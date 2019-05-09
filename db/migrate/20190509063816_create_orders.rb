@@ -1,7 +1,7 @@
 class CreateOrders < ActiveRecord::Migration[5.2]
   def change
     create_table :orders do |t|
-      t.integer :order_no
+      t.integer :order_no, { default: 1000 }
       t.string :first_name
       t.string :last_name
       t.string :address

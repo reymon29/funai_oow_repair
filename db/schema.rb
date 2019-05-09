@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2019_05_09_073821) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "order_no"
+    t.integer "order_no", default: 1000
     t.string "first_name"
     t.string "last_name"
     t.string "address"
