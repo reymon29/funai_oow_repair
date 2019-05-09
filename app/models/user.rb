@@ -6,4 +6,5 @@ class User < ApplicationRecord
   has_many :transactions
   has_many :notes
   has_many :repairs
+  has_many :shippings
 end

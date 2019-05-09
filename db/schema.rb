@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_09_070524) do
+ActiveRecord::Schema.define(version: 2019_05_09_073028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,21 @@ ActiveRecord::Schema.define(version: 2019_05_09_070524) do
     t.index ["user_id"], name: "index_repairs_on_user_id"
   end
 
+  create_table "shippings", force: :cascade do |t|
+    t.string "receive_model"
+    t.string "receive_serial"
+    t.string "receive_courier"
+    t.string "receive_tracking"
+    t.string "shipout_courier"
+    t.string "shipout_tracking"
+    t.bigint "order_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_shippings_on_order_id"
+    t.index ["user_id"], name: "index_shippings_on_user_id"
+  end
+
   create_table "transactions", force: :cascade do |t|
     t.integer "amount"
     t.string "auth_no"
@@ -94,6 +109,8 @@ ActiveRecord::Schema.define(version: 2019_05_09_070524) do
   add_foreign_key "orders", "products"
   add_foreign_key "repairs", "orders"
   add_foreign_key "repairs", "users"
+  add_foreign_key "shippings", "orders"
+  add_foreign_key "shippings", "users"
   add_foreign_key "transactions", "orders"
   add_foreign_key "transactions", "users"
 end

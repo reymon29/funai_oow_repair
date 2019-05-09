@@ -3,4 +3,5 @@ class Order < ApplicationRecord
   has_many :orders
   has_many :notes
   has_many :repairs
+  has_many :shippings
 end
