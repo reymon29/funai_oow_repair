@@ -4,34 +4,34 @@
     <%= simple_form_for @order do |f| %>
       <h1>Create an order</h1>
       <div class="form-row">
-        <div class="col">
+        <div class="col-sm">
           <%= f.input :case_no %>
         </div>
-        <div class="col">
+        <div class="col-sm">
           <%= f.association :product, label: "Model number", prompt: "Choose a product", collection: @product_model %>
         </div>
-        <div class="col">
+        <div class="col-sm">
           <%= f.input :serial_number %>
         </div>
     </div>
     <div class="form-row">
-      <div class="col">
+      <div class="col-sm">
         <%= f.input :first_name %>
       </div>
-      <div class="col">
+      <div class="col-sm">
         <%= f.input :last_name %>
       </div>
     </div>
       <%= f.input :address %>
-      <%= f.input :address1 %>
+      <%= f.input :address1, label: "Address2" %>
       <div class="form-row">
-        <div class="col">
+        <div class="col-sm">
           <%= f.input :city %>
         </div>
-        <div class="col">
+        <div class="col-sm">
           <%= f.input :state %>
         </div>
-        <div class="col">
+        <div class="col-sm">
           <%= f.input :zip %>
         </div>
       </div>
@@ -42,3 +42,4 @@
   </div>
   </div>
 </div>
+
