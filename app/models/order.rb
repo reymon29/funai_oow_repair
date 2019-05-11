@@ -20,10 +20,6 @@ class Order < ApplicationRecord
 
   def check_order_id
     orders = Order.all
-    if orders.empty?
-      self.order_no
-    else
-      self.order_no = Order.last.order_no + 1
-    end
+    orders.empty? ? self.order_no : self.order_no = Order.last.order_no + 1
   end
 end
