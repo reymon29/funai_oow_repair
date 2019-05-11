@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <h1>Create an order</h1>
+
+    <%= simple_form_for @order do |f| %>
+    div.
+      <%= f.association :product, label: "Model number", prompt: "Choose a product", collection: @product_model %>
+      <%= f.input :serial_number %>
+      <%= f.input :first_name %>
+      <%= f.input :last_name %>
+      <%= f.input :address %>
+      <%= f.input :address1 %>
+      <%= f.input :city %>
+      <%= f.input :state %>
+      <%= f.input :zip %>
+      <%= f.input :telephone_no %>
+      <%= f.input :email %>
+      <%= f.submit "Create order", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

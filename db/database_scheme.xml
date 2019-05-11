@@ -112,14 +112,10 @@
 <part>id</part>
 </key>
 </table>
-<table x="822" y="41" name="transactions">
+<table x="834" y="26" name="transactions">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="order_id" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="orders" row="id" />
-</row>
 <row name="amount" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -129,6 +125,10 @@
 <row name="auth_no" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="order_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="orders" row="id" />
+</row>
 <row name="user_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="users" row="id" />
@@ -144,7 +144,7 @@
 <row name="model_no" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="type" null="1" autoincrement="0">
+<row name="product_type" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="weight" null="1" autoincrement="0">
@@ -207,7 +207,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1005" y="205" name="shipping">
+<table x="974" y="213" name="shipping">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>

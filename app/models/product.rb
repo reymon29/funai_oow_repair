@@ -8,4 +8,7 @@ class Product < ApplicationRecord
   validates :height, presence: true
   has_many :orders
 
+  def name
+  "#{model_no} - #{product_type}"
+  end
 end
