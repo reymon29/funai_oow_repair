@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:create, :show]
   before_action :order_id_find, only: [:show, :edit, :update, :destroy]
   def index
     @orders = Order.all
@@ -9,6 +10,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+
   end
 
   def edit
@@ -27,6 +29,6 @@ class OrdersController < ApplicationController
   end
 
   def return_params
-    params.require(:order).permit(:first_name, :last_name, :address, :address1, :city, :state, :zip, :telephone_no, :email, :product_id)
+    params.require(:order).permit(:first_name, :case_no, :last_name, :address, :address1, :city, :state, :zip, :telephone_no, :email, :product_id)
   end
 end

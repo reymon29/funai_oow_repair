@@ -1,21 +1,44 @@
 <div class="container">
-  <div class="row">
-    <h1>Create an order</h1>
-
+  <div class="row justify-content-center">
+  <div class="orderform-view">
     <%= simple_form_for @order do |f| %>
-    div.
-      <%= f.association :product, label: "Model number", prompt: "Choose a product", collection: @product_model %>
-      <%= f.input :serial_number %>
-      <%= f.input :first_name %>
-      <%= f.input :last_name %>
+      <h1>Create an order</h1>
+      <div class="form-row">
+        <div class="col">
+          <%= f.input :case_no %>
+        </div>
+        <div class="col">
+          <%= f.association :product, label: "Model number", prompt: "Choose a product", collection: @product_model %>
+        </div>
+        <div class="col">
+          <%= f.input :serial_number %>
+        </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+        <%= f.input :first_name %>
+      </div>
+      <div class="col">
+        <%= f.input :last_name %>
+      </div>
+    </div>
       <%= f.input :address %>
       <%= f.input :address1 %>
-      <%= f.input :city %>
-      <%= f.input :state %>
-      <%= f.input :zip %>
+      <div class="form-row">
+        <div class="col">
+          <%= f.input :city %>
+        </div>
+        <div class="col">
+          <%= f.input :state %>
+        </div>
+        <div class="col">
+          <%= f.input :zip %>
+        </div>
+      </div>
       <%= f.input :telephone_no %>
       <%= f.input :email %>
       <%= f.submit "Create order", class: "btn btn-primary" %>
     <% end %>
+  </div>
   </div>
 </div>
