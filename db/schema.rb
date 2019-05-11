@@ -44,12 +44,13 @@ ActiveRecord::Schema.define(version: 2019_05_09_073821) do
   end
 
   create_table "products", force: :cascade do |t|
+    t.string "brand"
     t.string "model_no"
-    t.string "type"
-    t.integer "weight"
-    t.integer "length"
-    t.integer "width"
-    t.integer "height"
+    t.string "product_type"
+    t.decimal "weight", precision: 4, scale: 2, default: "0.0"
+    t.decimal "length", precision: 4, scale: 2, default: "0.0"
+    t.decimal "width", precision: 4, scale: 2, default: "0.0"
+    t.decimal "height", precision: 4, scale: 2, default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

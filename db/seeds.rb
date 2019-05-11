@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+puts "Creating Product List"
+Product.create(brand: "Magnavox", model_no: "MDR865H/F7", product_type: "DVD/HDD", weight: 10.5, length: 20.5, width: 5.8, height: 16.3)
+Product.create(brand: "Magnavox", model_no: "MDR867H/F7", product_type: "DVD/HDD", weight: 10.5, length: 20.5, width: 5.8, height: 16.3)
+Product.create(brand: "Magnavox", model_no: "MDR868H/F7", product_type: "DVD/HDD", weight: 10.5, length: 20.5, width: 5.8, height: 16.3)
+Product.create(brand: "Funai", model_no: "ZV427FX4", product_type: "DVD/VCR", weight: 13.5, length: 21.4, width: 7.1, height: 14.8)
+Product.create(brand: "Funai", model_no: "ZV427FX4 A", product_type: "DVD/VCR", weight: 13.5, length: 21.4, width: 7.1, height: 14.8)
+Product.create(brand: "Emerson", model_no: "ZV427EM5", product_type: "DVD/VCR", weight: 13.5, length: 21.4, width: 7.1, height: 14.8)
+Product.create(brand: "Sanyo", model_no: "FWZV475F", product_type: "DVD/VCR", weight: 13.5, length: 21.4, width: 7.1, height: 14.8)
+puts "Finishing list"
+
+
