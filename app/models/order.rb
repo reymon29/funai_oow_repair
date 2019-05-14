@@ -7,7 +7,7 @@ class Order < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :address, presence: true, length: { in: 0..60 }
-  validates :address1, length: { in: 0..60 }, allow_blank: true
+  validates :address2, length: { in: 0..60 }, allow_blank: true
   validates :city, presence: true
   validates :state, presence: true
   validates :case_no, presence: true
