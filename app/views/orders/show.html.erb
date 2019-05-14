@@ -1,5 +1,43 @@
 <div class="row">
   <div class="container">
-    <h1>Order Show Page</h1>
+    <div class="show-page-order">
+      <div class="col">
+        <h1>Order No.
+       <%= @order.order_no %></h1>
+      </div>
+      <div class="col">
+        <h6>
+          Case No.
+          <%= @order.case_no %>
+          <span style="padding-left: 10px;">Order Status
+          <%= @order.order_status %></span>
+        </h6>
+        <h6>
+          Shipping address
+          <address>
+            <%= @order.address %>
+            <%= @order.address2 %>
+            <%= @order.city %>
+            <%= @order.state %>
+            <%= @order.zip %>
+          </address>
+          Contact Info
+          <address>
+            <%= @order.telephone_no %>
+            <% if @order.email.empty? %>
+            <% else %>
+              <a href="mailto:<%= @order.email %>"><%= @order.email %></a>
+            <% end %>
+          </address>
+        </h6>
+      </div>
+      <div class="col">
+        <ul class="list-group">
+          <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
+          <li class="list-group-item">Serial Number: <%= @order.serial_number %></li>
+          <li class="list-group-item">Symptom: <%= @order.symptom %></li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
