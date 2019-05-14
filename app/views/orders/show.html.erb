@@ -1,43 +1,41 @@
-<div class="row">
-  <div class="container">
-    <div class="show-page-order">
-      <div class="col">
-        <h1>Order No.
-       <%= @order.order_no %></h1>
-      </div>
-      <div class="col">
-        <h6>
+<div class="container">
+  <div class="row">
+    <div class="col-6 col-md-4 show-page-order">
+      <h1>Order No.
+      <%= @order.order_no %></h1>
+      <h6>
           Case No.
           <%= @order.case_no %>
-          <span style="padding-left: 10px;">Order Status
+          <span style="padding-left: 6px;">Order Status
           <%= @order.order_status %></span>
         </h6>
         <h6>
-          Shipping address
-          <address>
-            <%= @order.address %>
-            <%= @order.address2 %>
-            <%= @order.city %>
-            <%= @order.state %>
-            <%= @order.zip %>
-          </address>
-          Contact Info
-          <address>
-            <%= @order.telephone_no %>
-            <% if @order.email.empty? %>
-            <% else %>
-              <a href="mailto:<%= @order.email %>"><%= @order.email %></a>
-            <% end %>
-          </address>
-        </h6>
-      </div>
-      <div class="col">
+        Shipping address
+        <address>
+          <%= @order.address %>
+          <%= @order.address2 %>
+          <%= @order.city %>
+          <%= @order.state %>
+          <%= @order.zip %>
+        </address>
+        Contact Info
+        <address>
+          <%= @order.telephone_no %>
+          <% if @order.email.empty? %>
+          <% else %>
+            <a href="mailto:<%= @order.email %>"><%= @order.email %></a>
+          <% end %>
+        </address>
         <ul class="list-group">
-          <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
-          <li class="list-group-item">Serial Number: <%= @order.serial_number %></li>
-          <li class="list-group-item">Symptom: <%= @order.symptom %></li>
-        </ul>
-      </div>
+        <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
+        <li class="list-group-item">Serial Number: <%= @order.serial_number %></li>
+        <li class="list-group-item">Symptom: <%= @order.symptom %></li>
+      </ul>
+    </div>
+    <div class="col-6 col-md-5 show-page-order">
+      <h1>Transactions</h1>
+      <h1>Repair Status</h1>
+      <h1>Notes</h1>
     </div>
   </div>
 </div>
