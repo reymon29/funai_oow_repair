@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :dept, presence: true, exclusion: { in: %w(Warranty TC CC) }
   validates :location, presence: true, exclusion: { in: %w(OH CA PH) }
-  validates :email, presence: true, uniqueness: true, format: { with: /[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(funaicorp|funaiservice)\.(com)$/, multiline: true, message: " domain is not a valid partner at this time." }
+  validates :email, presence: true, uniqueness: true, format: { with: /[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(funaicorp|funaiservice|hgs)\.(com)$/, multiline: true, message: " domain is not a valid partner at this time." }
   before_validation :normalize_name, on: [ :create, :update ]
 
   private

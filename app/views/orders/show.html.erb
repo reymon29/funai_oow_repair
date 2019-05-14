@@ -28,7 +28,7 @@
         </address>
         <ul class="list-group">
         <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
-        <li class="list-group-item">Serial Number: <%= @order.serial_number %></li>
+        <li class="list-group-item">Serial No: <%= @order.serial_number %></li>
         <li class="list-group-item">Symptom: <%= @order.symptom %></li>
       </ul>
     </div>
@@ -36,6 +36,12 @@
       <h1>Transactions</h1>
       <h1>Repair Status</h1>
       <h1>Notes</h1>
+        <% @order.notes.each do |note| %>
+          <%= note.comment %>
+          <%= User.find_by_id(note.user_id).first_name %>
+          <%= note.created_at.strftime("%A, %b %d") %>
+        <% end %>
+      <%= console %>
     </div>
   </div>
 </div>

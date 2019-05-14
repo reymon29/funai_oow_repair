@@ -17,3 +17,7 @@ Product.create(brand: "Sanyo", model_no: "FWZV475F", product_type: "DVD/VCR", we
 puts "Finishing list"
 
 
+puts "Create Users"
+User.create(email: "HGSTEAM@HGS.com", password: "HGSTEAM@121", first_name: "HGS", last_name: "TEAM", dept: "Call Center", location: "Remote")
+User.create(email: "rmontemayor@funaiservice.com", password: "123456", first_name: "Reyes", last_name: "Montemayor", dept: "Call Center", location: "Remote")
+puts "Finishing"
