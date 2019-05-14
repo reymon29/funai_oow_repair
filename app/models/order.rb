@@ -15,7 +15,7 @@ class Order < ApplicationRecord
   validates :serial_number, presence: true, length: { is: 9, message: "format J123456789" }
   validates :telephone_no, presence: true, format: { with: /^[0-9]{10}$/, multiline: true,
     message: "format 5555555555" }
-
+  validates :symptom, presence: true, length: { in: 10..250 }
   before_create :check_order_id
 
   private
