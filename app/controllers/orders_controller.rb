@@ -5,6 +5,10 @@ class OrdersController < ApplicationController
     @orders = Order.all
   end
 
+  def show
+    @note = Note.new
+  end
+
   def new
     @order = Order.new
     @product_model = Product.order(:model_no)
