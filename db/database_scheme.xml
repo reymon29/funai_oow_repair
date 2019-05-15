@@ -67,7 +67,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="566" y="18" name="orders">
+<table x="635" y="16" name="orders">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -108,6 +108,12 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="products" row="id" />
 </row>
+<row name="serial_number" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="symptom" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
