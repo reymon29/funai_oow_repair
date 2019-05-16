@@ -36,18 +36,17 @@
       <h1>Transactions</h1>
       <h1>Repair Status</h1>
       <h1>Notes</h1>
-        <% @order.notes.each do |note| %>
-          <%= note.comment %>
-          <%= User.find_by_id(note.user_id).first_name %>
-          <%= note.created_at.strftime("%A, %b %d") %>
-        <% end %>
-        <button type="button" class="btn btn-primary button-holder-left" data-toggle="modal" data-target="#notesModal">
-          Add Note
-        </button>
-        <button type="button" class="btn btn-primary button-holder-right" data-toggle="modal" data-target="#notesModal">
-          Receive
-        </button>
-      <%= console %>
+      <% @order.notes.each do |note| %>
+        <%= note.comment %>
+        <%= User.find_by_id(note.user_id).first_name %>
+        <%= note.created_at.strftime("%A, %b %d") %>
+      <% end %>
+      <button type="button" class="btn btn-primary button-holder-left" data-toggle="modal" data-target="#notesModal">
+        Add Note
+      </button>
+      <button type="button" class="btn btn-primary button-holder-right" data-toggle="modal" data-target="#notesModal">
+        Receive
+      </button>
     </div>
   </div>
 </div>
