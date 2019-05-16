@@ -8,6 +8,7 @@ class CreateReceivingsTable < ActiveRecord::Migration[5.2]
       t.string :serial_number
       t.string :receive_courier
       t.string :receive_tracking
+      t.timestamps
     end
   end
 end

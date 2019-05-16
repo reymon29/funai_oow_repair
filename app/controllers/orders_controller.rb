@@ -32,12 +32,14 @@ class OrdersController < ApplicationController
   end
 
   def edit
+    @product_model = Product.order(:model_no)
+    @note = Note.new
   end
 
   def update
-  end
-
-  def destroy
+    @product_model = Product.order(:model_no)
+    @order.update(order_params)
+    redirect_to order_path(@order)
   end
 
   private
@@ -47,6 +49,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:first_name, :case_no, :last_name, :address, :address2, :city, :state, :zip, :telephone_no, :email, :product_id, :serial_number, :symptom)
+    params.require(:order).permit(:first_name, :case_no, :last_name, :address, :address2, :city, :state, :zip, :telephone_no, :email, :product_id, :serial_number, :symptom, :order_status, :notes)
   end
+
 end

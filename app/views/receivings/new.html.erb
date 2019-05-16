@@ -1,0 +1,7 @@
+<%= simple_form_for [@order, @receive] do |f| %>
+  <%= f.input :receive_courier, collection: %w(FedEx UPS USPS DHL) %>
+  <%= f.input :receive_tracking %>
+  <%= f.input :model_no %>
+  <%= f.input :serial_number %>
+  <%= f.submit %>
+<% end %>

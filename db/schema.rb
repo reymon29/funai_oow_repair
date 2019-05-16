@@ -63,6 +63,8 @@ ActiveRecord::Schema.define(version: 2019_05_16_045140) do
     t.string "serial_number"
     t.string "receive_courier"
     t.string "receive_tracking"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "order_id"
     t.index ["order_id"], name: "index_receivings_on_order_id"
   end

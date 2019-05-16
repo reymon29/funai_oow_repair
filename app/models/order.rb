@@ -3,6 +3,7 @@ class Order < ApplicationRecord
   has_many :orders
   has_many :notes
   has_many :repairs
+  has_many :receivings
   has_one :shippings
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -16,7 +17,10 @@ class Order < ApplicationRecord
   validates :telephone_no, presence: true, format: { with: /^[0-9]{10}$/, multiline: true,
     message: "format 5555555555" }
   validates :symptom, presence: true, length: { in: 10..250 }
+  validates :order_status, inclusion: { in: ["Order Created", "Order Cancelled", "Item received", "Item in repair", "Completed, Shipped"] }
   before_create :check_order_id
+
+
 
   private
 
