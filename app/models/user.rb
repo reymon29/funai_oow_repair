@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :notes
   has_many :repairs
   has_many :shippings
+  has_many :orders
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :dept, presence: true, exclusion: { in: %w(Warranty TC CC) }

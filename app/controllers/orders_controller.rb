@@ -7,18 +7,21 @@ class OrdersController < ApplicationController
 
   def show
     @note = Note.new
+    @payment = Payment.new
   end
 
   def new
     @order = Order.new
     @product_model = Product.order(:model_no)
+    @payment = Payment.new
   end
 
   def create
     @product_model = Product.order(:model_no)
     @order = Order.new(order_params)
+    @order.user = current_user
+    @order.state = "Pending"
     @notes = Note.new
-
     @notes.comment = "Created order request"
     @notes.user = user_signed_in? ? current_user : User.find_by_id(2)
     @order.order_status = "Order Created"

@@ -1,10 +1,12 @@
 class Order < ApplicationRecord
   belongs_to :product
-  has_many :orders
+  belongs_to :user
   has_many :notes
   has_many :repairs
   has_many :receivings
   has_one :shippings
+  has_many :payments
+  has_many :repair_rates, through: :payments
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :address, presence: true, length: { in: 0..60 }
@@ -19,8 +21,6 @@ class Order < ApplicationRecord
   validates :symptom, presence: true, length: { in: 10..250 }
   validates :order_status, inclusion: { in: ["Order Created", "Order Cancelled", "Item received", "Item in repair", "Completed, Shipped"] }
   before_create :check_order_id
-
-
 
   private
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_17_064824) do
+ActiveRecord::Schema.define(version: 2019_05_17_090756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,12 +38,26 @@ ActiveRecord::Schema.define(version: 2019_05_17_064824) do
     t.string "email"
     t.string "order_status"
     t.bigint "product_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "serial_number"
     t.string "case_no"
     t.text "symptom"
     t.index ["product_id"], name: "index_orders_on_product_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.string "state"
+    t.integer "amount_cents", default: 0, null: false
+    t.jsonb "payment"
+    t.bigint "order_id"
+    t.bigint "repair_rates_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_payments_on_order_id"
+    t.index ["repair_rates_id"], name: "index_payments_on_repair_rates_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -99,18 +113,6 @@ ActiveRecord::Schema.define(version: 2019_05_17_064824) do
     t.index ["user_id"], name: "index_shippings_on_user_id"
   end
 
-  create_table "transactions", force: :cascade do |t|
-    t.string "auth_no"
-    t.string "transaction_no"
-    t.bigint "order_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "price_cents", default: 0, null: false
-    t.index ["order_id"], name: "index_transactions_on_order_id"
-    t.index ["user_id"], name: "index_transactions_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -130,11 +132,12 @@ ActiveRecord::Schema.define(version: 2019_05_17_064824) do
   add_foreign_key "notes", "orders"
   add_foreign_key "notes", "users"
   add_foreign_key "orders", "products"
+  add_foreign_key "orders", "users"
+  add_foreign_key "payments", "orders"
+  add_foreign_key "payments", "repair_rates", column: "repair_rates_id"
   add_foreign_key "receivings", "orders"
   add_foreign_key "repairs", "orders"
   add_foreign_key "repairs", "users"
   add_foreign_key "shippings", "orders"
   add_foreign_key "shippings", "users"
-  add_foreign_key "transactions", "orders"
-  add_foreign_key "transactions", "users"
 end

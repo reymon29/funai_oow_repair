@@ -13,6 +13,7 @@ class CreateOrders < ActiveRecord::Migration[5.2]
       t.string :email
       t.string :order_status
       t.references :product, foreign_key: true
+      t.references :user, foreign_key: true
       t.timestamps null: false
     end
   end
