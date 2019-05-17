@@ -3,13 +3,17 @@
     <div class="col-6 col-md-4 show-page-order">
       <h1>Order No.
       <%= @order.order_no %></h1>
-      <h6>
-          Case No.
-          <%= @order.case_no %>
-          <span style="padding-left: 6px;">Order Status
-          <%= @order.order_status %></span>
-        </h6>
+      <div class="col">
         <h6>
+          Case No.
+          <%= @order.case_no %><br>
+          Created On
+          <%= @order.created_at.strftime("%b %d, %Y") %><br>
+          Order Status
+          <%= @order.order_status %>
+        </h6>
+      </div>
+      <div class="col">
         Shipping address
         <address>
           <%= @order.address %>
@@ -26,6 +30,8 @@
             <a href="mailto:<%= @order.email %>"><%= @order.email %></a>
           <% end %>
         </address>
+      </div>
+
         <ul class="list-group">
         <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
         <li class="list-group-item">Serial No: <%= @order.serial_number %></li>
@@ -50,9 +56,9 @@
       </button>
       <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary button-holder-right" %>
     </div>
-    <div class="col-6 col-md-4 show-page-order">
+    <div class="col-6 col-md-8 show-page-order">
       <h1>Received</h1>
-      <table id="receive" class="display" style="width:30%">
+      <table id="receive" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>Receive Model</th>
