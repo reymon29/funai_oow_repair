@@ -6,6 +6,16 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+puts 'Cleaning database...'
+Note.destroy_all
+Receiving.destroy_all
+Order.destroy_all
+Product.destroy_all
+User.destroy_all
+User.destroy_all
+RepairRate.destroy_all
+puts 'Deleted database...'
+
 puts "Creating Product List"
 Product.create(brand: "Magnavox", model_no: "MDR865H/F7", product_type: "DVD/HDD", weight: 10.5, length: 20.5, width: 5.8, height: 16.3)
 Product.create(brand: "Magnavox", model_no: "MDR867H/F7", product_type: "DVD/HDD", weight: 10.5, length: 20.5, width: 5.8, height: 16.3)
@@ -21,3 +31,11 @@ puts "Create Users"
 User.create(email: "HGSTEAM@HGS.com", password: "HGSTEAM@121", first_name: "HGS", last_name: "TEAM", dept: "Call Center", location: "Remote")
 User.create(email: "rmontemayor@funaiservice.com", password: "123456", first_name: "Reyes", last_name: "Montemayor", dept: "Call Center", location: "Remote")
 puts "Finishing"
+
+puts "Create Repair Rates"
+RepairRate.create(sku: "DVD001", name: "Diagnose Fee", price: 35)
+RepairRate.create(sku: "SHIP001", name: "Return Label Fee", price: 20)
+RepairRate.create(sku: "SHIP002", name: "Return Box Fee", price: 30)
+RepairRate.create(sku: "REPAIR001", name: "Minor Repair Fee", price: 66)
+RepairRate.create(sku: "REPAIR002", name: "Major Repair Fee", price: 90)
+puts "Finished"
