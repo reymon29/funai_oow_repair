@@ -42,6 +42,7 @@
         Update Status
       </button>
     </div>
+
     <div class="col-6 col-md-5 show-page-order">
       <h1>Transactions</h1>
       <h1>Repair Status</h1>
@@ -55,6 +56,16 @@
         Add Note
       </button>
       <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary button-holder-right" %>
+    </div>
+    <div class="col-6 col-md-4 show-page-order">
+      <h1>Payments</h1>
+      <div class="col">
+        <% @order.payments.each do |payment| %>
+          <%= payment.state %>
+          <%= humanized_money_with_symbol(payment.amount) %>
+          <%= payment.repair_rate.name %>
+        <% end %>
+      </div>
     </div>
     <div class="col-6 col-md-8 show-page-order">
       <h1>Received</h1>

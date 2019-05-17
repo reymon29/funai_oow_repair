@@ -19,15 +19,23 @@ class OrdersController < ApplicationController
   def create
     @product_model = Product.order(:model_no)
     @order = Order.new(order_params)
+    @repair = RepairRate.find(1)
+    @payment = Payment.new
     @order.user = current_user
     @order.state = "Pending"
     @notes = Note.new
     @notes.comment = "Created order request"
     @notes.user = user_signed_in? ? current_user : User.find_by_id(2)
+
     @order.order_status = "Order Created"
     if @order.save
       @notes.order = @order
       @notes.save
+      @payment.repair_rate = @repair
+      @payment.order = @order
+      @payment.state = "Pending"
+      @payment.amount = @repair.price
+      @payment.save
       redirect_to order_path(@order)
     else
       render :new

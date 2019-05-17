@@ -24,6 +24,6 @@ class PaymentsController < ApplicationController
   private
 
   def set_order
-    @order = current_user.orders.where(state: 'pending').find(params[:order_id])
+    @order = Order.find(params[:order_id])
   end
 end
