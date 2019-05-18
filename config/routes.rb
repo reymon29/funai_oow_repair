@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   resources :orders do
     resources :notes, only: [:new, :create]
     resources :receivings, only: [:new, :create]
-    resources :payments, only: [:new, :create, :update]
+    resources :payments, only: [:new, :create]
   end
 end
