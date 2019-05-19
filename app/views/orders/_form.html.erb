@@ -99,9 +99,6 @@
         <div class="col">
           <%= f.input :email %>
         </div>
-        <div class="col">
-          <%= f.association :repair_rates, as: :select, collection: @repair_rates, label: "Shipping" %>
-        </div>
       </div>
       <%= f.submit "Create order", class: "btn btn-primary" %>
     <% end %>

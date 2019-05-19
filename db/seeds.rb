@@ -33,10 +33,10 @@ User.create(email: "rmontemayor@funaiservice.com", password: "123456", first_nam
 puts "Finishing"
 
 puts "Create Repair Rates"
-RepairRate.create(sku: "DVD001", name: "Diagnose Fee", price: 35)
-RepairRate.create(sku: "SHIP001", name: "Return Label Fee", price: 20)
-RepairRate.create(sku: "SHIP002", name: "Return Box Fee", price: 30)
-RepairRate.create(sku: "SHIP003", name: "Shelf Ship", price: 0)
-RepairRate.create(sku: "REPAIR001", name: "Minor Repair Fee", price: 66)
-RepairRate.create(sku: "REPAIR002", name: "Major Repair Fee", price: 90)
+RepairRate.create(category: "OOW", sku: "DVD001", name: "Diagnose Fee", price: 35)
+RepairRate.create(category: "Shipping", sku: "SHIP001", name: "Return Label Fee", price: 20)
+RepairRate.create(category: "Shipping", sku: "SHIP002", name: "Return Box Fee", price: 30)
+RepairRate.create(category: "Shipping", sku: "SHIP003", name: "Shelf Ship", price: 0)
+RepairRate.create(category: "Repair", sku: "REPAIR001", name: "Minor Repair Fee", price: 66)
+RepairRate.create(category: "Repair", sku: "REPAIR002", name: "Major Repair Fee", price: 90)
 puts "Finished"

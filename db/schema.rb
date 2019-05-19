@@ -62,11 +62,9 @@ ActiveRecord::Schema.define(version: 2019_05_19_071412) do
     t.integer "amount_cents", default: 0, null: false
     t.jsonb "payment"
     t.bigint "order_id"
-    t.bigint "repair_rate_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_payments_on_order_id"
-    t.index ["repair_rate_id"], name: "index_payments_on_repair_rate_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -93,6 +91,7 @@ ActiveRecord::Schema.define(version: 2019_05_19_071412) do
   end
 
   create_table "repair_rates", force: :cascade do |t|
+    t.string "category"
     t.string "sku"
     t.string "name"
     t.datetime "created_at", null: false
@@ -145,7 +144,6 @@ ActiveRecord::Schema.define(version: 2019_05_19_071412) do
   add_foreign_key "orders", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "payments", "orders"
-  add_foreign_key "payments", "repair_rates"
   add_foreign_key "receivings", "orders"
   add_foreign_key "repairs", "orders"
   add_foreign_key "repairs", "users"
