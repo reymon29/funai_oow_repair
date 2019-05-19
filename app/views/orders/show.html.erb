@@ -65,18 +65,20 @@
             <%= link_to "charge", new_order_payment_path(payment) %>
           <% end %>
           <%= humanized_money_with_symbol(payment.amount) %>
-          <%= payment.repair_rate.name %>
         <% end %>
       </div>
     </div>
     <div class="col-6 col-md-4 show-page-order">
       <h1>Order Items</h1>
-      <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary button-holder-right" %>
+      <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary" %>
       <div class="col">
-        <% @order.order_items.each do |repair| %>
-          <%= repair.repair_rate.name %>
-          <%= humanized_money_with_symbol(repair.repair_rate.price) %>
+        <ul class="list-group">
+          <% @order.order_items.each do |repair| %>
+          <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %>          <%= link_to "Delete", order_item_path(repair),
+      method: :delete,
+      data: { confirm: "Are you sure?" }, class: "btn btn-warning" %></li>
         <% end %>
+      </ul>
       </div>
     </div>
     <div class="col-6 col-md-8 show-page-order">

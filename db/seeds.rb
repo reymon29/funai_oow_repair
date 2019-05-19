@@ -35,8 +35,9 @@ puts "Finishing"
 puts "Create Repair Rates"
 RepairRate.create(category: "OOW", sku: "DVD001", name: "Diagnose Fee", price: 35)
 RepairRate.create(category: "Shipping", sku: "SHIP001", name: "Return Label Fee", price: 20)
-RepairRate.create(category: "Shipping", sku: "SHIP002", name: "Return Box Fee", price: 30)
-RepairRate.create(category: "Shipping", sku: "SHIP003", name: "Shelf Ship", price: 0)
+RepairRate.create(category: "Shipping", sku: "SHIP002", name: "Shipback Fee", price: 20)
+RepairRate.create(category: "Shipping", sku: "SHIP003", name: "Return Box Fee", price: 30)
+RepairRate.create(category: "Shipping", sku: "SHIP004", name: "Shelf Ship", price: 0)
 RepairRate.create(category: "Repair", sku: "REPAIR001", name: "Minor Repair Fee", price: 66)
 RepairRate.create(category: "Repair", sku: "REPAIR002", name: "Major Repair Fee", price: 90)
 puts "Finished"

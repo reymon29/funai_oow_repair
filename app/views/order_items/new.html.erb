@@ -1,3 +1,4 @@
 <%= simple_form_for [@order, @order_item] do |f| %>
-  <%= f.association :repair_rate %>
+  <%= f.association :repair_rate, label_method: :name_type %>
+  <%= f.submit %>
 <% end %>

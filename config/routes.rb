@@ -8,4 +8,5 @@ Rails.application.routes.draw do
     resources :receivings, only: [:new, :create]
     resources :payments, only: [:new, :create]
   end
+  resources :order_items, only: :destroy
 end
