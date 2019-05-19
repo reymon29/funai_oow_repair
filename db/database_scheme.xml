@@ -151,7 +151,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="826" y="566" name="notes">
+<table x="857" y="756" name="notes">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -170,7 +170,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="821" y="408" name="repairs">
+<table x="1033" y="707" name="repairs">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -192,7 +192,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="994" y="187" name="shipping">
+<table x="1016" y="345" name="shipping">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -220,7 +220,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1008" y="401" name="receiving">
+<table x="1015" y="539" name="receiving">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -244,7 +244,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="243" y="245" name="repair_rates">
+<table x="998" y="6" name="repair_rates">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -261,14 +261,10 @@
 <part>id</part>
 </key>
 </table>
-<table x="421" y="234" name="payments">
+<table x="1003" y="199" name="payments">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="repair_rate_id" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default><relation table="repair_rates" row="id" />
-</row>
 <row name="order_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="orders" row="id" />
@@ -282,6 +278,22 @@
 <row name="payment" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="832" y="9" name="order_items">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="repair_rates_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="repair_rates" row="id" />
+</row>
+<row name="order_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="orders" row="id" />
+</row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>

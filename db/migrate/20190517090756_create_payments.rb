@@ -5,7 +5,6 @@ class CreatePayments < ActiveRecord::Migration[5.2]
       t.monetize :amount, currency: { present: false }
       t.jsonb :payment
       t.references :order, foreign_key: true
-      t.references :repair_rate, foreign_key: true
 
       t.timestamps
     end

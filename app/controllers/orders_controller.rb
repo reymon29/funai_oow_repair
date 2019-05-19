@@ -13,6 +13,8 @@ class OrdersController < ApplicationController
   def new
     @order = Order.new
     @product_model = Product.order(:model_no)
+    @order_item = OrderItem.new
+    @repair_rates = RepairRate.where(sku: ["SHIP001", "SHIP002", "SHIP003"])
     @payment = Payment.new
   end
 

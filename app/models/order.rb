@@ -6,7 +6,8 @@ class Order < ApplicationRecord
   has_many :receivings
   has_one :shippings
   has_many :payments
-  has_many :repair_rates, through: :payments
+  has_many :order_items
+  has_many :repair_rates, through: :order_items
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :address, presence: true, length: { in: 0..60 }
