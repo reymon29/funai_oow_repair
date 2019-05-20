@@ -25,6 +25,7 @@ class OrdersController < ApplicationController
     @notes.comment = "Created order request"
     @notes.user = user_signed_in? ? current_user : User.find_by_id(2)
     @order.order_status = "Order Created"
+    @order.amount = @repair.price
     if @order.save
       @notes.order = @order
       @notes.save

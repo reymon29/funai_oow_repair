@@ -4,7 +4,7 @@ class CreateRepairRates < ActiveRecord::Migration[5.2]
       t.string :category
       t.string :sku
       t.string :name
-
+      t.monetize :price, currency: { present: false }
       t.timestamps
     end
   end

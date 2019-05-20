@@ -12,6 +12,7 @@ class CreateOrders < ActiveRecord::Migration[5.2]
       t.string :telephone_no
       t.string :email
       t.string :order_status
+      t.monetize :amount, currency: { present: false }
       t.references :product, foreign_key: true
       t.references :user, foreign_key: true
       t.timestamps null: false

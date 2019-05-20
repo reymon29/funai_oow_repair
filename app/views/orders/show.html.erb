@@ -56,10 +56,16 @@
       <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary button-holder-right" %>
     </div>
     <div class="col-6 col-md-4 show-page-order">
+      <h1>Order Total</h1>
+      <%= humanized_money_with_symbol(@order.amount) %>
+      <h5>Charge Fees</h5>
+      <%= link_to "Charge", new_order_payment_path(@order) %>
+    </div>
+    <div class="col-6 col-md-4 show-page-order">
       <h1>Payments</h1>
       <div class="col">
         <% @order.payments.each do |payment| %>
-        <% if payment.state == "paid" %>
+        <% if payment.state == "Paid" %>
             <%= payment.state %>
           <% else %>
             <%= link_to "charge", new_order_payment_path(payment) %>

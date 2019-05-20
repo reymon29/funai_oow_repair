@@ -8,6 +8,7 @@ class Order < ApplicationRecord
   has_many :payments
   has_many :order_items, dependent: :destroy
   has_many :repair_rates, through: :order_items
+  monetize :amount_cents
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :address, presence: true, length: { in: 0..60 }

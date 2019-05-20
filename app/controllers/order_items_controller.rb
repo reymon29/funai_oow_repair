@@ -8,8 +8,9 @@ class OrderItemsController < ApplicationController
   def create
     @order_item = OrderItem.new(order_params)
     @order_item.order = @order
-    @payment = Payment.create(order: @order, amount: @order_item.repair_rate.price, state: "Pending")
+    @order.amount = @order.amount + @order_item.repair_rate.price
     if @order_item.save
+      @order.save
       redirect_to order_path(@order)
     else
       render :new
@@ -18,6 +19,10 @@ class OrderItemsController < ApplicationController
 
   def destroy
     @order_item = OrderItem.find(params[:id])
+    @order = Order.find(@order_item.order_id)
+    @repair = RepairRate.find(@order_item.repair_rate_id)
+    @order.amount = @order.amount - @repair.price
+    @order.save
     @order_item.destroy
     redirect_to order_path(@order_item.order)
   end
