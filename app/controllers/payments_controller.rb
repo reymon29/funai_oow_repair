@@ -22,7 +22,6 @@ class PaymentsController < ApplicationController
         currency:     @order.amount.currency
       )
     else
-
       charge = Stripe::Charge.create(
         customer:     stripe_customer,   # You should store this customer id and re-use it.
         amount:       @order.amount_cents,
@@ -30,7 +29,6 @@ class PaymentsController < ApplicationController
         currency:     @order.amount.currency
       )
     end
-
 
     @payment = Payment.new(payment: charge.to_json, state: 'Paid', order: @order, amount: @order.amount)
     @order.paid == 0 ? @order.amount : @order.amount += @order.paid
@@ -61,4 +59,5 @@ class PaymentsController < ApplicationController
       return a["customer"]
     end
   end
+
 end
