@@ -41,3 +41,4 @@ RepairRate.create(category: "Shipping", sku: "SHIP004", name: "Shelf Ship", pric
 RepairRate.create(category: "Repair", sku: "REPAIR001", name: "Minor Repair Fee", price: 66)
 RepairRate.create(category: "Repair", sku: "REPAIR002", name: "Major Repair Fee", price: 90)
 puts "Finished"
+
