@@ -7,7 +7,7 @@ class OrdersController < ApplicationController
 
   def show
     @note = Note.new
-    @payment = Payment.new
+    @repair = Repair.new
   end
 
   def new

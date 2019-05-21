@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :notes, only: [:new, :create]
     resources :receivings, only: [:new, :create]
     resources :payments, only: [:new, :create]
+    resources :repairs, only: [:new, :create]
   end
   resources :order_items, only: :destroy
 end

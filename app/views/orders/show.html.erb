@@ -53,11 +53,17 @@
           </li> <%= note.comment %>
       <% end %>
       </ul>
-      <button type="button" class="btn btn-primary button-holder-left" data-toggle="modal" data-target="#notesModal">
-        Add Note
-      </button>
-      <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary button-holder-right" %>
+      <div class="button-section-comments">
+        <button type="button" class="btn btn-primary button-holder-left" data-toggle="modal" data-target="#notesModal">
+          Add Note
+        </button>
+        <button type="button" class="btn btn-primary button-holder-middle" data-toggle="modal" data-target="#repairModal">
+          Repair Comments
+        </button>
+        <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary button-holder-right" %>
+      </div>
     </div>
+
     <div class="col-6 col-md-4 show-page-order">
       <h1>Order Total</h1>
       Total:<%= humanized_money_with_symbol(@order.amount) %>
@@ -169,3 +175,26 @@
   </div>
 </div>
 
+<!-- Repair Notes -->
+<div class="modal fade" id="repairModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Repair Section</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= simple_form_for [@order, @repair] do |f| %>
+          <%= f.select :status, [ "Diagnosed", "Reviewed", "Repair Completed"] %>
+          <%= f.input :comment %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <%= f.submit "Save change", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

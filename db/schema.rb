@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2019_05_19_071412) do
   end
 
   create_table "repairs", force: :cascade do |t|
-    t.string "type"
+    t.string "status"
     t.text "comment"
     t.bigint "order_id"
     t.bigint "user_id"
