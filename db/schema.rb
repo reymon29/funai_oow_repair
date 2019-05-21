@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_19_105352) do
+ActiveRecord::Schema.define(version: 2019_05_19_071412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 2019_05_19_105352) do
     t.bigint "repair_rate_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["repair_rate_id"], name: "index_order_items_on_repair_rate_id"
   end
@@ -48,6 +47,7 @@ ActiveRecord::Schema.define(version: 2019_05_19_105352) do
     t.string "email"
     t.string "order_status"
     t.integer "amount_cents", default: 0, null: false
+    t.integer "paid_cents", default: 0, null: false
     t.bigint "product_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false

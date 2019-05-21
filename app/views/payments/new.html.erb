@@ -15,4 +15,8 @@
     data-amount="<%= @order.amount_cents %>"
     data-currency="<%= @order.amount.currency %>"></script>
 <% end %>
-<%= console %>
+
+
+<%= form_tag order_payments_path(@order) do %>
+  <%= submit_tag "Charge Last Card Used" %>
+<% end %>

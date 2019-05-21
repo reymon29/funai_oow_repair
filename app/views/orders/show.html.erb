@@ -45,11 +45,14 @@
     <div class="col-6 col-md-5 show-page-order">
       <h1>Repair Status</h1>
       <h1>Notes</h1>
-      <% @order.notes.each do |note| %>
-        <%= note.comment %>
-        <%= User.find_by_id(note.user_id).first_name %>
-        <%= note.created_at.strftime("%A, %b %d") %>
+      <ul>
+        <% @order.notes.each do |note| %>
+          <li>
+            <%= User.find_by_id(note.user_id).first_name %>
+            <%= note.created_at.strftime("%A, %b %d") %>
+          </li> <%= note.comment %>
       <% end %>
+      </ul>
       <button type="button" class="btn btn-primary button-holder-left" data-toggle="modal" data-target="#notesModal">
         Add Note
       </button>
@@ -57,7 +60,8 @@
     </div>
     <div class="col-6 col-md-4 show-page-order">
       <h1>Order Total</h1>
-      <%= humanized_money_with_symbol(@order.amount) %>
+      Total:<%= humanized_money_with_symbol(@order.amount) %>
+      Paid: <%= humanized_money_with_symbol(@order.paid) %>
       <h5>Charge Fees</h5>
       <%= link_to "Charge", new_order_payment_path(@order) %>
     </div>
@@ -66,23 +70,26 @@
       <div class="col">
         <% @order.payments.each do |payment| %>
         <% if payment.state == "Paid" %>
-            <%= payment.state %>
           <% else %>
             <%= link_to "charge", new_order_payment_path(payment) %>
           <% end %>
-          <%= humanized_money_with_symbol(payment.amount) %>
+          <ul>
+            <li>
+              <%= payment.state %>-<%= humanized_money_with_symbol(payment.amount) %> - <%= payment.created_at.strftime("%A, %b %d") %>
+            </li>
+          </ul>
         <% end %>
       </div>
     </div>
-    <div class="col-6 col-md-4 show-page-order">
+    <div class="col-6 col-md-8 show-page-order">
       <h1>Order Items</h1>
       <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary" %>
       <div class="col">
         <ul class="list-group">
           <% @order.order_items.each do |repair| %>
-          <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %>          <%= link_to "Delete", order_item_path(repair),
+          <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %><%= link_to "Delete", order_item_path(repair),
       method: :delete,
-      data: { confirm: "Are you sure?" }, class: "btn btn-warning" %></li>
+      data: { confirm: "Are you sure?" }, class: "btn btn-warning " %></li>
         <% end %>
       </ul>
       </div>
