@@ -2,6 +2,7 @@ class ShippingsController < ApplicationController
   before_action :order_id_find, only: [:new, :create]
 
   def new
+    @shipping = Shipping.new
   end
 
   def create

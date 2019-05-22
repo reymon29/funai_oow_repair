@@ -4,9 +4,8 @@ class Shipping < ApplicationRecord
   validates :shipout_courier, inclusion: { in: %w(FedEx UPS USPS DHL) }
   # mount_uploader :label, ShippingUploader
 
-  def shipstation_create_return(order)
-    require 'rubygems' if RUBY_VERSION < '1.9'
-    require 'rest_client'
+  def self.shipstation(order)
+    require 'rest-client'
     require 'json'
     require "base64"
 
@@ -61,16 +60,65 @@ class Shipping < ApplicationRecord
       "customField2": "#{order.case_no}"
     }'
 
-    headers = {
-      :content_type => 'application/json',
-      :authorization => ENV['SHIPSTATION_BASIC']
-    }
+    puts ""#{order.first_name}""
+#     values = '{
+#   "carrierCode": "fedex",
+#   "serviceCode": "fedex_ground",
+#   "packageCode": "package",
+#   "confirmation": "delivery",
+#   "shipDate": "2019-05-22",
+#   "weight": {
+#     "value": 3,
+#     "units": "ounces"
+#   },
+#   "dimensions": {
+#     "units": "inches",
+#     "length": 7,
+#     "width": 5,
+#     "height": 6
+#   },
+#   "shipFrom": {
+#     "name": "Jason Hodges",
+#     "company": "ShipStation",
+#     "street1": "2815 Exposition Blvd",
+#     "street2": "Ste 2353242",
+#     "street3": null,
+#     "city": "Austin",
+#     "state": "TX",
+#     "postalCode": "78703",
+#     "country": "US",
+#     "phone": "1234567890",
+#     "residential": false
+#   },
+#   "shipTo": {
+#     "name": "The President",
+#     "company": "US Govt",
+#     "street1": "1600 Pennsylvania Ave",
+#     "street2": "Oval Office",
+#     "street3": null,
+#     "city": "Washington",
+#     "state": "DC",
+#     "postalCode": "20500",
+#     "country": "US",
+#     "phone": "1234567890",
+#     "residential": false
+#   },
+#   "insuranceOptions": null,
+#   "internationalOptions": null,
+#   "advancedOptions": null,
+#   "testLabel": false
+# }'
+    # headers = {
+    #   :content_type => 'application/json',
+    #   :authorization => "Basic ZjJkNmE4NWQyNTNlNDM3MGFmN2UyNTQ5MzNjYTYxN2M6MzRiMmZiMWRlMGFlNGZiNjgxOTQ0ZmRhYjEyNzQ3OTc="
+    # }
 
-    response = RestClient.post 'https://ssapi.shipstation.com/shipments/createlabel', values, headers
-    response = JSON.parse(response)
-    label = response['labelData']
-    File.open('shipping_label.pdf', "wb") do |f|
-      f.write(Base64.decode64(label))
-    end
+    # response = RestClient.post 'https://ssapi.shipstation.com/shipments/createlabel', values, headers
+    # puts response
+    # response = JSON.parse(response)
+    # label = response['labelData']
+    # File.open('shipping_label.pdf', "wb") do |f|
+    #   f.write(Base64.decode64(label))
+    # end
   end
 end
