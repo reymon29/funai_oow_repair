@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   has_many :notes
   has_many :repairs
   has_many :receivings
-  has_one :shippings
+  has_many :shippings
   has_many :payments
   has_many :order_items, dependent: :destroy
   has_many :repair_rates, through: :order_items

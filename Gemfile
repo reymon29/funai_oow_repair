@@ -17,9 +17,10 @@ gem 'uglifier'
 gem 'webpacker'
 gem 'money-rails'
 gem 'stripe'
-gem 'carrierwave', '~> 1.2'
 gem 'rest-client', '~> 1.8'
 gem 'fedex'
+gem 'postmark-rails'
+
 
 group :development do
   gem 'web-console', '>= 3.3.0'

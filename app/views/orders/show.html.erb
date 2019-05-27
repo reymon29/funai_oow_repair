@@ -43,6 +43,10 @@
     </div>
 
     <div class="col-6 col-md-5 show-page-order">
+      <h1>Shipping</h1>
+      <% @order.shippings.each do |item| %>
+        <%= item.name %> - <%= item.ready_ship == false ? "Not processed yet" : link_to(item.shipout_tracking, root_path + item.label, target: "_blank") %>
+      <% end %>
       <h1>Repair Status</h1>
       <h1>Notes</h1>
       <ul>

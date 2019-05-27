@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_23_043024) do
+ActiveRecord::Schema.define(version: 2019_05_27_071403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(version: 2019_05_23_043024) do
     t.string "label"
     t.string "name"
     t.boolean "ready_ship", default: false
+    t.string "shipping_amount"
     t.index ["order_id"], name: "index_shippings_on_order_id"
     t.index ["user_id"], name: "index_shippings_on_user_id"
   end

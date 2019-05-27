@@ -36,7 +36,6 @@ class PaymentsController < ApplicationController
     @order.save
     @payment.save
     payment_shipping
-    raise
     redirect_to order_path(@order)
 
   rescue Stripe::CardError => e
@@ -59,9 +58,8 @@ class PaymentsController < ApplicationController
         a = Shipping.find(item.id)
         a.ready_ship = true
         a.save
-        label = Shipping.fedex_label(set_order, item.id)
+        label = Shipping.fedex_label(set_order, item)
       end
-
     end
   end
 
