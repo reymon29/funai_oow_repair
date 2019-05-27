@@ -23,7 +23,7 @@ class PaymentsController < ApplicationController
       )
     else
       charge = Stripe::Charge.create(
-        customer:     stripe_customer,   # You should store this customer id and re-use it.
+        customer:     stripe_customer,   # If payment was already taken before to locate stripe customer id.
         amount:       @order.amount_cents,
         description:  "Payment for repair #{@order.product.name} for order #{@order.order_no}",
         currency:     @order.amount.currency
@@ -35,6 +35,8 @@ class PaymentsController < ApplicationController
     @order.paid += @order.amount - @order.paid
     @order.save
     @payment.save
+    payment_shipping
+    raise
     redirect_to order_path(@order)
 
   rescue Stripe::CardError => e
@@ -47,6 +49,20 @@ class PaymentsController < ApplicationController
   def set_order
     # @order = Payment.where(state: "Pending").find(params[:order_id])
     @order = Order.find(params[:order_id])
+  end
+
+  def payment_shipping
+    @shipping = Shipping.where(order_id: @order, ready_ship: false, name: "Return Label Fee")
+    if @shipping.empty?
+    else
+      @shipping.each do |item|
+        a = Shipping.find(item.id)
+        a.ready_ship = true
+        a.save
+        label = Shipping.fedex_label(set_order, item.id)
+      end
+
+    end
   end
 
   def paid_check

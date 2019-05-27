@@ -7,9 +7,22 @@ class OrderItemsController < ApplicationController
 
   def create
     @order_item = OrderItem.new(order_params)
+    @shipping = Shipping.new
     @order_item.order = @order
+    @repair_item = RepairRate.find(@order_item.repair_rate_id)
     @order.amount = @order.amount + @order_item.repair_rate.price
     if @order_item.save
+      if @repair_item.category == "Shipping"
+        if @repair_item.sku == "SHIP003"
+          @order.bap_ship = true
+        else
+          @shipping.order = @order
+          @shipping.user = current_user
+          @shipping.name = @repair_item.name
+          @shipping.shipout_courier = "FedEx"
+          @shipping.save
+        end
+      end
       @order.save
       redirect_to order_path(@order)
     else
@@ -21,9 +34,11 @@ class OrderItemsController < ApplicationController
     @order_item = OrderItem.find(params[:id])
     @order = Order.find(@order_item.order_id)
     @repair = RepairRate.find(@order_item.repair_rate_id)
+    @shipping = Shipping.where(order_id: @order, ready_ship: false, name: @repair.name).limit(1)
     @order.amount = @order.amount - @repair.price
     @order.save
     @order_item.destroy
+    @shipping.destroy_all
     redirect_to order_path(@order_item.order)
   end
 

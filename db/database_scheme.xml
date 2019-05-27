@@ -41,7 +41,7 @@
     <type label="Inet CIDR Addr" length="0" sql="CIDR" quote="'"/>
     <type label="Geometry" length="0" sql="GEOMETRY" quote="'"/>
   </group>
-</datatypes><table x="504" y="445" name="users">
+</datatypes><table x="0" y="221" name="users">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -67,7 +67,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="638" y="9" name="orders">
+<table x="178" y="2" name="orders">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -121,11 +121,14 @@
 <row name="amount" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="bap_ship" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="401" y="15" name="products">
+<table x="0" y="2" name="products">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -154,7 +157,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="857" y="756" name="notes">
+<table x="686" y="276" name="notes">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -173,7 +176,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1033" y="707" name="repairs">
+<table x="688" y="399" name="repairs">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -195,14 +198,8 @@
 <part>id</part>
 </key>
 </table>
-<table x="1016" y="345" name="shipping">
+<table x="523" y="131" name="shipping">
 <row name="id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="receive_courier" null="1" autoincrement="0">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<row name="receive_tracking" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <row name="shipout_courier" null="1" autoincrement="0">
@@ -219,11 +216,20 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="users" row="id" />
 </row>
+<row name="label" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="name" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="ready_ship" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="1015" y="539" name="receiving">
+<table x="525" y="350" name="receiving">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -247,7 +253,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="998" y="6" name="repair_rates">
+<table x="511" y="3" name="repair_rates">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -264,7 +270,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1003" y="199" name="payments">
+<table x="527" y="525" name="payments">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -285,7 +291,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="832" y="9" name="order_items">
+<table x="321" y="0" name="order_items">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>

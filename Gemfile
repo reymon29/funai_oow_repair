@@ -19,6 +19,7 @@ gem 'money-rails'
 gem 'stripe'
 gem 'carrierwave', '~> 1.2'
 gem 'rest-client', '~> 1.8'
+gem 'fedex'
 
 group :development do
   gem 'web-console', '>= 3.3.0'

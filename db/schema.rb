@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_21_090626) do
+ActiveRecord::Schema.define(version: 2019_05_23_043024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 2019_05_21_090626) do
     t.string "serial_number"
     t.string "case_no"
     t.text "symptom"
+    t.boolean "bap_ship", default: false
     t.index ["product_id"], name: "index_orders_on_product_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -121,6 +122,7 @@ ActiveRecord::Schema.define(version: 2019_05_21_090626) do
     t.datetime "updated_at", null: false
     t.string "label"
     t.string "name"
+    t.boolean "ready_ship", default: false
     t.index ["order_id"], name: "index_shippings_on_order_id"
     t.index ["user_id"], name: "index_shippings_on_user_id"
   end

@@ -75,6 +75,9 @@ GEM
     execjs (2.7.0)
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
+    fedex (3.10.11)
+      httparty (>= 0.14.0)
+      nokogiri (>= 1.5.6)
     ffi (1.11.1)
     font-awesome-sass (5.6.1)
       sassc (>= 1.11)
@@ -82,6 +85,8 @@ GEM
       activesupport (>= 4.2.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
+    httparty (0.16.2)
+      multi_xml (>= 0.5.2)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     jbuilder (2.9.1)
@@ -112,6 +117,7 @@ GEM
       money (~> 6.13.2)
       railties (>= 3.0)
     msgpack (1.2.10)
+    multi_xml (0.6.0)
     multipart-post (2.1.1)
     net-http-persistent (3.0.1)
       connection_pool (~> 2.2)
@@ -232,6 +238,7 @@ DEPENDENCIES
   carrierwave (~> 1.2)
   devise
   dotenv-rails
+  fedex
   font-awesome-sass (~> 5.6.1)
   jbuilder (~> 2.0)
   listen (~> 3.0.5)
