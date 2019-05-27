@@ -6,10 +6,14 @@ class Shipping < ApplicationRecord
     shipping = Shipping.find(ship.id)
     require 'fedex'
     packages = []
+
+
     packages << {
       :weight => {:units => "LB", :value => 15},
-      :dimensions => {:length => 14, :width => 9, :height => 12, :units => "IN" }
-    }
+      :customer_references => [order.order_no, {type: "DEPARTMENT_NUMBER", value: "DVD-OOW"},
+        {type: "P_O_NUMBER", value: order.product.model_no + order.serial_number}],
+      :dimensions => {:length => 14, :width => 9, :height => 12, :units => "IN" }}
+
 
     shipper = { :name => "#{order.first_name} #{order.last_name}",
                 :company => "",
