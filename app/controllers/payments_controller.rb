@@ -35,6 +35,8 @@ class PaymentsController < ApplicationController
     @order.paid += @order.amount - @order.paid
     @order.save
     @payment.save
+    mail = OrderMailer.with(order: @order).invoice
+    mail.deliver_now
     payment_shipping
     redirect_to order_path(@order)
 

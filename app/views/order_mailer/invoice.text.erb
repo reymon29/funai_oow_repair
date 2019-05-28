@@ -1,5 +1,5 @@
 Hi <%= @order.first_name %>,
-Thank you for your payment and the repair is in motion for your model <%= @order.product.model_no %>.
+Thank you for your payment for your model <%= @order.product.model_no %>.
 
 Order No: <%= @order.order_no %>
 <% @order.order_items.each do |item| %>
@@ -11,8 +11,7 @@ Charged: <%= JSON.parse(payment.payment)["payment_method_details"]["card"]["bran
 <% end %>
 
 If you ordered a Shipping label or Box and Packaging you will receive another email notification once it is ready. Note, during the process you may receive mutiple emails from us.
-Thank you for being a value customer and we look forward to repairing your device.
-
+Thank you for being a value customer,
 
 Funai Service Corporation
 2425 Speigel Dr.
