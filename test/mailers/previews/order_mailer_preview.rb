@@ -8,4 +8,8 @@ class OrderMailerPreview < ActionMailer::Preview
     OrderMailer.with(order: order, shipping: shipping).label
   end
 
+  def invoice
+    order = Order.last
+    OrderMailer.with(order: order).invoice
+  end
 end

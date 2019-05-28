@@ -11,6 +11,12 @@ class OrderMailer < ApplicationMailer
     @shipping = params[:shipping]
     mail(to: @order.email, subject: "🛠Thank you for the order " + @order.order_no.to_s + " "+ @order.product.model_no + " this is your shipping label.").attachments[@shipping + ".pdf"] = File.read('public/uploads/labels/'+ @shipping +'.pdf')
   end
+
+  def invoice
+    @order = params[:order]
+    mail(to: @order.email, subject: "🛠Thank you for your payment order no. " + @order.order_no.to_s + " "+ @order.product.model_no + " copy of invoice.")
+  end
+
   private
 
   def add_inline_attachment!
