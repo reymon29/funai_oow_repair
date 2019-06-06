@@ -60,7 +60,7 @@ class PaymentsController < ApplicationController
         a = Shipping.find(item.id)
         a.ready_ship = true
         a.save
-        label = Shipping.fedex_label(set_order, item)
+        label = Shipping.email_label(set_order, item)
       end
     end
   end

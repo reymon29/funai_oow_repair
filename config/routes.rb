@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'orders#index'
+  root 'pages#home'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :orders do
     resources :order_items, only: [:new, :create]
@@ -11,4 +11,5 @@ Rails.application.routes.draw do
     resources :shippings, only: [:new, :create]
   end
   resources :order_items, only: :destroy
+
 end

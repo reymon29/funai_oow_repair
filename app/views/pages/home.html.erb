@@ -1,1 +1,20 @@
-<%= render '/orders/form', order: @order  %>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      Pending Call Backs
+    </div>
+    <div class="col">
+      Pending Box and Packing Shipping
+      <ul>
+        <% @pending_shipping.each do |ship|  %>
+          <li><%= ship.product.model_no %> - <%= link_to "Create BAP Labels", order_shippings_path(ship),
+      method: :post,
+      data: { confirm: "Are you sure?" }, class: "btn btn-warning " %> <%= ship.order_no %></li>
+        <% end %>
+     </ul>
+    </div>
+    <div class="col">
+      Today Sales
+    </div>
+  </div>
+</div>
