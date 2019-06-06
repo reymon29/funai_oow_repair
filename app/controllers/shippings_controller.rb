@@ -13,6 +13,8 @@ class ShippingsController < ApplicationController
     @order = order_id_find
     @user = current_user
     Shipping.bap_label(@order, @user)
+    @order.bap_ship = false
+    @order.save
     redirect_to root_path
   end
 
