@@ -26,5 +26,4 @@ class ReceivingsController < ApplicationController
   def receive_params
     params.require(:receiving).permit(:model_no, :serial_number, :receive_courier, :receive_tracking, :order_id)
   end
-
 end

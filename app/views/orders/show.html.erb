@@ -1,19 +1,20 @@
-<div class="container">
+<div class="container-fluid">
   <div class="row">
-    <div class="col-6 col-md-4 show-page-order">
+    <%= render 'shared/sidemenu' %>
+    <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content show-page-order">
       <h1>Order No.
-      <%= @order.order_no %></h1>
-      <div class="col">
-        <h6>
+      <%= @order.order_no %> - <%= @order.order_status %> <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary btn-sm" %></h1>
+      <div class="row">
+      <div class="col-6 col-md-4">
+        <p>
           Case No.
           <%= @order.case_no %><br>
           Created On
           <%= @order.created_at.strftime("%b %d, %Y") %><br>
           Order Status
-          <%= @order.order_status %>
-        </h6>
+        </p>
       </div>
-      <div class="col">
+      <div class="col-6 col-md-4">
         Shipping address
         <address>
           <%= @order.address %>
@@ -22,119 +23,92 @@
           <%= @order.state %>
           <%= @order.zip %>
         </address>
-        Contact Info
-        <address>
-          <%= @order.telephone_no %>
-          <% if @order.email.empty? %>
-          <% else %>
-            <a href="mailto:<%= @order.email %>"><%= @order.email %></a>
-          <% end %>
-        </address>
-      </div>
-        <ul class="list-group">
-        <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
-        <li class="list-group-item">Serial No: <%= @order.serial_number %></li>
-        <li class="list-group-item">Symptom: <%= @order.symptom %></li>
-      </ul>
-      <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary" %>
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">
-        Update Status
-      </button>
-    </div>
-
-    <div class="col-6 col-md-5 show-page-order">
-      <h1>Shipping</h1>
-      <ul>
-        <% @order.shippings.each do |item| %>
-          <li>
-            <%= item.name %> - <%= item.ready_ship == false ? "Not processed yet" : link_to(item.shipout_tracking, root_path + item.label, target: "_blank") %>
-            <%=  link_to "resend email", resend_order_shipping_path(@order, item), class: "btn btn-success btn-sm"  if item.name == "Return Label Fee" %>
-          </li>
-        <% end %>
-      </ul>
-      <h1>Repair Status</h1>
-      <h1>Notes</h1>
-      <ul>
-        <% @order.notes.each do |note| %>
-          <li>
-            <%= User.find_by_id(note.user_id).first_name %>
-            <%= note.created_at.strftime("%A, %b %d") %>
-          </li> <%= note.comment %>
-      <% end %>
-      </ul>
-      <div class="button-section-comments">
-        <button type="button" class="btn btn-primary button-holder-left" data-toggle="modal" data-target="#notesModal">
-          Add Note
-        </button>
-        <button type="button" class="btn btn-primary button-holder-middle" data-toggle="modal" data-target="#repairModal">
-          Repair Comments
-        </button>
-        <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary button-holder-right" %>
-      </div>
-    </div>
-
-    <div class="col-6 col-md-4 show-page-order">
-      <h1>Order Total</h1>
-      Total:<%= humanized_money_with_symbol(@order.amount) %>
-      Paid: <%= humanized_money_with_symbol(@order.paid) %>
-      <h5>Charge Fees</h5>
-      <%= link_to "Charge", new_order_payment_path(@order) %>
-    </div>
-    <div class="col-6 col-md-4 show-page-order">
-      <h1>Payments</h1>
-      <div class="col">
-        <% @order.payments.each do |payment| %>
-        <% if payment.state == "Paid" %>
-          <% else %>
-            <%= link_to "charge", new_order_payment_path(payment) %>
-          <% end %>
-          <ul>
-            <li>
-              <%= payment.state %>-<%= humanized_money_with_symbol(payment.amount) %> - <%= payment.created_at.strftime("%A, %b %d") %>
-            </li>
+        </div>
+        <div class="col-6 col-md-4">
+          Contact Info
+          <address>
+            <%= @order.telephone_no %>
+            <% if @order.email.empty? %>
+            <% else %>
+              <a href="mailto:<%= @order.email %>"><%= @order.email %></a>
+           <% end %>
+          </address>
+        </div>
+        <div class="col-sm">
+          <h4>Model</h4>
+          <ul class="list-group">
+            <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
+            <li class="list-group-item">Serial No: <%= @order.serial_number %></li>
+            <li class="list-group-item">Symptom: <%= @order.symptom %></li>
           </ul>
-        <% end %>
+        </div>
+        <div class="col-sm">
+           <h4>Order Total</h4>
+            Total:<%= humanized_money_with_symbol(@order.amount) %>
+            Paid: <%= humanized_money_with_symbol(@order.paid) %>
+            Pending: <%= humanized_money_with_symbol(@order.amount - @order.paid) %>
+            <h5>Charge Fees</h5>
+            <%= link_to "Charge", new_order_payment_path(@order) %>
+        </div>
+                <div class="col-6 col-md-4">
+          <h4>Order Details</h4>
+          <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary btn-sm" %>
+          <div class="col">
+            <ul class="list-group">
+              <% @order.order_items.each do |repair| %>
+              <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %><%= link_to "Remove", order_item_path(repair),
+          method: :delete,
+          data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %></li>
+            <% end %>
+          </ul>
+          </div>
       </div>
-    </div>
-    <div class="col-6 col-md-8 show-page-order">
-      <h1>Order Items</h1>
-      <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary" %>
-      <div class="col">
-        <ul class="list-group">
-          <% @order.order_items.each do |repair| %>
-          <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %><%= link_to "Delete", order_item_path(repair),
-      method: :delete,
-      data: { confirm: "Are you sure?" }, class: "btn btn-warning " %></li>
-        <% end %>
-      </ul>
-      </div>
-    </div>
-    <div class="col-6 col-md-8 show-page-order">
-      <h1>Received</h1>
-      <table id="receive" class="display" style="width:100%">
-        <thead>
-            <tr>
-                <th>Receive Model</th>
-                <th>Receive Serial No</th>
-                <th>Receive Courier</th>
-                <th>Receive Tracking</th>
-                <th>Receive Date</th>
-            </tr>
-        </thead>
-        <tbody>
-          <% @order.receivings.each do |receive| %>
-            <tr>
-                <td><%= receive.model_no %></td>
-                <td><%= receive.serial_number %></td>
-                <td><%= receive.receive_courier %></td>
-                <td><%= receive.receive_tracking %></td>
-                <td><%= receive.created_at.strftime("%A, %b %d") %></td>
-            </tr>
+      <div class="col-6">
+        <h4>Shipping</h4>
+        <ul>
+          <% @order.shippings.each do |item| %>
+            <li>
+              <%= item.name %> - <%= item.ready_ship == false ? "Not processed yet" : link_to(item.shipout_tracking, root_path + item.label, target: "_blank") %>
+              <%=  link_to "resend email", resend_order_shipping_path(@order, item), class: "btn btn-success btn-sm"  if item.name == "Return Label Fee" %>
+            </li>
           <% end %>
-        </tbody>
-    </table>
-
-    </div>
+        </ul>
+      </div>
+      <div class="col-6">
+        <% if @order.receivings.empty? %>
+        <% else %>
+        <h4>Repair Status <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#repairModal">
+          Repair Comments
+        </button></h4>
+        <% end %>
+        <ul>
+          <% @order.repairs.each do |repair| %>
+          <li>
+            <%= repair.status %>
+            <%= repair.comment %>
+          </li>
+          <% end %>
+        </ul>
+        <h4>Notes</h4>
+        <ul>
+          <% @order.notes.each do |note| %>
+            <li>
+              <%= User.find_by_id(note.user_id).first_name %>
+              <%= note.created_at.strftime("%b %d, %Y") %>
+            </li> <%= note.comment %>
+        <% end %>
+        </ul>
+      </div>
+      <div class="col-6">
+        <h4>Received <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary btn-sm" %></h4>
+        <% @order.receivings.each do |receive| %>
+          <%= receive.model_no %>
+          <%= receive.serial_number %>
+          <%= receive.receive_courier %>
+          <%= receive.receive_tracking %>
+          <%= receive.created_at.strftime("%b %d, %Y") %>
+        <% end %>
+      </div>
   </div>
 </div>
 
@@ -198,6 +172,9 @@
         <%= simple_form_for [@order, @repair] do |f| %>
           <%= f.select :status, [ "Diagnosed", "Reviewed", "Repair Completed"] %>
           <%= f.input :comment %>
+           <%= simple_fields_for :no_model_fields do |n| %>
+            <%= n.input :repair_charge, collection: ["Major", "Minor", "Non-repairable"], prompt: "Select Status", require: true %>
+          <% end %>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -207,3 +184,4 @@
     </div>
   </div>
 </div>
+
