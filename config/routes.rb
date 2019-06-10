@@ -8,7 +8,11 @@ Rails.application.routes.draw do
     resources :receivings, only: [:new, :create]
     resources :payments, only: [:new, :create]
     resources :repairs, only: [:new, :create]
-    resources :shippings, only: [:new, :create]
+    resources :shippings, only: [:new, :create] do
+      member do
+        get "resend"
+      end
+    end
   end
   resources :order_items, only: :destroy
 

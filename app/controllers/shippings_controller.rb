@@ -18,7 +18,20 @@ class ShippingsController < ApplicationController
     redirect_to root_path
   end
 
+  def resend
+    @shipping = shipping_id_find
+    @order = order_id_find
+    mail = OrderMailer.with(order: @order, shipping: @shipping.shipout_tracking).label
+    mail.deliver_now
+    redirect_to order_path(@order)
+    flash[:notice] = "Email sent out"
+  end
+
   private
+
+  def shipping_id_find
+    @shipping = Shipping.find(params[:id])
+  end
 
   def order_id_find
     @order = Order.find(params[:order_id])
