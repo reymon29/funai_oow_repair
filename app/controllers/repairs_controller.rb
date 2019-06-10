@@ -19,7 +19,9 @@ class RepairsController < ApplicationController
       @create_ship = OrderItem.new(order: @order, repair_rate: @ship_rate)
       @order.amount = @order.amount + @repair_rate.price + @ship_rate.price
     elsif @repair_comment == "Non-repairable"
+      @repair_rate = RepairRate.find_by(name: "Non-repairable Fee")
       @ship_rate = RepairRate.find_by(name: "Shipback Fee")
+      @create_major = OrderItem.new(order: @order, repair_rate: @repair_rate)
       @create_ship = OrderItem.new(order: @order, repair_rate: @ship_rate)
       @order.amount = @order.amount + @repair_rate.price + @ship_rate.price
     end
@@ -28,8 +30,10 @@ class RepairsController < ApplicationController
       @create_ship.save
       @order.save
       redirect_to order_path(@order)
+      flash[:notice] = "Saved and you now have pending charges"
     else
-      render :new
+      redirect_to order_path(@order)
+      flash[:notice] = "Did not save comment please try again later"
     end
   end
 

@@ -1,7 +1,6 @@
 <div class="container-fluid">
-  <div class="row">
-    <%= render 'shared/sidemenu' %>
-    <div class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content show-page-order">
+  <div class="row justify-content-md-center">
+    <div class="col show-page-order">
       <h1>Order No.
       <%= @order.order_no %> - <%= @order.order_status %> <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary btn-sm" %></h1>
       <div class="row">
@@ -11,7 +10,6 @@
           <%= @order.case_no %><br>
           Created On
           <%= @order.created_at.strftime("%b %d, %Y") %><br>
-          Order Status
         </p>
       </div>
       <div class="col-6 col-md-4">
@@ -34,7 +32,7 @@
            <% end %>
           </address>
         </div>
-        <div class="col-sm">
+        <div class="col-md-auto">
           <h4>Model</h4>
           <ul class="list-group">
             <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
@@ -42,7 +40,7 @@
             <li class="list-group-item">Symptom: <%= @order.symptom %></li>
           </ul>
         </div>
-        <div class="col-sm">
+        <div class="col-md-auto">
            <h4>Order Total</h4>
             Total:<%= humanized_money_with_symbol(@order.amount) %>
             Paid: <%= humanized_money_with_symbol(@order.paid) %>
@@ -50,7 +48,7 @@
             <h5>Charge Fees</h5>
             <%= link_to "Charge", new_order_payment_path(@order) %>
         </div>
-                <div class="col-6 col-md-4">
+        <div class="col-md-auto">
           <h4>Order Details</h4>
           <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary btn-sm" %>
           <div class="col">
@@ -63,7 +61,7 @@
           </ul>
           </div>
       </div>
-      <div class="col-6">
+      <div class="col-md-auto">
         <h4>Shipping</h4>
         <ul>
           <% @order.shippings.each do |item| %>
@@ -74,13 +72,23 @@
           <% end %>
         </ul>
       </div>
-      <div class="col-6">
+      <div class="col-md-auto">
         <% if @order.receivings.empty? %>
+        <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary btn-sm" %>
         <% else %>
+        <h4>Received</h4>
+        <% @order.receivings.each do |receive| %>
+          <%= receive.model_no %>
+          <%= receive.serial_number %>
+          <%= receive.receive_courier %>
+          <%= receive.receive_tracking %>
+          <%= receive.created_at.strftime("%b %d, %Y") %>
+        <% end %>
         <h4>Repair Status <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#repairModal">
           Repair Comments
         </button></h4>
         <% end %>
+        <h4>Repair Notes</h4>
         <ul>
           <% @order.repairs.each do |repair| %>
           <li>
@@ -99,16 +107,7 @@
         <% end %>
         </ul>
       </div>
-      <div class="col-6">
-        <h4>Received <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary btn-sm" %></h4>
-        <% @order.receivings.each do |receive| %>
-          <%= receive.model_no %>
-          <%= receive.serial_number %>
-          <%= receive.receive_courier %>
-          <%= receive.receive_tracking %>
-          <%= receive.created_at.strftime("%b %d, %Y") %>
-        <% end %>
-      </div>
+
   </div>
 </div>
 
