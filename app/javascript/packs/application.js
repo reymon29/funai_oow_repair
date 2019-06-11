@@ -6,8 +6,7 @@ $(document).ready(function() {
 } );
 
 $(document).ready(function() {
-    $('#receive').DataTable( {
-        "scrollY":        "200px",
+    $('#calls').DataTable( {
         "scrollCollapse": true,
         "paging":         false,
     } );

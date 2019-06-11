@@ -1,1 +1,12 @@
-<h1>Show Page</h1>
+<div class="conainter">
+  <div class="row">
+    <div class="col-md-4">
+      <%= @opencall.status %>
+      <%= @opencall.first_name %>
+      <%= @opencall.last_name %>
+      <%= @opencall.product.model_no %>
+      <%= @opencall.symptom %>
+      <%= link_to "Create Order", new_open_call_order_path(@opencall) %>
+    </div>
+  </div>
+</div>

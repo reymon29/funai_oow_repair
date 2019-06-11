@@ -11,8 +11,14 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = Order.new
-    @product_model = Product.order(:model_no)
+    if opencall_id_find.nil?
+      @order = Order.new
+      @product_model = Product.order(:model_no)
+    else
+      @opencall = opencall_id_find
+      @order = Order.new(case_no: @opencall.case_no, first_name: @opencall.first_name, last_name: @opencall.last_name, product: @opencall.product, serial_number: @opencall.serial_number, symptom: @opencall.symptom, address: @opencall.address, address2: @opencall.address2, city: @opencall.city, state: @opencall.state, zip: @opencall.zip, telephone_no: @opencall.telephone_no, email: @opencall.email)
+      @product_model = Product.order(:model_no)
+    end
   end
 
   def create
@@ -53,6 +59,13 @@ class OrdersController < ApplicationController
 
   def order_id_find
     @order = Order.find(params[:id])
+  end
+
+  def opencall_id_find
+    if params[:open_call_id].nil?
+    else
+      @opencall = OpenCall.find(params[:open_call_id])
+    end
   end
 
   def order_params

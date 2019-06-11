@@ -1,1 +1,29 @@
-<h1>Hello Index</h1>
+<table id="calls" class="table table-striped table-bordered" style="width:100%">
+  <thead>
+    <tr>
+      <th>Case No</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>State</th>
+      <th>Model No</th>
+      <th>Status</th>
+      <th>Option</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @opencalls.each do |call| %>
+      <tr>
+        <td><%= call.case_no %></td>
+        <td><%= call.first_name %></td>
+        <td><%= call.last_name %></td>
+        <td><%= call.state %></td>
+        <td><%= call.product.model_no %></td>
+        <td><%= call.status %></td>
+        <td><%= link_to(open_call_path(call), class: "badge badge-primary" ) do %>
+          Open
+        </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

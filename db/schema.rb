@@ -36,8 +36,10 @@ ActiveRecord::Schema.define(version: 2019_06_11_010238) do
     t.string "zip"
     t.string "telephone_no"
     t.string "email"
-    t.boolean "called", default: false
+    t.boolean "called_back", default: false
     t.string "status"
+    t.string "serial_number"
+    t.text "symptom"
     t.bigint "product_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false

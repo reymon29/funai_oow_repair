@@ -7,6 +7,7 @@ class Product < ApplicationRecord
   validates :width, presence: true
   validates :height, presence: true
   has_many :orders
+  has_many :open_calls
 
   def name
   "#{model_no} - #{product_type}"
