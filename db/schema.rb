@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_27_071403) do
+ActiveRecord::Schema.define(version: 2019_06_11_010238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,27 @@ ActiveRecord::Schema.define(version: 2019_05_27_071403) do
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_notes_on_order_id"
     t.index ["user_id"], name: "index_notes_on_user_id"
+  end
+
+  create_table "open_calls", force: :cascade do |t|
+    t.string "case_no"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "address"
+    t.string "address2"
+    t.string "city"
+    t.string "state"
+    t.string "zip"
+    t.string "telephone_no"
+    t.string "email"
+    t.boolean "called", default: false
+    t.string "status"
+    t.bigint "product_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_open_calls_on_product_id"
+    t.index ["user_id"], name: "index_open_calls_on_user_id"
   end
 
   create_table "order_items", force: :cascade do |t|
@@ -146,6 +167,8 @@ ActiveRecord::Schema.define(version: 2019_05_27_071403) do
 
   add_foreign_key "notes", "orders"
   add_foreign_key "notes", "users"
+  add_foreign_key "open_calls", "products"
+  add_foreign_key "open_calls", "users"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "repair_rates"
   add_foreign_key "orders", "products"
