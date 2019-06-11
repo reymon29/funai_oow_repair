@@ -24,9 +24,16 @@ class OpenCallsController < ApplicationController
   end
 
   def edit
+    @product_model = Product.order(:model_no)
   end
 
   def update
+    @opencall.update(open_params)
+    if @opencall.status == "Create Order"
+      redirect_to new_open_call_order_path(@opencall)
+    else
+      redirect_to open_calls_path
+    end
   end
 
   private
