@@ -1,7 +1,7 @@
 class OpenCallsController < ApplicationController
   before_action :call_id_find, only: [:show, :edit, :update, :destroy]
   def index
-    @opencalls = OpenCall.all
+    @opencalls = OpenCall.where.not(status: ["Canceled", "Create Order"])
   end
 
   def new

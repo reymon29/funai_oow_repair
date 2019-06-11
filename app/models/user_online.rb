@@ -1,0 +1,2 @@
+class UserOnline < ApplicationRecord
+end
