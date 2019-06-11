@@ -97,7 +97,9 @@
           </li>
           <% end %>
         </ul>
-        <h4>Notes</h4>
+        <h4>Notes <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#notesModal">
+          Add Comment
+        </button></h4>
         <ul>
           <% @order.notes.each do |note| %>
             <li>
