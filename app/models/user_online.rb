@@ -11,4 +11,8 @@ class UserOnline < ApplicationRecord
     end
   end
 
+  def self.my_online_users
+    users = self.all
+  end
+
 end

@@ -20,32 +20,34 @@
         <li class="nav-item">
           <%= link_to "My Calls", open_calls_path, class: "nav-link" %>
         </li>
-        <li class="nav-item">
-          <% if UserOnline.useronline?(current_user) == true %>
-             <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <% if current_user.admin? %>
+          <li class="nav-item">
+            <% if UserOnline.useronline?(current_user) == true %>
+               <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" checked> Available
+                </label>
+                <label class="btn btn-secondary">
+                  <%= link_to user_online_path(current_user),
+                    method: :delete,
+                    data: { confirm: "Are you sure?" } do %>
+                  <input type="radio" name="options" id="option3" autocomplete="off"> Offline
+                  <% end %>
+                </label>
+              </div>
+            <% else %>
+
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
               <label class="btn btn-secondary active">
-                <input type="radio" name="options" id="option1" autocomplete="off" checked> Available
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Offine
               </label>
               <label class="btn btn-secondary">
-                <%= link_to user_online_path(current_user),
-                  method: :delete,
-                  data: { confirm: "Are you sure?" } do %>
-                <input type="radio" name="options" id="option3" autocomplete="off"> Offline
+                <%= link_to user_onlines_path, method: :post do %>
+                  <input type="radio" name="options" id="option2" autocomplete="off"> Available
                 <% end %>
               </label>
             </div>
-          <% else %>
-
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-secondary active">
-              <input type="radio" name="options" id="option1" autocomplete="off" checked> Offine
-            </label>
-            <label class="btn btn-secondary">
-              <%= link_to user_onlines_path, method: :post do %>
-                <input type="radio" name="options" id="option2" autocomplete="off"> Available
-              <% end %>
-            </label>
-          </div>
+            <% end %>
           <% end %>
         </li>
         <li class="nav-item dropdown">
