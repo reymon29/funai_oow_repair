@@ -18,5 +18,5 @@ Rails.application.routes.draw do
   resources :open_calls do
     resources :orders, only: :new
   end
-  resources :onlineusers, only: [:create, :update, :destroy]
+  resources :user_onlines, only: [:create, :destroy]
 end

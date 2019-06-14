@@ -154,8 +154,10 @@ ActiveRecord::Schema.define(version: 2019_06_11_142121) do
   create_table "user_onlines", force: :cascade do |t|
     t.boolean "active"
     t.string "status"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_onlines_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -189,4 +191,5 @@ ActiveRecord::Schema.define(version: 2019_06_11_142121) do
   add_foreign_key "repairs", "users"
   add_foreign_key "shippings", "orders"
   add_foreign_key "shippings", "users"
+  add_foreign_key "user_onlines", "users"
 end

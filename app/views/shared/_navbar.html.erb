@@ -21,10 +21,31 @@
           <%= link_to "My Calls", open_calls_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <%= form_tag(controller: "onlineusers", action: "create", method: "post") do %>
-            <%= radio_button_tag(:status, "online") %>
-            <%= label_tag("Online?") %>
-            <%= submit_tag %>
+          <% if UserOnline.useronline?(current_user) == true %>
+             <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="radio" name="options" id="option1" autocomplete="off" checked> Available
+              </label>
+              <label class="btn btn-secondary">
+                <%= link_to user_online_path(current_user),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } do %>
+                <input type="radio" name="options" id="option3" autocomplete="off"> Offline
+                <% end %>
+              </label>
+            </div>
+          <% else %>
+
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+              <input type="radio" name="options" id="option1" autocomplete="off" checked> Offine
+            </label>
+            <label class="btn btn-secondary">
+              <%= link_to user_onlines_path, method: :post do %>
+                <input type="radio" name="options" id="option2" autocomplete="off"> Available
+              <% end %>
+            </label>
+          </div>
           <% end %>
         </li>
         <li class="nav-item dropdown">
