@@ -35,11 +35,11 @@
       <h3>Online (Ohio)</h3>
       <ul>
       <% if UserOnline.my_online_users.empty? %>
-      <li>Offline</li>
+      <li style="background-color: #FFFF00; width: 16%;">Offline-Setup Open Call, we will callback later.</li>
       <% else %>
         <% UserOnline.my_online_users.each do |user| %>
           <li>
-            <%= user.user.first_name %> - <%= user.status %>
+            <i class="fas fa-user-alt"></i> <%= user.user.first_name %> - <%= user.status %>
           </li>
         <% end %>
       <% end %>
