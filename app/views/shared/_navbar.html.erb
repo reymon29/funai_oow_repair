@@ -67,11 +67,3 @@
   </div>
 </div>
 
-<script>
-  const statusBtns = document.querySelectorAll(".btn-group-toggle");
-  window.addEventListener('close', (event) => {
-    event.preventDefault();
-    event.returnValue = `Are you sure you want to leave?`;
-    console.log(event)
-  });
-</script>

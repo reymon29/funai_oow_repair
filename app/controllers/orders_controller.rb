@@ -33,6 +33,11 @@ class OrdersController < ApplicationController
     @order.order_status = "Order Created"
     @order.amount = @repair.price
     if @order.save
+      if current_user.admin?
+      @user = UserOnline.find_by(user: current_user)
+      @user.status = "Available"
+      @user.save
+    end
       @notes.order = @order
       @notes.save
       @order_item.order = @order
