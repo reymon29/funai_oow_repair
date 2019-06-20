@@ -14,7 +14,7 @@ class UserOnlinesController < ApplicationController
     @user = find_user
     @online = UserOnline.find_by(user: @user)
     if @online.destroy
-      redirect_to open_calls_path
+      redirect_to root_path
     else
       render 'open_calls/index'
       flash[:notice] = "Something went wrong here, please try again"
@@ -25,9 +25,5 @@ class UserOnlinesController < ApplicationController
 
   def find_user
     @user = User.find(params[:id])
-  end
-
-  def user_params_status
-    params.permit(:status)
   end
 end

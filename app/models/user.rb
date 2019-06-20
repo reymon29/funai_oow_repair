@@ -14,6 +14,7 @@ class User < ApplicationRecord
   validates :location, presence: true, exclusion: { in: %w(OH CA PH) }
   validates :email, presence: true, uniqueness: true, format: { with: /[a-zA-Z0-9_.+-]+@(?:(?:[a-zA-Z0-9-]+\.)?[a-zA-Z]+\.)?(funaicorp|funaiservice|hgs)\.(com)$/, multiline: true, message: " domain is not a valid partner at this time." }
   before_validation :normalize_name, on: [ :create, :update ]
+  after_destroy :destroy_online_sign_out
 
   private
 
@@ -21,4 +22,13 @@ class User < ApplicationRecord
     self.first_name = first_name.nil? ? first_name : first_name.titleize
     self.last_name = last_name.nil? ? last_name : last_name.titleize
   end
+
+  def self.destroy_online_sign_out
+    online = UserOnline.find_by(user: current_user)
+    if online.nil?
+    else
+      online.destroy
+    end
+  end
+
 end

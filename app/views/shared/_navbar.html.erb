@@ -55,7 +55,7 @@
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
             <%= link_to "Action", "#", class: "dropdown-item" %>
             <%= link_to "Another action", "#", class: "dropdown-item" %>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item", id: "logout"%>
           </div>
         </li>
       <% else %>
@@ -66,3 +66,12 @@
     </ul>
   </div>
 </div>
+
+<script>
+  logout = document.getElementById("logout")
+  function onlineUser(){
+    logoutBtn = document.getElementById("destroy_online").click()
+  }
+
+  logout.addEventListener("click", onlineUser)
+</script>
