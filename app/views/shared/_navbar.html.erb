@@ -68,10 +68,10 @@
 </div>
 
 <script>
-  logout = document.getElementById("logout")
-  function onlineUser(){
-    logoutBtn = document.getElementById("destroy_online").click()
-  }
-
-  logout.addEventListener("click", onlineUser)
+  const statusBtns = document.querySelectorAll(".btn-group-toggle");
+  window.addEventListener('close', (event) => {
+    event.preventDefault();
+    event.returnValue = `Are you sure you want to leave?`;
+    console.log(event)
+  });
 </script>
