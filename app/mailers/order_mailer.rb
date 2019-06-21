@@ -21,5 +21,6 @@ class OrderMailer < ApplicationMailer
 
   def add_inline_attachment!
     attachments.inline["logo.png"] = File.read("app/assets/images/logo.png")
+    attachments.inline["icon.ico"] = File.read("app/assets/images/icon.ico")
   end
 end

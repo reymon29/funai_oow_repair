@@ -5,7 +5,7 @@
   <title>Invoice</title>
 </head>
 <body>
-  <%= image_tag attachments['logo.png'].url, alt: 'Our Photo', class: 'photo', height: "100px" -%>
+  <%= image_tag attachments['logo.png'].url, alt: 'Our Photo', class: 'photo', height: "75px" %>
   <p>Hi <%= @order.first_name %>,</p>
   <p>Thank you for your payment to Funai Service.<br>
   <strong>Model No: <%= @order.product.model_no %></strong>.</p>
@@ -17,15 +17,15 @@
     </li>
   <% end %>
   <p>Payment:</p>
-
   <% @order.payments.each do |payment| %>
    <li style="list-style-type: none;"> Charged: <%= JSON.parse(payment.payment)["payment_method_details"]["card"]["brand"].upcase%> $<%= payment.amount %> Date: <%= payment.created_at.strftime("%b %d, %Y") %></li>
   <% end %>
+    <p><li style="list-style-type: none;"><strong>Total:</strong><%= @order.amount %></li></p>
   </ol>
   <p>If you ordered a Shipping label or Box and Packaging you will receive another email notification once it is ready. Note, during the process you may receive mutiple emails from us.</p>
   <p>Thank you for being a value customer,</p>
-
-  <p style="padding-top: 100px;background-color: white; text-align: center;">
+  <p style="padding-top: 75px; margin: 0; background-color: white; text-align: center;">
+    <%= image_tag  attachments['icon.ico'].url, alt: 'Our Photo', class: 'photo', height: "25px"%>
       Funai Service Corporation
       2425 Speigel Dr.
       Groveport, OH 43125
