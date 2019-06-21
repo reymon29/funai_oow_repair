@@ -55,19 +55,16 @@ class PaymentsController < ApplicationController
   def payment_shipping
     @shipping = Shipping.where(order_id: @order, ready_ship: false)
     if @shipping.empty?
-    elsif @shipping.name == "Return Label Fee"
+    else
       @shipping.each do |item|
         a = Shipping.find(item.id)
         a.ready_ship = true
         a.save
-        label = Shipping.email_label(set_order, item)
-      end
-    elsif @shipping.name == "Shipback Fee"
-        @shipping.each do |item|
-        a = Shipping.find(item.id)
-        a.ready_ship = true
-        a.save
-        label = Shipping.ship_out_label(set_order, item)
+        if item.name == "Return Label Fee"
+          label = Shipping.email_label(set_order, item)
+        else item.name == "Shipback Fee"
+          label = Shipping.ship_out_label(set_order, item)
+        end
       end
     end
   end

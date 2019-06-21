@@ -6,6 +6,7 @@ class RepairsController < ApplicationController
     @repair.order = @order
     @repair.user = current_user
     @repair_comment = repair_comment["repair_charge"]
+    @shipping = Shipping.new
     if @repair_comment == "Major"
       @repair_rate = RepairRate.find_by(name: "Major Repair Fee")
       @ship_rate = RepairRate.find_by(name: "Shipback Fee")
@@ -27,7 +28,13 @@ class RepairsController < ApplicationController
     end
     if @repair.save
       @create_major.save
-      @create_ship.save
+      if @create_ship.save
+        @shipping.order = @order
+        @shipping.user = current_user
+        @shipping.name = @ship_rate.name
+        @shipping.shipout_courier = "FedEx"
+        @shipping.save
+      end
       @order.save
       redirect_to order_path(@order)
       flash[:notice] = "Saved and you now have pending charges"
