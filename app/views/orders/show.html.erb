@@ -174,7 +174,7 @@
           <%= f.select :status, [ "Diagnosed", "Reviewed", "Repair Completed"] %>
           <%= f.input :comment %>
            <%= simple_fields_for :no_model_fields do |n| %>
-            <%= n.input :repair_charge, collection: ["Major", "Minor", "Non-repairable"], prompt: "Select Status", require: true %>
+            <%= n.input :repair_charge, collection: ["Major", "Minor", "Non-repairable"], prompt: "Select Status" %>
           <% end %>
       </div>
       <div class="modal-footer">
@@ -186,3 +186,20 @@
   </div>
 </div>
 
+<script>
+  const repairStatusBtn = document.getElementById("repair_status")
+  const repairComment = document.querySelector(".repair_comment")
+  const repairCharge = document.querySelector(".no_model_fields_repair_charge")
+
+  repairStatusBtn.addEventListener("change", () =>{
+    if(repairStatusBtn.value != "Diagnosed"){
+      repairComment.style.display = "none";
+      repairCharge.style.display = "none";
+    } else {
+      repairComment.style.display = "inherit";
+      repairCharge.style.display = "inherit";
+    }
+  });
+
+
+</script>

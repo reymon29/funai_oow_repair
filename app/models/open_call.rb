@@ -13,4 +13,9 @@ class OpenCall < ApplicationRecord
     message: "format 5555555555" }
   validates :symptom, presence: true, length: { in: 10..250 }
   validates :status, presence: true
+
+  def self.pending_calls_count
+    @calls = self.where(status: ["Open Call", "Left Message"])
+    return @calls.count
+  end
 end

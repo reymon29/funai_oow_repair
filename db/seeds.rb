@@ -42,4 +42,3 @@ RepairRate.create(category: "Repair", sku: "REPAIR001", name: "Minor Repair Fee"
 RepairRate.create(category: "Repair", sku: "REPAIR002", name: "Major Repair Fee", price: 90)
 RepairRate.create(category: "Repair", sku: "REPAIR003", name: "Non-repairable Fee", price: 0)
 puts "Finished"
-

@@ -7,41 +7,50 @@ class RepairsController < ApplicationController
     @repair.user = current_user
     @repair_comment = repair_comment["repair_charge"]
     @shipping = Shipping.new
-    if @repair_comment == "Major"
-      @repair_rate = RepairRate.find_by(name: "Major Repair Fee")
-      @ship_rate = RepairRate.find_by(name: "Shipback Fee")
-      @create_major = OrderItem.new(order: @order, repair_rate: @repair_rate)
-      @create_ship = OrderItem.new(order: @order, repair_rate: @ship_rate)
-      @order.amount = @order.amount + @repair_rate.price + @ship_rate.price
-    elsif @repair_comment == "Minor"
-      @repair_rate = RepairRate.find_by(name: "Minor Repair Fee")
-      @ship_rate = RepairRate.find_by(name: "Shipback Fee")
-      @create_major = OrderItem.new(order: @order, repair_rate: @repair_rate)
-      @create_ship = OrderItem.new(order: @order, repair_rate: @ship_rate)
-      @order.amount = @order.amount + @repair_rate.price + @ship_rate.price
-    elsif @repair_comment == "Non-repairable"
-      @repair_rate = RepairRate.find_by(name: "Non-repairable Fee")
-      @ship_rate = RepairRate.find_by(name: "Shipback Fee")
-      @create_major = OrderItem.new(order: @order, repair_rate: @repair_rate)
-      @create_ship = OrderItem.new(order: @order, repair_rate: @ship_rate)
-      @order.amount = @order.amount + @repair_rate.price + @ship_rate.price
-    end
-    if @repair.save
-      @create_major.save
-      if @create_ship.save
-        @shipping.order = @order
-        @shipping.user = current_user
-        @shipping.name = @ship_rate.name
-        @shipping.shipout_courier = "FedEx"
-        @shipping.save
-      end
+    if @repair.status == "Repair Completed"
+      @repair.comment = "Completed on #{Date.today}"
+      @repair.save
+      @order.order_status = "Completed, Shipped"
       @order.save
       redirect_to order_path(@order)
-      flash[:notice] = "Saved and you now have pending charges"
     else
-      redirect_to order_path(@order)
-      flash[:notice] = "Did not save comment please try again later"
+      if @repair_comment == "Major"
+        @repair_rate = RepairRate.find_by(name: "Major Repair Fee")
+        @ship_rate = RepairRate.find_by(name: "Shipback Fee")
+        @create_major = OrderItem.new(order: @order, repair_rate: @repair_rate)
+        @create_ship = OrderItem.new(order: @order, repair_rate: @ship_rate)
+        @order.amount = @order.amount + @repair_rate.price + @ship_rate.price
+      elsif @repair_comment == "Minor"
+        @repair_rate = RepairRate.find_by(name: "Minor Repair Fee")
+        @ship_rate = RepairRate.find_by(name: "Shipback Fee")
+        @create_major = OrderItem.new(order: @order, repair_rate: @repair_rate)
+        @create_ship = OrderItem.new(order: @order, repair_rate: @ship_rate)
+        @order.amount = @order.amount + @repair_rate.price + @ship_rate.price
+      elsif @repair_comment == "Non-repairable"
+        @repair_rate = RepairRate.find_by(name: "Non-repairable Fee")
+        @ship_rate = RepairRate.find_by(name: "Shipback Fee")
+        @create_major = OrderItem.new(order: @order, repair_rate: @repair_rate)
+        @create_ship = OrderItem.new(order: @order, repair_rate: @ship_rate)
+        @order.amount = @order.amount + @repair_rate.price + @ship_rate.price
+      end
+      if @repair.save
+        @create_major.save
+        if @create_ship.save
+          @shipping.order = @order
+          @shipping.user = current_user
+          @shipping.name = @ship_rate.name
+          @shipping.shipout_courier = "FedEx"
+          @shipping.save
+        end
+        @order.save
+        redirect_to order_path(@order)
+        flash[:notice] = "Saved and you now have pending charges"
+      else
+        redirect_to order_path(@order)
+        flash[:notice] = "Did not save comment please try again later"
+      end
     end
+
   end
 
   private

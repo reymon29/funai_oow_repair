@@ -2,6 +2,11 @@
   <div class="row">
     <div class="col">
       Pending Call Backs
+      <ul>
+        <li>
+          <%= OpenCall.pending_calls_count %>
+        </li>
+      </ul>
     </div>
     <div class="col">
       Pending Box and Packing Shipping
@@ -15,6 +20,37 @@
     </div>
     <div class="col">
       Today Sales
+     <ul>
+       <li>
+        $ <%= Payment.today_sales %>
+       </li>
+     </ul>
     </div>
   </div>
+  <div class="row">
+    <div id="columnchart_material" style="width: 800px; height: 500px;"></div>
+  </div>
 </div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = JSON.parse('<%= Payment.sales_vs_profit.to_json.html_safe  %>');
+        data = [['Year', 'Sales', 'Expenses', 'Profit']].concat(data);
+        data = google.visualization.arrayToDataTable(data);
+
+        var options = {
+          chart: {
+            title: '30-day Performance',
+            subtitle: 'Sales, Expenses, and Profit',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
