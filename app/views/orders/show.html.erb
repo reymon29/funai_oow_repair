@@ -74,6 +74,12 @@
           <% @order.shippings.each do |item| %>
             <li>
               <%= item.name %> - <%= item.ready_ship == false ? "Awaiting on Payment" : link_to(item.shipout_tracking, root_path + item.label, target: "_blank") %>
+              <% if item.label.nil? %>
+              <% else %>
+                 <button type="button" onclick="printJS('<%= root_path + item.label %>')">
+                    Print PDF
+                 </button>
+               <% end %>
               <% if item.name == "Return Label Fee" %>
                 <%=  item.ready_ship == false ? "" : link_to("resend email", resend_order_shipping_path(@order, item), class: "btn btn-success btn-sm") %>
               <% end %>
@@ -180,7 +186,7 @@
       </div>
       <div class="modal-body">
         <%= simple_form_for [@order, @repair] do |f| %>
-          <%= f.select :status, [ "Diagnosed", "Reviewed", "Repair Completed"] %>
+          <%= f.select :status, [ "Diagnosed", "Dispose", "Repair Completed"] %>
           <%= f.input :comment %>
            <%= simple_fields_for :no_model_fields do |n| %>
             <%= n.input :repair_charge, collection: ["Major", "Minor", "Non-repairable"], prompt: "Select Status" %>

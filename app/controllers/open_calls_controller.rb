@@ -27,8 +27,12 @@ class OpenCallsController < ApplicationController
     @product_model = Product.order(:model_no)
     if current_user.admin?
       @user = UserOnline.find_by(user: current_user)
-      @user.status = "In a Call"
-      @user.save
+      if @user.nil?
+        @user = UserOnline.create(active: true, status: "In a call", user: current_user)
+      else
+        @user.status = "In a Call"
+        @user.save
+      end
     end
   end
 

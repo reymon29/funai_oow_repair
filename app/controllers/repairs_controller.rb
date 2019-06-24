@@ -8,10 +8,13 @@ class RepairsController < ApplicationController
     @repair_comment = repair_comment["repair_charge"]
     @shipping = Shipping.new
     if @repair.status == "Repair Completed"
-      @repair.comment = "Completed on #{Date.today}"
+      @repair.comment = "on #{Date.today}"
       @repair.save
       @order.order_status = "Completed, Shipped"
       @order.save
+      @shipping = Shipping.ship_out_tracking(@order)
+      mail = OrderMailer.with(order: @order, shipping: @shipping).repair_completed
+      mail.deliver_now
       redirect_to order_path(@order)
     else
       if @repair_comment == "Major"

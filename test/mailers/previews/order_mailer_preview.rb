@@ -12,4 +12,10 @@ class OrderMailerPreview < ActionMailer::Preview
     order = Order.last
     OrderMailer.with(order: order).invoice
   end
+
+  def repair_completed
+    @order = Order.first
+    @shipping = Shipping.ship_out_tracking(@order)
+    OrderMailer.with(order: @order, shipping: @shipping).repair_completed
+  end
 end

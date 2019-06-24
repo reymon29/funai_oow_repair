@@ -1,0 +1,13 @@
+<%= @order.first_name %>
+
+Model No: <%= @order.product.model_no %>
+
+Order No: <%= @order.order_no %>
+Shipping FedEx: <%= @shipping.shipout_tracking %>
+Tracking it go going to https://www.fedex.com/apps/fedextrack/?tracknumbers=<%= @shipping.shipout_tracking %>
+
+Thank you for being a value customer,
+
+Funai Service Corporation
+      2425 Speigel Dr.
+      Groveport, OH 43125
