@@ -1,8 +1,15 @@
 <div class="container-fluid">
   <div class="row justify-content-md-center">
     <div class="col show-page-order">
-      <h1>Order No.
-      <%= @order.order_no %> - <%= @order.order_status %> <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary btn-sm" %></h1>
+      <h1>
+        Order No.
+        <%= @order.order_no %> - <%= @order.order_status %> <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary btn-sm" %>
+        <% if @order.bap_ship == true %>
+         <%= link_to "#{@order.product.model_no} BAP Labels", order_shippings_path(@order),
+            method: :post,
+            data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %>
+        <% end %>
+      </h1>
       <div class="row">
       <div class="col-6 col-md-4">
         <p>
@@ -66,8 +73,10 @@
         <ul>
           <% @order.shippings.each do |item| %>
             <li>
-              <%= item.name %> - <%= item.ready_ship == false ? "Not processed yet" : link_to(item.shipout_tracking, root_path + item.label, target: "_blank") %>
-              <%=  link_to "resend email", resend_order_shipping_path(@order, item), class: "btn btn-success btn-sm"  if item.name == "Return Label Fee" %>
+              <%= item.name %> - <%= item.ready_ship == false ? "Awaiting on Payment" : link_to(item.shipout_tracking, root_path + item.label, target: "_blank") %>
+              <% if item.name == "Return Label Fee" %>
+                <%=  item.ready_ship == false ? "" : link_to("resend email", resend_order_shipping_path(@order, item), class: "btn btn-success btn-sm") %>
+              <% end %>
             </li>
           <% end %>
         </ul>

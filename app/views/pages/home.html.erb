@@ -12,9 +12,7 @@
       Pending Box and Packing Shipping
       <ul>
         <% @pending_shipping.each do |ship|  %>
-          <li><%= ship.product.model_no %> - <%= link_to "Create BAP Labels", order_shippings_path(ship),
-      method: :post,
-      data: { confirm: "Are you sure?" }, class: "btn btn-warning " %> <%= ship.order_no %></li>
+          <li><%= ship.product.model_no %> - <%= link_to "Open Order", order_path(ship), class: "btn btn-warning" %> <%= ship.order_no %></li>
         <% end %>
      </ul>
     </div>
