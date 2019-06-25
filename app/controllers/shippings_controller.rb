@@ -1,5 +1,5 @@
 class ShippingsController < ApplicationController
-  before_action :order_id_find, only: [:new, :create]
+  before_action :order_id_find, only: [:new, :create, :edit, :update]
 
   def index
     @shippings = Shipping.all
@@ -17,7 +17,10 @@ class ShippingsController < ApplicationController
     @order.save
     redirect_to root_path
   end
-
+  def edit
+  end
+  def update
+  end
   def resend
     @shipping = shipping_id_find
     @order = order_id_find

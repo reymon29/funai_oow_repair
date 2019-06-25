@@ -71,19 +71,22 @@
       <div class="col-md-auto">
         <h4>Shipping</h4>
         <ul>
-          <% @order.shippings.each do |item| %>
-            <li>
-              <%= item.name %> - <%= item.ready_ship == false ? "Awaiting on Payment" : link_to(item.shipout_tracking, root_path + item.label, target: "_blank") %>
-              <% if item.label.nil? %>
-              <% else %>
-                 <button type="button" onclick="printJS('<%= root_path + item.label %>')">
-                    Print PDF
-                 </button>
-               <% end %>
-              <% if item.name == "Return Label Fee" %>
-                <%=  item.ready_ship == false ? "" : link_to("resend email", resend_order_shipping_path(@order, item), class: "btn btn-success btn-sm") %>
-              <% end %>
-            </li>
+          <% if @order.shippings.nil? %>
+          <% else %>
+            <% @order.shippings.each do |item| %>
+              <li>
+                <%= item.name %> - <%= item.ready_ship == false ? "Awaiting on Payment" : link_to(item.shipout_tracking, root_path + item.label, target: "_blank") %>
+                <% if item.label.nil? %>
+                <% else %>
+                   <button type="button" onclick="printJS('<%= root_path + item.label %>')">
+                      Print PDF
+                   </button>
+                 <% end %>
+                <% if item.name == "Return Label Fee" %>
+                  <%=  item.ready_ship == false ? "" : link_to("resend email", resend_order_shipping_path(@order, item), class: "btn btn-success btn-sm") %>
+                <% end %>
+              </li>
+            <% end %>
           <% end %>
         </ul>
       </div>

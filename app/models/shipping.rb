@@ -3,6 +3,11 @@ class Shipping < ApplicationRecord
   belongs_to :user
   belongs_to :order
 
+  def self.ship_out_tracking(order)
+    order = order
+    shipping = Shipping.find_by(order: order)
+  end
+
   def self.email_label(order, ship)
     shipping = Shipping.find(ship.id)
     packages = []
@@ -59,8 +64,8 @@ class Shipping < ApplicationRecord
                   :service_type => "FEDEX_GROUND",
                   :shipping_options => shipping_options)
 
-    rescue  => msg
-      flash[:alert] = "Please try again at a later time"
+    rescue  Fedex::RateError => msg
+      puts "#{msg} Please try again at a later time"
     end
 
     label = fedex.label(:filename => "public/uploads/labels/example.pdf",

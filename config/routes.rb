@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :shippings, only: [:edit, :update]
   resources :order_items, only: :destroy
   resources :open_calls do
     resources :orders, only: :new
