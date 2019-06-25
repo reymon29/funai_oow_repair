@@ -93,12 +93,11 @@ class Shipping < ApplicationRecord
     shipping = Shipping.find(ship.id)
     packages = []
 
-
     packages << {
       :weight => {:units => "LB", :value => 15},
       :customer_references => [order.order_no, {type: "DEPARTMENT_NUMBER", value: "DVD-OOW"},
         {type: "P_O_NUMBER", value: order.product.model_no + order.serial_number}],
-      :dimensions => {:length => 14, :width => 9, :height => 12, :units => "IN" }}
+      :dimensions => {:length => 14, :width => 9, :height => 12, :units => "IN" }, :special_services_requested => {:signature_option_detail => {:signature_option_type => "DIRECT"}}}
 
 
     shipper = { :name => "Nancy Hart",
@@ -145,8 +144,8 @@ class Shipping < ApplicationRecord
                   :service_type => "FEDEX_GROUND",
                   :shipping_options => shipping_options)
 
-    rescue  => msg
-      flash[:alert] = "Please try again at a later time"
+    rescue  Fedex::RateError => msg
+      puts "#{msg} Please try again at a later time"
     end
 
     label = fedex.label(:filename => "public/uploads/labels/example4.pdf",
@@ -215,12 +214,15 @@ class Shipping < ApplicationRecord
                         :account_number => ENV['FEDEX_ACCOUNT_TEST'],
                         :meter => ENV['FEDEX_METER_TEST'],
                         :mode => 'development')
-
+      begin
       rate = fedex.rate(:shipper=>shipper,
                   :recipient => recipient,
                   :packages => packages,
                   :service_type => "FEDEX_GROUND",
                   :shipping_options => shipping_options)
+      rescue  Fedex::RateError => msg
+        puts "#{msg} Please try again at a later time"
+      end
 
       label = fedex.label(:filename => "public/uploads/labels/example2.pdf",
                     :shipper=> shipper,
@@ -297,12 +299,15 @@ class Shipping < ApplicationRecord
                         :account_number => ENV['FEDEX_ACCOUNT_TEST'],
                         :meter => ENV['FEDEX_METER_TEST'],
                         :mode => 'development')
-
+      begin
       rate = fedex.rate(:shipper=>shipper,
                   :recipient => recipient,
                   :packages => packages,
                   :service_type => "FEDEX_GROUND",
                   :shipping_options => shipping_options)
+      rescue  Fedex::RateError => msg
+        puts "#{msg} Please try again at a later time"
+      end
 
       label = fedex.label(:filename => "public/uploads/labels/example0.pdf",
                     :shipper=> shipper,
