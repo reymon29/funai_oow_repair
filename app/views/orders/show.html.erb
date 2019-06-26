@@ -35,7 +35,7 @@
             <%= @order.telephone_no %>
             <% if @order.email.empty? %>
             <% else %>
-              <a href="mailto:<%= @order.email %>"><%= @order.email %></a>
+              <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>"><%= @order.email %></a>
            <% end %>
           </address>
         </div>

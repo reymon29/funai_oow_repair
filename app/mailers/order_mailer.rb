@@ -1,5 +1,4 @@
 class OrderMailer < ApplicationMailer
-  before_action :add_inline_attachment!
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -21,12 +20,5 @@ class OrderMailer < ApplicationMailer
     @order = params[:order]
     @shipping = params[:shipping]
     mail(to: @order.email, subject: "🛠Repair Completed order no. " + @order.order_no.to_s + " "+ @order.product.model_no + " shipping back.")
-  end
-
-  private
-
-  def add_inline_attachment!
-    attachments.inline["logo.png"] = File.read("app/assets/images/logo.png")
-    attachments.inline["icon.ico"] = File.read("app/assets/images/icon.ico")
   end
 end

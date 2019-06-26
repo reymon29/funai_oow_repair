@@ -5,17 +5,16 @@
   <title>Repair Completed</title>
 </head>
 <body>
-  <%= image_tag attachments['logo.png'].url, alt: 'Our Photo', class: 'photo', height: "75px" %>
+  <%= image_tag 'logo.png', alt: 'Our Photo', class: 'photo', height: "50px" %>
   <p>Hi <%= @order.first_name %>,</p>
   <strong>Model No: <%= @order.product.model_no %></strong>.</p>
   <p>Order No: <%= @order.order_no %></p>
   <ol>
     <li style="list-style-type: none;">Shipping FedEx: <%= @shipping.shipout_tracking %></li>
-    <li style="list-style-type: none;"><a href="https://www.fedex.com/apps/fedextrack/?tracknumbers=<%= @shipping.shipout_tracking %>">FedEx.com</a></li>
+    <li style="list-style-type: none;"><a href="https://www.fedex.com/apps/fedextrack/?tracknumbers=<%= @shipping.shipout_tracking %>">Track FedEx.com</a></li>
   </ol>
-  <p>Thank you for being a value customer,</p>
+  <p>Thank you for being a valued customer,</p>
   <p style="padding-top: 75px; margin: 0; background-color: white; text-align: center;">
-    <%= image_tag  attachments['icon.ico'].url, alt: 'Our Photo', class: 'photo', height: "25px"%>
       Funai Service Corporation
       2425 Speigel Dr.
       Groveport, OH 43125

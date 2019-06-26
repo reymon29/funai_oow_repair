@@ -24,14 +24,11 @@ class OrdersController < ApplicationController
   def create
     @product_model = Product.order(:model_no)
     @order = Order.new(order_params)
-    @order_item = OrderItem.new
-    @repair = RepairRate.find(1)
     @order.user = current_user
     @notes = Note.new
     @notes.comment = "Created order request"
     @notes.user = user_signed_in? ? current_user : User.find_by_id(2)
     @order.order_status = "Order Created"
-    @order.amount = @repair.price
     if @order.save
       if current_user.admin?
       @user = UserOnline.find_by(user: current_user)
@@ -40,9 +37,6 @@ class OrdersController < ApplicationController
     end
       @notes.order = @order
       @notes.save
-      @order_item.order = @order
-      @order_item.repair_rate = @repair
-      @order_item.save
       redirect_to order_path(@order)
     else
       render :new
