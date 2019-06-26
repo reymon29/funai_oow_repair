@@ -16,6 +16,17 @@ class RepairsController < ApplicationController
       mail = OrderMailer.with(order: @order, shipping: @shipping).repair_completed
       mail.deliver_now
       redirect_to order_path(@order)
+    elsif @repair.status == "Diagnosed"
+      @repair.comment = "on #{Date.today}"
+      @repair_rate = RepairRate.find_by(name: "Diagnose Fee")
+      @create_major = OrderItem.new(order: @order, repair_rate: @repair_rate)
+      @order.amount = @order.amount + @repair_rate.price
+      if @repair.save
+        @create_major.save
+        @order.save
+        redirect_to order_path(@order)
+        flash[:notice] = "Saved and you now have pending charges"
+      end
     else
       if @repair_comment == "Major"
         @repair_rate = RepairRate.find_by(name: "Major Repair Fee")
