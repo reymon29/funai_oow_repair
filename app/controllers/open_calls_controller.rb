@@ -1,5 +1,7 @@
 class OpenCallsController < ApplicationController
   before_action :call_id_find, only: [:show, :edit, :update, :destroy]
+
+
   def index
     @opencalls = OpenCall.where.not(status: ["Canceled", "Create Order"])
   end
@@ -14,6 +16,8 @@ class OpenCallsController < ApplicationController
     @opencall.user = current_user
     @product_model = Product.order(:model_no)
     if @opencall.save
+      mail = OrderMailer.with(call: @opencall).create_call
+      mail.deliver_now
       redirect_to open_calls_path
     else
       render :new
@@ -56,8 +60,6 @@ class OpenCallsController < ApplicationController
       redirect_to open_calls_path
     end
   end
-
-  private
 
   def call_id_find
     @opencall = OpenCall.find(params[:id])

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Invoice</title>
+</head>
+<body>
+  <%= image_tag 'logo.png', alt: 'Our Photo', class: 'photo', height: "50px" %>
+  <p>New Call Request has been created.<br>
+    <strong>Model No:<%= @call.product.model_no %></strong><br>
+    Visit <%= link_to "Open Call Page", open_call_url(@call) %>
+  </p>
+  <p style="padding-top: 75px; margin: 0; background-color: white; text-align: center;">
+      Funai Service Corporation
+      2425 Speigel Dr.
+      Groveport, OH 43125
+  </p>
+</body>
+</html>
+

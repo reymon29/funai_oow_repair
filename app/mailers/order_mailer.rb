@@ -21,4 +21,9 @@ class OrderMailer < ApplicationMailer
     @shipping = params[:shipping]
     mail(to: @order.email, subject: "🛠Repair Completed order no. " + @order.order_no.to_s + " "+ @order.product.model_no + " shipping back.")
   end
+
+  def create_call
+    @call = params[:call]
+    mail(to: 'nhart@funaiservice.com', subject: "DVD OOW call back request created")
+  end
 end
