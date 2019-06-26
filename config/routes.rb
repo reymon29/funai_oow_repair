@@ -23,4 +23,8 @@ Rails.application.routes.draw do
     resources :orders, only: :new
   end
   resources :user_onlines, only: [:create, :destroy]
+
+  namespace :packing_slip do
+    resources :orders, only: :show
+  end
 end

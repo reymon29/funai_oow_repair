@@ -19,6 +19,8 @@ gem 'stripe'
 gem 'rest-client', '~> 1.8'
 gem 'fedex'
 gem 'postmark-rails'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 
 group :development do

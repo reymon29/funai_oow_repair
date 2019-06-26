@@ -1,0 +1,40 @@
+<div class="border border-dark" style="height: 500px;">
+  <div class="d-flex justify-content-center" style="height: 25px;">
+    <div class="p-2">Packing Slip</div>
+  </div>
+  <div class="d-flex">
+    <div class="mr-auto p-2" style="margin-left: 30px;"><%= image_tag wicked_pdf_asset_base64("logo.png"), height: "75px", class: "rounded" %></div>
+      <div class="align-items-center" style="height: 25px;">
+        <div class="p-0">Order #: <%= @order.order_no %></div>
+        <div class="p-0">Created On: <%= @order.created_at.strftime("%b %d, %Y") %></div>
+    </div>
+  </div>
+  <div class="d-flex flex-column" style="margin-left: 30px;">
+    <div class="p-0">Customer Name: <%= @order.first_name %> <%= @order.last_name %></div>
+    <div class="p-0">Shipping Address :<address>
+        <%= @order.address %>
+        <%= @order.address2 %>
+        <%= @order.city %> <%= @order.state %> <%= @order.zip %>
+    </address></div>
+    <div class="p-0">Contact No.: <%= @order.telephone_no %></div>
+  </div>
+  <div class="d-flex justify-content-center">Product: <%= @order.product.model_no %> <%= @order.serial_number %></div>
+  <div class="d-flex" style="margin-left: 30px;">
+    <div class="flex-column">
+      Services:
+      <% @order.order_items.each do |item| %>
+        <div class="p-0"><%= item.repair_rate.name %></div>
+      <% end %>
+    </div>
+    <div class="flex-column" style="margin-left: 50px;">
+      Repair Actions:
+      <% @order.repairs.each do |repair| %>
+        <div class="p-0"><%= repair.status %>- <%= repair.comment %></div>
+      <% end %>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center p-2">
+    <strong>Total:</strong> <%= humanized_money_with_symbol(@order.amount) %>
+  </div>
+</div>
+
