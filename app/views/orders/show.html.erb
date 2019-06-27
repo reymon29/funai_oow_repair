@@ -9,8 +9,9 @@
             method: :post,
             data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %>
         <% end %>
-        <%= link_to "Packing Slip", packing_slip_order_path(@order), class: "btn btn-success btn-sm" %>
-        <%= link_to "Packing Slip", packing_slip_order_path(@order, format: :pdf), class: "btn btn-success btn-sm" %>
+        <button type="button" class="btn btn-success btn-sm" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')">
+          Print Packing Slip
+        </button>
       </h1>
       <div class="row">
       <div class="col-6 col-md-4">
