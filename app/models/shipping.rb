@@ -11,8 +11,6 @@ class Shipping < ApplicationRecord
   def self.email_label(order, ship)
     shipping = Shipping.find(ship.id)
     packages = []
-
-
     packages << {
       :weight => {:units => "LB", :value => 15},
       :customer_references => [order.order_no, {type: "DEPARTMENT_NUMBER", value: "DVD-OOW"},
@@ -75,8 +73,12 @@ class Shipping < ApplicationRecord
                     :service_type => "FEDEX_GROUND",
                     :shipping_options => shipping_options,
                     :label_specification => example_spec)
-    rate.each do |i|
-      shipping.shipping_amount = i.total_net_charge
+    if rate.nil?
+      shipping.shipping_amount = 20
+    else
+      rate.each do |i|
+        shipping.shipping_amount = i.total_net_charge
+      end
     end
     directory = "public/uploads/labels/example.pdf"
     new_directory = "public/uploads/labels/#{label.tracking_number}.pdf"
@@ -92,7 +94,6 @@ class Shipping < ApplicationRecord
   def self.ship_out_label(order, ship)
     shipping = Shipping.find(ship.id)
     packages = []
-
     packages << {
       :weight => {:units => "LB", :value => 15},
       :customer_references => [order.order_no, {type: "DEPARTMENT_NUMBER", value: "DVD-OOW"},
@@ -155,9 +156,13 @@ class Shipping < ApplicationRecord
                     :service_type => "FEDEX_GROUND",
                     :shipping_options => shipping_options,
                     :label_specification => example_spec)
-    rate.each do |i|
-      shipping.shipping_amount = i.total_net_charge
-    end
+    if rate.nil?
+        shipping.shipping_amount = 20
+      else
+        rate.each do |i|
+          shipping.shipping_amount = i.total_net_charge
+        end
+      end
     directory = "public/uploads/labels/example4.pdf"
     new_directory = "public/uploads/labels/#{label.tracking_number}.pdf"
     updated_filepath = "uploads/labels/#{label.tracking_number}.pdf"
@@ -215,7 +220,7 @@ class Shipping < ApplicationRecord
                         :meter => ENV['FEDEX_METER_TEST'],
                         :mode => 'development')
       begin
-      rate = fedex.rate(:shipper=>shipper,
+      rate = fedex.rate(:shipper => shipper,
                   :recipient => recipient,
                   :packages => packages,
                   :service_type => "FEDEX_GROUND",
@@ -225,32 +230,35 @@ class Shipping < ApplicationRecord
       end
 
       label = fedex.label(:filename => "public/uploads/labels/example2.pdf",
-                    :shipper=> shipper,
+                    :shipper => shipper,
                     :recipient => recipient,
                     :packages => packages,
                     :service_type => "FEDEX_GROUND",
                     :shipping_options => shipping_options,
                     :label_specification => example_spec)
-      puts label.tracking_number
-    rate.each do |i|
-      shipping.shipping_amount = i.total_net_charge
+      if rate.nil?
+        shipping.shipping_amount = 20
+      else
+        rate.each do |i|
+          shipping.shipping_amount = i.total_net_charge
+        end
+      end
+      directory = "public/uploads/labels/example2.pdf"
+      new_directory = "public/uploads/labels/#{label.tracking_number}.pdf"
+      updated_filepath = "uploads/labels/#{label.tracking_number}.pdf"
+      new_path = File.rename(directory, new_directory)
+      shipping.label = updated_filepath
+      shipping.name = "BAP Outbound"
+      shipping.order_id = order.id
+      shipping.shipout_courier = "Fedex"
+      shipping.user_id = user.id
+      shipping.ready_ship = true
+      shipping.shipout_tracking = label.tracking_number
+      shipping.save
+      Shipping.bap_return_label(order, user)
+      # mail = OrderMailer.with(order: order, shipping: shipping.shipout_tracking).label
+      # mail.deliver_now
     end
-    directory = "public/uploads/labels/example2.pdf"
-    new_directory = "public/uploads/labels/#{label.tracking_number}.pdf"
-    updated_filepath = "uploads/labels/#{label.tracking_number}.pdf"
-    new_path = File.rename(directory, new_directory)
-    shipping.label = updated_filepath
-    shipping.name = "BAP Outbound"
-    shipping.order_id = order.id
-    shipping.shipout_courier = "Fedex"
-    shipping.user_id = user.id
-    shipping.ready_ship = true
-    shipping.shipout_tracking = label.tracking_number
-    shipping.save
-    Shipping.bap_return_label(order, user)
-    # mail = OrderMailer.with(order: order, shipping: shipping.shipout_tracking).label
-    # mail.deliver_now
-  end
 
     def self.bap_return_label(order, user)
     shipping = Shipping.new
@@ -300,7 +308,7 @@ class Shipping < ApplicationRecord
                         :meter => ENV['FEDEX_METER_TEST'],
                         :mode => 'development')
       begin
-      rate = fedex.rate(:shipper=>shipper,
+      rate = fedex.rate(:shipper => shipper,
                   :recipient => recipient,
                   :packages => packages,
                   :service_type => "FEDEX_GROUND",
@@ -310,15 +318,19 @@ class Shipping < ApplicationRecord
       end
 
       label = fedex.label(:filename => "public/uploads/labels/example0.pdf",
-                    :shipper=> shipper,
+                    :shipper => shipper,
                     :recipient => recipient,
                     :packages => packages,
                     :service_type => "FEDEX_GROUND",
                     :shipping_options => shipping_options,
                     :label_specification => example_spec)
-      puts label.tracking_number
-    rate.each do |i|
-      shipping.shipping_amount = i.total_net_charge
+
+    if rate.nil?
+        shipping.shipping_amount = 20
+      else
+        rate.each do |i|
+          shipping.shipping_amount = i.total_net_charge
+      end
     end
     directory = "public/uploads/labels/example0.pdf"
     new_directory = "public/uploads/labels/#{label.tracking_number}.pdf"

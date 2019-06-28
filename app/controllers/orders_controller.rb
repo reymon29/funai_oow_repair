@@ -8,6 +8,7 @@ class OrdersController < ApplicationController
   def show
     @note = Note.new
     @repair = Repair.new
+    @uploader = ImageUploader.new
   end
 
   def new

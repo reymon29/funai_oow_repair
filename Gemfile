@@ -21,6 +21,8 @@ gem 'fedex'
 gem 'postmark-rails'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+gem 'carrierwave', '~> 1.2'
+
 
 
 group :development do

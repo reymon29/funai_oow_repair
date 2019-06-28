@@ -15,12 +15,15 @@ class ShippingsController < ApplicationController
     Shipping.bap_label(@order, @user)
     @order.bap_ship = false
     @order.save
-    redirect_to root_path
+    redirect_to order_path(@order)
   end
+
   def edit
   end
+
   def update
   end
+
   def resend
     @shipping = shipping_id_find
     @order = order_id_find
@@ -28,6 +31,16 @@ class ShippingsController < ApplicationController
     mail.deliver_now
     redirect_to order_path(@order)
     flash[:notice] = "Email sent out"
+  end
+
+  def create_bnp
+    @order = order_id_find
+    @user = current_user
+    Shipping.bap_label(@order, @user)
+    @order.bap_ship = false
+    @order.save
+    redirect_to order_path(@order)
+    flash[:notice] = "FedEx labels created, now available to print"
   end
 
   private
