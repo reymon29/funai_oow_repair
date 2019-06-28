@@ -93,12 +93,14 @@
           </ul>
         </div>
         <div class="col-md-auto">
-          <h4>Photos</h4><%= link_to "Upload Photos", new_order_image_path(@order) %>
+          <h4>Photos</h4><%= link_to "Upload Photos", new_order_image_path(@order), class: "btn btn-secondary btn-sm" %>
           <% if @order.images.blank? %>
             <p>No photos are available</p>
           <% else %>
             <% @order.images.each do |item| %>
-              <%= image_tag(item.image.url) %>
+              <%= link_to item.image.url do %>
+                <%= image_tag(item.image.url, class: "img-thumbnail sm-preview") %>
+              <% end %>
             <% end %>
           <% end %>
 
@@ -231,4 +233,4 @@
     }
   });
 </script>
-<%= console %>
+
