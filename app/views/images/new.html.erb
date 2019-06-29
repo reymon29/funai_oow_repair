@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="orderform-view">
       <%= simple_form_for [@order, @images] do |f| %>
-        <h1>Create an order</h1>
+        <h1>Upload images</h1>
         <div class="form-row">
           <div class="col-sm">
             <%= f.input :images,  as: :file, input_html: { multiple: true, name: "images[]" }, hint: "Upload photos accepted formats jpg jpeg gif png." %>

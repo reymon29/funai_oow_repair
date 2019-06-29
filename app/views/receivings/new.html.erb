@@ -1,3 +1,4 @@
+<% title "Receive item" %>
 <%= simple_form_for [@order, @receive] do |f| %>
   <%= f.input :receive_courier, collection: %w(FedEx UPS USPS DHL) %>
   <%= f.input :receive_tracking %>
