@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_27_121831) do
+ActiveRecord::Schema.define(version: 2019_06_30_143759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2019_06_27_121831) do
     t.bigint "repair_rate_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "payment_status", default: "Unpaid"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["repair_rate_id"], name: "index_order_items_on_repair_rate_id"
   end
