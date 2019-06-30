@@ -33,4 +33,8 @@ class Order < ApplicationRecord
     orders = Order.all
     orders.empty? ? self.order_no : self.order_no = Order.last.order_no + 1
   end
+
+  def self.no_double
+
+  end
 end
