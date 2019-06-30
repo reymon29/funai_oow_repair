@@ -2,6 +2,11 @@ class Payment < ApplicationRecord
   belongs_to :order
   monetize :amount_cents
 
+  def update_ordered_items(order_no)
+    @order = Order.find(order_no)
+
+  end
+
   def self.today_sales
     total = 0
     @payments = self.where('DATE(created_at) = ? and State =?', Date.current, "Paid")
