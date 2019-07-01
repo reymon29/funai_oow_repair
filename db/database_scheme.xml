@@ -70,7 +70,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="295" y="7" name="orders">
+<table x="150" y="0" name="orders">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -160,7 +160,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="641" y="673" name="notes">
+<table x="488" y="701" name="notes">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -179,7 +179,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="840" y="530" name="repairs">
+<table x="307" y="252" name="repairs">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -201,7 +201,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="631" y="127" name="shipping">
+<table x="470" y="134" name="shipping">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -228,11 +228,14 @@
 <row name="ready_ship" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="shipping_amount" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="631" y="341" name="receiving">
+<table x="476" y="376" name="receiving">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -256,7 +259,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="624" y="3" name="repair_rates">
+<table x="465" y="5" name="repair_rates">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -273,7 +276,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="628" y="514" name="payments">
+<table x="476" y="549" name="payments">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -294,7 +297,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="426" y="10" name="order_items">
+<table x="286" y="3" name="order_items">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -306,11 +309,14 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="orders" row="id" />
 </row>
+<row name="payment_status" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="287" y="460" name="open_calls">
+<table x="262" y="452" name="open_calls">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -356,7 +362,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="148" y="599" name="Active">
+<table x="105" y="450" name="user_onlines">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -369,6 +375,21 @@
 <row name="user_id" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="users" row="id" />
+</row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="298" y="135" name="images">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="image" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="order_id" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="orders" row="id" />
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
