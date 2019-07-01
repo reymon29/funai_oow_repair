@@ -38,9 +38,13 @@ class OrderItemsController < ApplicationController
     @shipping = Shipping.where(order_id: @order, ready_ship: false, name: @repair.name).limit(1)
     @order.amount = @order.amount - @repair.price
     @order.save
-    @order_item.destroy
-    @shipping.destroy_all
-    redirect_to order_path(@order_item.order)
+    if @order_item.destroy
+      @shipping.destroy_all
+      redirect_to order_path(@order_item.order)
+    else
+      flash[:notice] = "Cannot be removed the item is paid."
+      redirect_to order_path(@order_item.order)
+    end
   end
 
   private
