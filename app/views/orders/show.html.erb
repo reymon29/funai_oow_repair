@@ -118,7 +118,7 @@
             <%= receive.receive_tracking %>
             <%= receive.created_at.strftime("%b %d, %Y") %>
           <% end %>
-        <h4>Repair Status <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#repairModal">
+        <h4>Repair Status <button id="repair_btn" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#repairModal">
         Repair Comments
         </button></h4>
         <% end %>
@@ -202,9 +202,9 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="repair_modal">
         <%= simple_form_for [@order, @repair] do |f| %>
-          <%= f.select :status, [ "Diagnosed", "Dispose", "Repair Completed"] %>
+          <%= f.select :status, [ "Diagnosed", "Reviewed", "Dispose", "Repair Completed"] %>
           <%= f.input :comment %>
            <%= simple_fields_for :no_model_fields do |n| %>
             <%= n.input :repair_charge, collection: ["Major", "Minor", "Non-repairable"], prompt: "Select Status" %>
@@ -221,17 +221,28 @@
 
 <script>
   const repairStatusBtn = document.getElementById("repair_status")
+  const repairBtn = document.getElementById("repair_btn")
+  const repairModal = document.getElementById("repair_modal")
   const repairComment = document.querySelector(".repair_comment")
   const repairCharge = document.querySelector(".no_model_fields_repair_charge")
 
-  repairStatusBtn.addEventListener("change", () =>{
-    if(repairStatusBtn.value != "Diagnosed"){
+  repairBtn.addEventListener("click", () => {
+    if(repairStatusBtn.value != "Reviewed"){
       repairComment.style.display = "none";
       repairCharge.style.display = "none";
     } else {
       repairComment.style.display = "inherit";
       repairCharge.style.display = "inherit";
     }
+    repairStatusBtn.addEventListener("change", ()=> {
+      if(repairStatusBtn.value != "Reviewed"){
+      repairComment.style.display = "none";
+      repairCharge.style.display = "none";
+      } else {
+      repairComment.style.display = "inherit";
+      repairCharge.style.display = "inherit";
+      }
+    });
   });
 </script>
 

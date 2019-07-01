@@ -27,6 +27,12 @@ class RepairsController < ApplicationController
         redirect_to order_path(@order)
         flash[:notice] = "Saved and you now have pending charges"
       end
+    elsif @repair.status == "Dispose"
+      @repair.comment = "on #{Date.today}"
+      @repair.save
+      @order.order_status = "Completed, Disposed"
+      @order.save
+      redirect_to order_path(@order)
     else
       if @repair_comment == "Major"
         @repair_rate = RepairRate.find_by(name: "Major Repair Fee")
