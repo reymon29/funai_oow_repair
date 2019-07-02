@@ -1,8 +1,10 @@
 class ImagesController < ApplicationController
   before_action :order_id_find, only: [:new, :create]
+  skip_after_action :verify_authorized, only: [:create]
 
   def new
     @images = @order.images.build
+    authorize @images
   end
 
   def create
