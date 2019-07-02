@@ -3,18 +3,20 @@ class OpenCallsController < ApplicationController
 
 
   def index
-    @opencalls = OpenCall.where.not(status: ["Canceled", "Create Order"])
+    @opencalls = policy_scope(OpenCall).where.not(status: ["Canceled", "Create Order"])
   end
 
   def new
     @opencall = OpenCall.new
     @product_model = Product.order(:model_no)
+    authorize @opencall
   end
 
   def create
     @opencall = OpenCall.new(open_params)
     @opencall.user = current_user
     @product_model = Product.order(:model_no)
+    authorize @opencall
     if @opencall.save
       mail = OrderMailer.with(call: @opencall).create_call
       mail.deliver_now
@@ -25,9 +27,11 @@ class OpenCallsController < ApplicationController
   end
 
   def show
+    authorize @opencall
   end
 
   def edit
+    authorize @opencall
     @product_model = Product.order(:model_no)
     if current_user.admin?
       @user = UserOnline.find_by(user: current_user)
@@ -41,6 +45,7 @@ class OpenCallsController < ApplicationController
   end
 
   def update
+    authorize @opencall
     @opencall.update(open_params)
     if @opencall.status == "Create Order"
       if current_user.admin?

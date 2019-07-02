@@ -28,7 +28,9 @@
     <% end %>
   </tbody>
 </table>
-<%= link_to "Create Call", new_open_call_path, class: "btn btn-primary btn-sm" %>
+  <% if policy(OpenCall).create? %>
+  <%= link_to "Create Call", new_open_call_path, class: "btn btn-primary btn-sm" %>
+  <% end %>
 
   <div class="row">
     <div class="col">
