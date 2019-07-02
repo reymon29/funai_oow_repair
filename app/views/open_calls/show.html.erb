@@ -6,7 +6,9 @@
       <%= @opencall.last_name %>
       <%= @opencall.product.model_no %>
       <%= @opencall.symptom %>
-      <%= link_to "Update", edit_open_call_path(@opencall) %>
+      <% if policy(OpenCall).edit? %>
+        <%= link_to "Update", edit_open_call_path(@opencall) %>
+      <% end %>
     </div>
   </div>
 </div>
