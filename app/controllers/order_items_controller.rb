@@ -41,8 +41,11 @@ class OrderItemsController < ApplicationController
     authorize @order_item
     if @order_item.destroy
       @order.amount = @order.amount - @repair.price
-      @order.save
       @shipping.destroy_all
+      if @order_item.repair_rate.name == "Return Box Fee"
+       @order.bap_ship = false
+      end
+      @order.save
       redirect_to order_path(@order_item.order)
     else
       flash[:notice] = "Cannot be removed the item is paid."
