@@ -3,6 +3,7 @@ class OrderItemsController < ApplicationController
 
   def new
     @order_item = OrderItem.new
+    authorize @order_item
   end
 
   def create
@@ -11,6 +12,7 @@ class OrderItemsController < ApplicationController
     @order_item.order = @order
     @repair_item = RepairRate.find(@order_item.repair_rate_id)
     @order.amount = @order.amount + @order_item.repair_rate.price
+    authorize @order_item
     if @order_item.save
       if @repair_item.category == "Shipping"
         if @repair_item.sku == "SHIP003"
@@ -36,9 +38,10 @@ class OrderItemsController < ApplicationController
     @order = Order.find(@order_item.order_id)
     @repair = RepairRate.find(@order_item.repair_rate_id)
     @shipping = Shipping.where(order_id: @order, ready_ship: false, name: @repair.name).limit(1)
-    @order.amount = @order.amount - @repair.price
-    @order.save
+    authorize @order_item
     if @order_item.destroy
+      @order.amount = @order.amount - @repair.price
+      @order.save
       @shipping.destroy_all
       redirect_to order_path(@order_item.order)
     else

@@ -1,17 +1,13 @@
 class OpenCallPolicy < ApplicationPolicy
-
   def create?
       return true
   end
-
   def show?
     return true
   end
-
   def update?
     user.admin?
   end
-
   class Scope < Scope
     def resolve
       scope.all

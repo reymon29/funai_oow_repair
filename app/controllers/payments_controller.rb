@@ -32,6 +32,7 @@ class PaymentsController < ApplicationController
     end
 
     @payment = Payment.new(payment: charge.to_json, state: 'Paid', order: @order, amount: @order.amount)
+    authorize @payment
     @order.paid == 0 ? @order.amount : @order.amount += @order.paid
     @order.paid += @order.amount - @order.paid
     @order.save
