@@ -5,6 +5,7 @@ class PaymentsController < ApplicationController
     @order.amount = @order.amount - @order.paid
     @payment = paid_check
     @customer = stripe_customer
+    authorize @payment
   end
 
   def create

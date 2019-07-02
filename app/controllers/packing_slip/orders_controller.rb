@@ -1,6 +1,8 @@
 module PackingSlip
   class OrdersController < ApplicationController
+
     def show
+      authorize @order
       @order = Order.find(params[:id])
       respond_to do |format|
             format.html
