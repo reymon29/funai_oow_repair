@@ -347,5 +347,4 @@ class Shipping < ApplicationRecord
     # mail = OrderMailer.with(order: order, shipping: shipping.shipout_tracking).label
     # mail.deliver_now
   end
-
 end

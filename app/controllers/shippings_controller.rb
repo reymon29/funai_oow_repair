@@ -1,21 +1,18 @@
 class ShippingsController < ApplicationController
   before_action :order_id_find, only: [:new, :create, :edit, :update]
+  skip_after_action :verify_authorized, only: [:create_bnp]
 
   def index
     @shippings = Shipping.all
+    authorize @shippings
   end
 
   def new
     @shipping = Shipping.new
+    authorize @shipping
   end
 
   def create
-    @order = order_id_find
-    @user = current_user
-    Shipping.bap_label(@order, @user)
-    @order.bap_ship = false
-    @order.save
-    redirect_to order_path(@order)
   end
 
   def edit
@@ -27,6 +24,7 @@ class ShippingsController < ApplicationController
   def resend
     @shipping = shipping_id_find
     @order = order_id_find
+    authorize @shipping
     mail = OrderMailer.with(order: @order, shipping: @shipping.shipout_tracking).label
     mail.deliver_now
     redirect_to order_path(@order)
