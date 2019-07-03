@@ -3,6 +3,24 @@ class Shipping < ApplicationRecord
   belongs_to :user
   belongs_to :order
 
+  def self.shipping_address(customer)
+    address = {
+      :street     => "#{customer.address} #{customer.address2}",
+      :city        => customer.city,
+      :state       => customer.state,
+      :postal_code => customer.zip,
+      :country     => "USA"
+    }
+
+    fedex = Fedex::Shipment.new(:key => ENV['FEDEX_KEY_TEST'],
+                        :password => ENV['FEDEX_PASSWORD_TEST'],
+                        :account_number => ENV['FEDEX_ACCOUNT_TEST'],
+                        :meter => ENV['FEDEX_METER_TEST'],
+                        :mode => 'development')
+    address_result = fedex.validate_address(:address => address)
+
+  end
+
   def self.ship_out_tracking(order)
     order = order
     shipping = Shipping.find_by(order: order)
