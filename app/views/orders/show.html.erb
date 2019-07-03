@@ -58,8 +58,10 @@
             Total:<%= humanized_money_with_symbol(@order.amount) %>
             Paid: <%= humanized_money_with_symbol(@order.paid) %>
             Pending: <%= humanized_money_with_symbol(@order.amount - @order.paid) %>
-            <h5>Charge Fees</h5>
-            <%= link_to "Charge", new_order_payment_path(@order) %>
+            <% if policy(Payment).create? %>
+              <h5>Charge Fees</h5>
+              <%= link_to "Charge", new_order_payment_path(@order) %>
+            <% end %>
         </div>
         <div class="col-md-auto">
           <h4>Order Details</h4>
