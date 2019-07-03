@@ -4,11 +4,14 @@
     <div class="col show-page-order">
       <h1>
         Order No.
-        <%= @order.order_no %> - <%= @order.order_status %> <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary btn-sm" %>
-        <% if @order.bap_ship == true %>
-         <%= link_to "#{@order.product.model_no} BAP Labels", create_bnp_path(@order),
-            data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %>
-        <% end %>
+          <%= @order.order_no %> - <%= @order.order_status %>
+          <% if policy(@order).update? %>
+            <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary btn-sm" %>
+            <% if @order.bap_ship == true %>
+             <%= link_to "#{@order.product.model_no} BAP Labels", create_bnp_path(@order),
+                data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %>
+            <% end %>
+          <% end %>
         <button type="button" class="btn btn-success btn-sm" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')">
           Print Packing Slip
         </button>
@@ -60,13 +63,19 @@
         </div>
         <div class="col-md-auto">
           <h4>Order Details</h4>
-          <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary btn-sm" %>
+          <% if policy(OrderItem).create? %>
+            <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary btn-sm" %>
+          <% end %>
           <div class="col">
             <ul class="list-group">
               <% @order.order_items.each do |repair| %>
-              <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %><%= link_to "Remove", order_item_path(repair),
-          method: :delete,
-          data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %></li>
+              <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %>
+                <% if policy(OrderItem).destroy? %>
+                  <%= link_to "Remove", order_item_path(repair),
+                    method: :delete,
+                    data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %>
+                <% end %>
+              </li>
             <% end %>
           </ul>
           </div>
@@ -85,8 +94,10 @@
                       Print PDF
                    </button>
                  <% end %>
-                <% if item.name == "Return Label Fee" %>
-                  <%=  item.ready_ship == false ? "" : link_to("resend email", resend_order_shipping_path(@order, item), class: "btn btn-success btn-sm") %>
+                 <% if policy(Shipping).resend? %>
+                  <% if item.name == "Return Label Fee" %>
+                    <%=  item.ready_ship == false ? "" : link_to("resend email", resend_order_shipping_path(@order, item), data: { confirm: "Are you sure?" }, class: "btn btn-success btn-sm") %>
+                  <% end %>
                 <% end %>
               </li>
             <% end %>
@@ -94,7 +105,10 @@
           </ul>
         </div>
         <div class="col-md-auto">
-          <h4>Photos</h4><%= link_to "Upload Photos", new_order_image_path(@order), class: "btn btn-secondary btn-sm" %>
+          <h4>Photos</h4>
+          <% if policy(Image).create? %>
+            <%= link_to "Upload Photos", new_order_image_path(@order), class: "btn btn-secondary btn-sm" %>
+          <% end %>
           <% if @order.images.blank? %>
             <p>No photos are available</p>
           <% else %>
@@ -108,7 +122,9 @@
         </div>
         <div class="col-md-auto">
           <% if @order.receivings.empty? %>
-          <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary btn-sm" %>
+            <% if policy(Receiving).create? %>
+              <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary btn-sm" %>
+            <% end %>
           <% else %>
           <h4>Received</h4>
             <% @order.receivings.each do |receive| %>
@@ -118,9 +134,13 @@
             <%= receive.receive_tracking %>
             <%= receive.created_at.strftime("%b %d, %Y") %>
           <% end %>
-        <h4>Repair Status <button id="repair_btn" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#repairModal">
-        Repair Comments
-        </button></h4>
+        <h4>Repair Status
+          <% if policy(Repair).create? %>
+            <button id="repair_btn" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#repairModal">
+              Repair Comments
+            </button>
+          <% end %>
+        </h4>
         <% end %>
         <h4>Repair Notes</h4>
         <ul>
