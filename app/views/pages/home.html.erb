@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-sm text-center">
-      <span class="list-group-item active">Pending Call Backs</span>
+      <span class="list-group-item active">Call Backs</span>
       <ul>
         <li>
           <h1><span class="badge badge-secondary">Count: <%= OpenCall.pending_calls_count %></span></h1>
@@ -9,7 +9,7 @@
       </ul>
     </div>
     <div class="col-sm text-center">
-      <span class="list-group-item active">Pending Box and Packing Shipping</span>
+      <span class="list-group-item active">Box and Packing Shipping</span>
       <ul>
         <% @pending_shipping.each do |ship|  %>
           <li><%= ship.product.model_no %> - <%= link_to "Open Order", order_path(ship), class: "btn btn-warning" %> <%= ship.order_no %></li>
