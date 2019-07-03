@@ -3,12 +3,14 @@ class ReceivingsController < ApplicationController
 
   def new
     @receive = Receiving.new
+    authorize @receive
   end
 
   def create
     @receive = Receiving.new(receive_params)
     @order.order_status = "Item received"
     @receive.order = @order
+    authorize @receive
     if @receive.save
       @order.save
       redirect_to order_path(@order)
