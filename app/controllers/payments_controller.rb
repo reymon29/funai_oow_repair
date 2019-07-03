@@ -81,5 +81,4 @@ class PaymentsController < ApplicationController
       return a["customer"]
     end
   end
-
 end

@@ -50,5 +50,4 @@ class ShippingsController < ApplicationController
   def order_id_find
     @order = Order.find(params[:order_id])
   end
-
 end

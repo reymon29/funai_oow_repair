@@ -1,4 +1,5 @@
 class UserOnlinesController < ApplicationController
+
   def create
     @user = current_user
     @useronline = UserOnline.new(user:  @user, status: "Available", active: true)

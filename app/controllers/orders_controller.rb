@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
   skip_before_action :authenticate_user!, only: [:create, :show, :new]
   before_action :order_id_find, only: [:show, :edit, :update, :destroy]
+
   def index
     @orders = policy_scope(Order).all
   end

@@ -1,7 +1,6 @@
 class OpenCallsController < ApplicationController
   before_action :call_id_find, only: [:show, :edit, :update, :destroy]
 
-
   def index
     @opencalls = policy_scope(OpenCall).where.not(status: ["Canceled", "Create Order"])
   end
