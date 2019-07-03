@@ -7,6 +7,7 @@ class RepairsController < ApplicationController
     @repair.user = current_user
     @repair_comment = repair_comment["repair_charge"]
     @shipping = Shipping.new
+    authorize @repair
     if @repair.status == "Repair Completed"
       @repair.comment = "on #{Date.today}"
       @repair.save
