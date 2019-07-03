@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create, :new]
   before_action :order_id_find, only: [:new, :create]
+
   def new
     @note = Note.new
   end
@@ -8,7 +8,8 @@ class NotesController < ApplicationController
   def create
     @note = Note.new(notes_params)
     @note.order = @order
-    @note.user = user_signed_in? ? current_user : User.find_by_id(2)
+    @note.user = current_user
+    authorize @note
     if @note.save
       redirect_to order_path(@note.order)
     end
