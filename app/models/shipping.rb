@@ -16,9 +16,13 @@ class Shipping < ApplicationRecord
                         :password => ENV['FEDEX_PASSWORD_TEST'],
                         :account_number => ENV['FEDEX_ACCOUNT_TEST'],
                         :meter => ENV['FEDEX_METER_TEST'],
-                        :mode => 'production')
+                        :mode => 'development')
     address_result = fedex.validate_address(:address => address)
+  rescue  Fedex::RateError => msg
+      puts "#{msg} Please try again at a later time"
   end
+
+
 
   def self.ship_out_tracking(order)
     order = order

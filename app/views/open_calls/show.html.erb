@@ -1,24 +1,36 @@
 <% title "Open Call #{@opencall.id}" %>
 <div class="conainter">
-  <div class="row">
-    <div class="col">
-      <h4>Open Callback</h4>
-      <ul>
-        <li>Status: <%= @opencall.status %></li>
-        <li>Customer First Name: <%= @opencall.first_name %></li>
-        <li>Customer Last Name: <%= @opencall.last_name %></li>
+  <div class="row" style="margin: 0;">
+    <div class="col-md-auto col-lg-4">
+      <h2 class="text-center">Open Status</h2>
+    <ul class="text-left">
+      <li><i class="fas fa-calendar-alt"></i>Created On: <%= @opencall.created_at.strftime("%b %d, %Y") %></li>
+      <li><i class="fas fa-clipboard-check"></i>Status: <%= @opencall.status %></li>
+      <li><i class="fas fa-phone"></i>Phone: <%= @opencall.telephone_no %></li>
+      <li><i class="fas fa-envelope-open-text"></i>Email:
+        <% if @opencall.email.empty? %>
+        <% else %>
+          <a href="mailto:<%= @opencall.email %>?subject=Funai Pending Repair-<%= @opencall.product.model_no %>"><%= @opencall.email %></a>
+        <% end %>
+      </li>
+    </ul>
+    </div>
+    <div class="col-md-auto col-lg-4">
+      <h2 class="text-center">Open Callback</h2>
+      <ul class="text-center">
+        <li><i class="fas fa-user-secret"></i>Customer: <%= @opencall.first_name %> <%= @opencall.last_name %></li>
         <li>Model No.: <%= @opencall.product.model_no %></li>
         <li>Symptom: <%= @opencall.symptom %></li>
       </ul>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <h4>FedEx Delivery Confirmation Address</h4>
-      <ul>
-        <li>FedEx Rating: <%= Shipping.shipping_address(@opencall).score %></li>
-        <li>FedEx Confirmation: <%= Shipping.shipping_address(@opencall).confirmed %></li>
-        <li>FedEx Type: <%= Shipping.shipping_address(@opencall).status %></li>
+    <div class="col-md-auto col-lg-4">
+      <h2 class="text-center">FedEx Validate</h2>
+      <ul class="text-center">
+          <li>FedEx Rating: <%= Shipping.shipping_address(@opencall).score %></li>
+          <li>FedEx Confirmation: <%= Shipping.shipping_address(@opencall).confirmed %></li>
+          <li>FedEx Type: <%= Shipping.shipping_address(@opencall).status %></li>
+          <li>Address: <%= @opencall.address %> <%= @opencall.address2 %> <%= @opencall.city %> <%= @opencall.state %> <%= @opencall.zip %>
+          </li>
       </ul>
     </div>
   </div>
