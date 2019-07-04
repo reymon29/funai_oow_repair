@@ -1,14 +1,29 @@
+<% title "Open Call #{@opencall.id}" %>
 <div class="conainter">
   <div class="row">
-    <div class="col-md-4">
-      <%= @opencall.status %>
-      <%= @opencall.first_name %>
-      <%= @opencall.last_name %>
-      <%= @opencall.product.model_no %>
-      <%= @opencall.symptom %>
-      <% if policy(OpenCall).edit? %>
-        <%= link_to "Update", edit_open_call_path(@opencall) %>
-      <% end %>
+    <div class="col">
+      <h4>Open Callback</h4>
+      <ul>
+        <li>Status: <%= @opencall.status %></li>
+        <li>Customer First Name: <%= @opencall.first_name %></li>
+        <li>Customer Last Name: <%= @opencall.last_name %></li>
+        <li>Model No.: <%= @opencall.product.model_no %></li>
+        <li>Symptom: <%= @opencall.symptom %></li>
+      </ul>
     </div>
   </div>
+  <div class="row">
+    <div class="col">
+      <h4>FedEx Delivery Confirmation Address</h4>
+      <ul>
+        <li>FedEx Rating: <%= Shipping.shipping_address(@opencall).score %></li>
+        <li>FedEx Confirmation: <%= Shipping.shipping_address(@opencall).confirmed %></li>
+        <li>FedEx Type: <%= Shipping.shipping_address(@opencall).status %></li>
+      </ul>
+    </div>
+  </div>
+  <% if policy(OpenCall).edit? %>
+    <%= link_to "Update", edit_open_call_path(@opencall), class: "btn btn-primary btn-lg" %>
+  <% end %>
 </div>
+

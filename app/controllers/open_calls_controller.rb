@@ -18,6 +18,7 @@ class OpenCallsController < ApplicationController
     authorize @opencall
     if @opencall.save
       mail = OrderMailer.with(call: @opencall).create_call
+      Shipping.shipping_address(@opencall)
       mail.deliver_now
       redirect_to open_calls_path
     else
