@@ -34,8 +34,18 @@
       </ul>
     </div>
   </div>
+  <%= @markers.to_json %>
   <% if policy(OpenCall).edit? %>
     <%= link_to "Update", edit_open_call_path(@opencall), class: "btn btn-primary btn-lg" %>
   <% end %>
+  <div
+    id="map"
+    style="width: 100%;
+    height: 459px;"
+    data-markers="<%= @markers.to_json %>"
+    data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
+  </div>
 </div>
+
+
 

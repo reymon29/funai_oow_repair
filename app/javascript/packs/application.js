@@ -1,6 +1,10 @@
 import "bootstrap";
 import "datatables.net-bs4";
 import "print-js";
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { initMapbox } from '../maps/init_mapbox';
+
+initMapbox();
 
 $(document).ready(function() {
     $('#orders').DataTable();

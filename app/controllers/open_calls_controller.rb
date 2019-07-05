@@ -28,6 +28,10 @@ class OpenCallsController < ApplicationController
 
   def show
     authorize @opencall
+    @markers = [{
+          lat: @opencall.latitude,
+          lng: @opencall.longitude
+        }]
   end
 
   def edit

@@ -17,7 +17,7 @@ class OpenCall < ApplicationRecord
   after_validation :geocode
 
   def address_item
-    [address, address2, city, state, "USA"].compact.join(', ')
+    [address, address2, zip, state, "USA"].compact.join(', ')
   end
 
   def self.pending_calls_count
