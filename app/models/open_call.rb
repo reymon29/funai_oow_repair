@@ -13,6 +13,12 @@ class OpenCall < ApplicationRecord
     message: "format 5555555555" }
   validates :symptom, presence: true, length: { in: 10..250 }
   validates :status, presence: true
+  geocoded_by :address_item
+  after_validation :geocode
+
+  def address_item
+    [address, address2, city, state, "USA"].compact.join(', ')
+  end
 
   def self.pending_calls_count
     @calls = self.where(status: ["Open Call", "Left Message"])

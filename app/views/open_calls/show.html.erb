@@ -17,18 +17,18 @@
     </div>
     <div class="col-md-auto col-lg-4">
       <h2 class="text-center">Open Callback</h2>
-      <ul class="text-center">
+      <ul class="text-left">
         <li><i class="fas fa-user-secret"></i>Customer: <%= @opencall.first_name %> <%= @opencall.last_name %></li>
-        <li>Model No.: <%= @opencall.product.model_no %></li>
-        <li>Symptom: <%= @opencall.symptom %></li>
+        <li><i class="fas fa-box"></i>Model No.: <%= @opencall.product.model_no %></li>
+        <li><i class="fas fa-file-alt"></i>Symptom: <%= @opencall.symptom %></li>
       </ul>
     </div>
     <div class="col-md-auto col-lg-4">
       <h2 class="text-center">FedEx Validate</h2>
-      <ul class="text-center">
-          <li>FedEx Rating: <%= Shipping.shipping_address(@opencall).score %></li>
-          <li>FedEx Confirmation: <%= Shipping.shipping_address(@opencall).confirmed %></li>
-          <li>FedEx Type: <%= Shipping.shipping_address(@opencall).status %></li>
+      <ul class="text-left fedex-item">
+          <li>Rating: <%= Shipping.shipping_address(@opencall).score %></li>
+          <li>Confirmation: <%= Shipping.shipping_address(@opencall).confirmed %></li>
+          <li>Type: <%= Shipping.shipping_address(@opencall).status %></li>
           <li>Address: <%= @opencall.address %> <%= @opencall.address2 %> <%= @opencall.city %> <%= @opencall.state %> <%= @opencall.zip %>
           </li>
       </ul>
