@@ -56,3 +56,5 @@ $('#image_images').on('click', function(e){
    $el2.empty();
 
 });
+
+

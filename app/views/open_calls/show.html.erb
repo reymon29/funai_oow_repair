@@ -1,6 +1,28 @@
 <% title "Open Call #{@opencall.id}" %>
 <div class="conainter">
   <div class="row" style="margin: 0;">
+    <div class="button-control col-sm">
+      <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <div class="btn-group" role="group">
+          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Controls
+          </button>
+          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <% if policy(OpenCall).edit? %>
+              <%= link_to "Update", edit_open_call_path(@opencall), class: "dropdown-item" %>
+           <% end %>
+            <%= link_to "Back Open Calls", open_calls_path, class: "dropdown-item" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="timezones col-sm">
+      <iframe src="http://free.timeanddate.com/clock/i6u2j3p4/n179/fn7/fs20/tct/pct/ftb/th2/ta1" frameborder="0" width="179" height="30" allowTransparency="true"></iframe>
+      <iframe src="http://free.timeanddate.com/clock/i6u2j3p4/n64/fn7/fs20/tct/pct/ftb/th2/ta1" frameborder="0" width="179" height="30" allowTransparency="true"></iframe>
+      <iframe src="http://free.timeanddate.com/clock/i6u2j3p4/n137/fn7/fs20/tct/pct/ftb/th2/ta1" frameborder="0" width="177" height="30" allowTransparency="true"></iframe>
+    </div>
+  </div>
+  <div class="row" style="margin: 0;">
     <div class="col-md-auto col-lg-4">
       <h2 class="text-center">Open Status</h2>
     <ul class="text-left">
@@ -34,14 +56,10 @@
       </ul>
     </div>
   </div>
-  <%= @markers.to_json %>
-  <% if policy(OpenCall).edit? %>
-    <%= link_to "Update", edit_open_call_path(@opencall), class: "btn btn-primary btn-lg" %>
-  <% end %>
   <div
     id="map"
     style="width: 100%;
-    height: 459px;"
+    height: 426px;"
     data-markers="<%= @markers.to_json %>"
     data-mapbox-api-key="<%= ENV['MAPBOX_API_KEY'] %>">
   </div>

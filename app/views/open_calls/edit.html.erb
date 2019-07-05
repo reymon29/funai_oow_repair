@@ -1,1 +1,38 @@
-<%= render "opencallform" %>
+<div class="container">
+  <div class="row justify-content-center">
+  <div class="orderform-view">
+    <%= simple_form_for @opencall do |f| %>
+      <h1>Callback</h1>
+      <div class="form-row">
+        <div class="col-sm">
+          <%= f.input :case_no %>
+        </div>
+        <div class="col-sm">
+          <%= f.association :product, label: "Model number", prompt: "Choose a product", collection: @product_model %>
+        </div>
+        <div class="col-sm">
+          <%= f.input :serial_number %>
+        </div>
+    </div>
+    <div class="form-row">
+      <div class="col">
+          <%= f.input :symptom %>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-sm">
+        <%= f.input :first_name %>
+      </div>
+      <div class="col-sm">
+        <%= f.input :last_name %>
+      </div>
+      <div class="col">
+        <%= f.input :status, collection: ["Open Call", "Left Message", "Create Order", "Canceled"] %>
+      </div>
+    </div>
+      <%= f.submit "Submit", class: "btn btn-primary" %>
+    <% end %>
+    </div>
+  </div>
+</div>
+
