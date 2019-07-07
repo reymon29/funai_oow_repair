@@ -6,30 +6,30 @@
         <strong><h4 class="text-center">Controls</h4></strong>
         <li class="nav-item">
           <% if policy(@order).update? %>
-            <%= link_to edit_order_path(@order) do %>
+            <%= link_to edit_order_path(@order), class:"nav-link-order" do %>
             <i class="fas fa-folder-plus">Update Order</i>
             <% end %>
           </li>
           <li class="nav-item">
             <% if @order.bap_ship == true %>
-              <%= link_to "#{@order.product.model_no} BAP Labels", create_bnp_path(@order),
+              <%= link_to "#{@order.product.model_no} BAP Labels", create_bnp_path(@order), class: "nav-link-order",
                   data: { confirm: "Are you sure?" } %>
               <% end %>
             <% end %>
           </li>
           <li class="nav-item">
-            <a type="button" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')"> <i class="fas fa-folder-open">Print Slip</i></a>
+            <a type="button" class="nav-link-order" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')"> <i class="fas fa-folder-open">Print Slip</i></a>
           </li>
           <li class="nav-item">
             <% if policy(OrderItem).create? %>
-              <%= link_to new_order_order_item_path(@order) do %>
+              <%= link_to new_order_order_item_path(@order), class:"nav-link-order" do %>
                 <i class="fas fa-cart-plus">Add Order</i>
               <% end %>
             <% end %>
           </li>
           <li class="nav-item">
             <% if policy(Image).create? %>
-              <%= link_to new_order_image_path(@order) do %>
+              <%= link_to new_order_image_path(@order), class: "nav-link-order" do %>
                 <i class="fas fa-images">Add Images</i>
               <% end %>
             <% end %>
@@ -41,13 +41,13 @@
           </li>
           <li class="nav-item">
             <% if policy(Receiving).create? %>
-              <%= link_to new_order_receiving_path(@order) do %>
+              <%= link_to new_order_receiving_path(@order), class:"nav-link-order" do %>
                 <i class="fas fa-shipping-fast">Receive Product</i>
               <% end %>
             <% end %>
           </li>
           <li class="nav-item">
-            <a type="button" data-toggle="modal" data-target="#notesModal"><i class="fas fa-sticky-note"></i>Add Comment</a>
+            <a type="button" class="nav-link-order" data-toggle="modal" data-target="#notesModal"><i class="fas fa-sticky-note"></i>Add Comment</a>
           </li>
       </ul>
     </nav>
