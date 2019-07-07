@@ -75,7 +75,7 @@
                 <% if policy(OrderItem).destroy? %>
                   <%= link_to "Remove", order_item_path(repair),
                     method: :delete,
-                    data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %>
+                    data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm float-right" %>
                 <% end %>
               </li>
             <% end %>
