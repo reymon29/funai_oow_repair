@@ -17,7 +17,7 @@ class OpenCall < ApplicationRecord
   after_validation :geocode
 
   def address_item
-    [address, address2, zip, state, "USA"].compact.join(', ')
+    [address, city, state, zip, "USA"].compact.join(', ')
   end
 
   def self.users_time

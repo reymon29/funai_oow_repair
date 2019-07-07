@@ -26,10 +26,10 @@
     <div class="col-md-auto col-lg-4">
       <h2 class="text-center">Open Status</h2>
     <ul class="text-left">
-      <li><i class="fas fa-calendar-alt"></i>Created On: <%= @opencall.created_at.strftime("%b %d, %Y") %></li>
-      <li><i class="fas fa-clipboard-check"></i>Status: <%= @opencall.status %></li>
-      <li><i class="fas fa-phone"></i>Phone: <%= @opencall.telephone_no %></li>
-      <li><i class="fas fa-envelope-open-text"></i>Email:
+      <li><i class="fas fa-calendar-alt"></i> Created On: <%= @opencall.created_at.strftime("%b %d, %Y") %></li>
+      <li><i class="fas fa-clipboard-check"></i> Status: <%= @opencall.status %></li>
+      <li><i class="fas fa-phone"></i> Phone: <%= @opencall.telephone_no %></li>
+      <li><i class="fas fa-envelope-open-text"></i> Email:
         <% if @opencall.email.empty? %>
         <% else %>
           <a href="mailto:<%= @opencall.email %>?subject=Funai Pending Repair-<%= @opencall.product.model_no %>"><%= @opencall.email %></a>
@@ -40,9 +40,9 @@
     <div class="col-md-auto col-lg-4">
       <h2 class="text-center">Open Callback</h2>
       <ul class="text-left">
-        <li><i class="fas fa-user-secret"></i>Customer: <%= @opencall.first_name %> <%= @opencall.last_name %></li>
-        <li><i class="fas fa-box"></i>Model No.: <%= @opencall.product.model_no %></li>
-        <li><i class="fas fa-file-alt"></i>Symptom: <%= @opencall.symptom %></li>
+        <li><i class="fas fa-user-secret"></i> Customer: <%= @opencall.first_name %> <%= @opencall.last_name %></li>
+        <li><i class="fas fa-box"></i> Model No.: <%= @opencall.product.model_no %></li>
+        <li><i class="fas fa-file-alt"></i> Symptom: <%= @opencall.symptom %></li>
       </ul>
     </div>
     <div class="col-md-auto col-lg-4">
