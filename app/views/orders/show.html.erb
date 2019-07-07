@@ -1,20 +1,35 @@
 <% title "#{@order.order_no} Repair"%>
 <div class="container-fluid">
   <div class="row justify-content-md-center">
+    <nav class="col-md-2 offline">
+      <% if policy(@order).update? %>
+        <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary btn-sm" %>
+        <% if @order.bap_ship == true %>
+         <%= link_to "#{@order.product.model_no} BAP Labels", create_bnp_path(@order),
+            data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %>
+        <% end %>
+      <% end %>
+      <button type="button" class="btn btn-success btn-sm" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')">
+        Print Packing Slip
+      </button>
+      <% if policy(OrderItem).create? %>
+        <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary btn-sm" %>
+      <% end %>
+      <% if policy(Image).create? %>
+        <%= link_to "Upload Photos", new_order_image_path(@order), class: "btn btn-secondary btn-sm" %>
+     <% end %>
+      <% if policy(Repair).create? %>
+        <button id="repair_btn" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#repairModal">Repair Comments</button>
+      <% end %>
+      <% if policy(Receiving).create? %>
+        <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary btn-sm" %>
+      <% end %>
+      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#notesModal">Add Comment</button>
+    </nav>
     <div class="col show-page-order">
       <h1>
         Order No.
           <%= @order.order_no %> - <%= @order.order_status %>
-          <% if policy(@order).update? %>
-            <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary btn-sm" %>
-            <% if @order.bap_ship == true %>
-             <%= link_to "#{@order.product.model_no} BAP Labels", create_bnp_path(@order),
-                data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %>
-            <% end %>
-          <% end %>
-        <button type="button" class="btn btn-success btn-sm" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')">
-          Print Packing Slip
-        </button>
       </h1>
       <div class="row">
         <div class="col-6 col-md-4">
@@ -65,9 +80,6 @@
         </div>
         <div class="col-md-auto">
           <h4>Order Details</h4>
-          <% if policy(OrderItem).create? %>
-            <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary btn-sm" %>
-          <% end %>
           <div class="col">
             <ul class="list-group">
               <% @order.order_items.each do |repair| %>
@@ -108,9 +120,6 @@
         </div>
         <div class="col-md-auto">
           <h4>Photos</h4>
-          <% if policy(Image).create? %>
-            <%= link_to "Upload Photos", new_order_image_path(@order), class: "btn btn-secondary btn-sm" %>
-          <% end %>
           <% if @order.images.blank? %>
             <p>No photos are available</p>
           <% else %>
@@ -124,9 +133,6 @@
         </div>
         <div class="col-md-auto">
           <% if @order.receivings.empty? %>
-            <% if policy(Receiving).create? %>
-              <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary btn-sm" %>
-            <% end %>
           <% else %>
           <h4>Received</h4>
             <% @order.receivings.each do |receive| %>
@@ -136,13 +142,7 @@
             <%= receive.receive_tracking %>
             <%= receive.created_at.strftime("%b %d, %Y") %>
           <% end %>
-        <h4>Repair Status
-          <% if policy(Repair).create? %>
-            <button id="repair_btn" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#repairModal">
-              Repair Comments
-            </button>
-          <% end %>
-        </h4>
+        <h4>Repair Status</h4>
         <% end %>
         <h4>Repair Notes</h4>
         <ul>
@@ -153,9 +153,7 @@
             </li>
           <% end %>
         </ul>
-        <h4>Notes <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#notesModal">
-          Add Comment
-        </button></h4>
+        <h4>Notes</h4>
         <ul>
          <% @order.notes.each do |note| %>
             <li>
@@ -164,7 +162,7 @@
             </li> <%= note.comment %>
           <% end %>
         </ul>
-      </div>
+    </div>
   </div>
 </div>
 
