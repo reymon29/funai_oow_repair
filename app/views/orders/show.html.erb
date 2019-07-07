@@ -2,29 +2,54 @@
 <div class="container-fluid">
   <div class="row justify-content-md-center">
     <nav class="col-md-2 offline">
-      <% if policy(@order).update? %>
-        <%= link_to "Update Order", edit_order_path(@order), class: "btn btn-primary btn-sm" %>
-        <% if @order.bap_ship == true %>
-         <%= link_to "#{@order.product.model_no} BAP Labels", create_bnp_path(@order),
-            data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm" %>
-        <% end %>
-      <% end %>
-      <button type="button" class="btn btn-success btn-sm" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')">
-        Print Packing Slip
-      </button>
-      <% if policy(OrderItem).create? %>
-        <%= link_to "Add Items", new_order_order_item_path(@order), class: "btn btn-primary btn-sm" %>
-      <% end %>
-      <% if policy(Image).create? %>
-        <%= link_to "Upload Photos", new_order_image_path(@order), class: "btn btn-secondary btn-sm" %>
-     <% end %>
-      <% if policy(Repair).create? %>
-        <button id="repair_btn" type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#repairModal">Repair Comments</button>
-      <% end %>
-      <% if policy(Receiving).create? %>
-        <%= link_to "Receive", new_order_receiving_path(@order), class: "btn btn-primary btn-sm" %>
-      <% end %>
-      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#notesModal">Add Comment</button>
+      <ul class="nav flex-column">
+        <strong><h4 class="text-center">Controls</h4></strong>
+        <li class="nav-item">
+          <% if policy(@order).update? %>
+            <%= link_to edit_order_path(@order) do %>
+            <i class="fas fa-folder-plus">Update Order</i>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <% if @order.bap_ship == true %>
+              <%= link_to "#{@order.product.model_no} BAP Labels", create_bnp_path(@order),
+                  data: { confirm: "Are you sure?" } %>
+              <% end %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <a type="button" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')"> <i class="fas fa-folder-open">Print Slip</i></a>
+          </li>
+          <li class="nav-item">
+            <% if policy(OrderItem).create? %>
+              <%= link_to new_order_order_item_path(@order) do %>
+                <i class="fas fa-cart-plus">Add Order</i>
+              <% end %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <% if policy(Image).create? %>
+              <%= link_to new_order_image_path(@order) do %>
+                <i class="fas fa-images">Add Images</i>
+              <% end %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <% if policy(Repair).create? %>
+              <a id="repair_btn" type="button" data-toggle="modal" data-target="#repairModal"><i class="fas fa-tools">Repair Update</i></a>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <% if policy(Receiving).create? %>
+              <%= link_to new_order_receiving_path(@order) do %>
+                <i class="fas fa-shipping-fast">Receive Product</i>
+              <% end %>
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <a type="button" data-toggle="modal" data-target="#notesModal"><i class="fas fa-sticky-note"></i>Add Comment</a>
+          </li>
+      </ul>
     </nav>
     <div class="col show-page-order">
       <h1>

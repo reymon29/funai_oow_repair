@@ -2,15 +2,12 @@
   justify-content: space-between;
   background: white;
 }
-
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
 }
-
 .navbar-lewagon .navbar-brand img {
   width: 185px;
 }
-
 .btn-group-toggle a:hover{
   color: white;
   text-decoration: none;
@@ -18,4 +15,35 @@
 
 .btn-group-toggle a{
   color: gray;
+}
+
+.nav-item {
+  display: block;
+  font-size: 1.45rem;
+  padding: 1px 2px;
+
+  a[type="button"] {
+    box-sizing: border-box;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 1px 2px;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    -webkit-appearance: inherit;
+  }
+ a {
+  color: black;
+ }
+ a:hover {
+  color: lightgray;
+  opacity: 0.8;
+  text-decoration: none;
+ }
+ a[type="button"]:hover {
+  color: lightgray;
+  opacity: 0.8;
+  text-decoration: none;
+ }
 }
