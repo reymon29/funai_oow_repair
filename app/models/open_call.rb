@@ -20,10 +20,6 @@ class OpenCall < ApplicationRecord
     [address, city, state, zip, "USA"].compact.join(', ')
   end
 
-  def self.users_time
-
-  end
-
   def self.pending_calls_count
     @calls = self.where(status: ["Open Call", "Left Message"])
     return @calls.count

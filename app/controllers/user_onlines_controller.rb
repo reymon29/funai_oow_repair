@@ -6,6 +6,7 @@ class UserOnlinesController < ApplicationController
     authorize @useronline
     if @useronline.save
       redirect_to root_path
+      flash[:alert] = "Now available"
     else
       render 'open_calls/index'
       flash[:notice] = "Something went wrong here, please try again"
@@ -18,6 +19,7 @@ class UserOnlinesController < ApplicationController
     authorize @online
     if @online.destroy
       redirect_to root_path
+      flash[:notice] = "Offline"
     else
       render 'open_calls/index'
       flash[:notice] = "Something went wrong here, please try again"
