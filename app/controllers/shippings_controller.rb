@@ -1,5 +1,6 @@
 class ShippingsController < ApplicationController
-  before_action :order_id_find, only: [:new, :create, :edit, :update]
+  before_action :order_id_find, only: [:new, :create]
+  before_action :shipping_id_find, only: [:edit, :update, :resend]
   skip_after_action :verify_authorized, only: [:create_bnp]
 
   def index
@@ -16,13 +17,21 @@ class ShippingsController < ApplicationController
   end
 
   def edit
+    authorize @shipping
   end
 
   def update
+    authorize @shipping
+    @shipping.ready_ship = true
+    if @shipping.update(shipping_params)
+      if @shipping.name == "Return Label Fee"
+        Shipping.email_label(@shipping.order, @shipping)
+        redirect_to order_path(@shipping.order)
+      end
+    end
   end
 
   def resend
-    @shipping = shipping_id_find
     @order = order_id_find
     authorize @shipping
     mail = OrderMailer.with(order: @order, shipping: @shipping.shipout_tracking).label
@@ -49,5 +58,9 @@ class ShippingsController < ApplicationController
 
   def order_id_find
     @order = Order.find(params[:order_id])
+  end
+
+  def shipping_params
+    params.require(:shipping).permit(:name)
   end
 end

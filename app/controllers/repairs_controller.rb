@@ -21,12 +21,15 @@ class RepairsController < ApplicationController
       @repair.comment = "on #{Date.today}"
       @repair_rate = RepairRate.find_by(name: "Diagnose Fee")
       @create_major = OrderItem.new(order: @order, repair_rate: @repair_rate)
-      @order.amount = @order.amount + @repair_rate.price
-      if @repair.save
-        @create_major.save
+      if @create_major.save
+        @repair.save
+        @order.amount = @order.amount + @repair_rate.price
         @order.save
         redirect_to order_path(@order)
         flash[:notice] = "Saved and you now have pending charges"
+      else
+        redirect_to order_path(@order)
+        flash[:notice] = "Sorry, items have been added."
       end
     elsif @repair.status == "Dispose"
       @repair.comment = "on #{Date.today}"
@@ -54,8 +57,8 @@ class RepairsController < ApplicationController
         @create_ship = OrderItem.new(order: @order, repair_rate: @ship_rate)
         @order.amount = @order.amount + @repair_rate.price + @ship_rate.price
       end
-      if @repair.save
-        @create_major.save
+      if @create_major.save
+        @repair.save
         if @create_ship.save
           @shipping.order = @order
           @shipping.user = current_user

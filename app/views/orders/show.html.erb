@@ -7,55 +7,69 @@
         <li class="nav-item">
           <% if policy(@order).update? %>
             <%= link_to edit_order_path(@order), class:"nav-link-order" do %>
-            <i class="fas fa-folder-plus">Update Order</i>
-            <% end %>
-          </li>
-          <li class="nav-item">
-            <% if @order.bap_ship == true %>
-              <%= link_to "#{@order.product.model_no} BAP Labels", create_bnp_path(@order), class: "nav-link-order",
-                  data: { confirm: "Are you sure?" } %>
+            <i class="fas fa-folder-plus"> Update Order</i>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <% if @order.bap_ship == true %>
+            <%= link_to create_bnp_path(@order), class: "nav-link-order",
+                  data: { confirm: "Are you sure?" } do %>
+                <i class="fas fa-box-open">Print Box Labels</i>
+
               <% end %>
             <% end %>
-          </li>
-          <li class="nav-item">
-            <a type="button" class="nav-link-order" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')"> <i class="fas fa-folder-open">Print Slip</i></a>
-          </li>
-          <li class="nav-item">
-            <% if policy(OrderItem).create? %>
-              <%= link_to new_order_order_item_path(@order), class:"nav-link-order" do %>
-                <i class="fas fa-cart-plus">Add Order</i>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <% if policy(Payment).create? %>
+              <%= link_to new_order_payment_path(@order), class:"nav-link-order" do %>
+                <i class="fas fa-shopping-cart"> Charge Payment<span class="badge badge-light"><%= humanized_money_with_symbol(@order.amount - @order.paid) %></span></i>
               <% end %>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <a type="button" class="nav-link-order" onclick="printJS('<%= packing_slip_order_path(@order, format: :pdf) %>')"> <i class="fas fa-folder-open"> Print Slip</i></a>
+        </li>
+        <li class="nav-item">
+          <% if policy(OrderItem).create? %>
+            <%= link_to new_order_order_item_path(@order), class:"nav-link-order" do %>
+              <i class="fas fa-cart-plus"> Add Order</i>
             <% end %>
-          </li>
-          <li class="nav-item">
-            <% if policy(Image).create? %>
-              <%= link_to new_order_image_path(@order), class: "nav-link-order" do %>
-                <i class="fas fa-images">Add Images</i>
-              <% end %>
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <% if policy(Image).create? %>
+            <%= link_to new_order_image_path(@order), class: "nav-link-order" do %>
+              <i class="fas fa-images"> Add Images</i>
             <% end %>
-          </li>
-          <li class="nav-item">
-            <% if policy(Repair).create? %>
-              <a id="repair_btn" type="button" data-toggle="modal" data-target="#repairModal"><i class="fas fa-tools">Repair Update</i></a>
-            <% end %>
-          </li>
+          <% end %>
+        </li>
+        <% if @order.receivings.empty? %>
           <li class="nav-item">
             <% if policy(Receiving).create? %>
               <%= link_to new_order_receiving_path(@order), class:"nav-link-order" do %>
-                <i class="fas fa-shipping-fast">Receive Product</i>
-              <% end %>
+              <i class="fas fa-shipping-fast"> Receive Product</i>
             <% end %>
-          </li>
-          <li class="nav-item">
-            <a type="button" class="nav-link-order" data-toggle="modal" data-target="#notesModal"><i class="fas fa-sticky-note"></i>Add Comment</a>
-          </li>
+          <% end %>
+        </li>
+        <% else %>
+          <% if @order.order_status != "Completed, Shipped" %>
+            <li class="nav-item">
+              <% if policy(Repair).create? %>
+                <a id="repair_btn" type="button" data-toggle="modal" class="nav-link-order" data-target="#repairModal"><i class="fas fa-tools"> Repair Update</a></i>
+              <% end %>
+            </li>
+          <% end %>
+        <% end %>
+        <li class="nav-item">
+          <a type="button" class="nav-link-order" data-toggle="modal" data-target="#notesModal"><i class="fas fa-sticky-note"> Add Comment</a></i>
+        </li>
       </ul>
     </nav>
     <div class="col show-page-order">
       <h1>
         Order No.
-          <%= @order.order_no %> - <%= @order.order_status %>
-      </h1>
+          <%= @order.order_no %> - <%= @order.order_status %></h1>
       <div class="row">
         <div class="col-6 col-md-4">
           <p>
@@ -66,42 +80,33 @@
           </p>
         </div>
         <div class="col-6 col-md-4">
-          Shipping address
+          Contact Info
+          <%= @order.first_name %> <%= @order.last_name %> <%= @order.telephone_no %>
           <address>
             <%= @order.address %>
             <%= @order.address2 %>
             <%= @order.city %>
             <%= @order.state %>
             <%= @order.zip %>
-          </address>
-        </div>
-        <div class="col-6 col-md-4">
-          Contact Info
-          <address>
-            <%= @order.telephone_no %>
             <% if @order.email.empty? %>
             <% else %>
-              <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>"><%= @order.email %></a>
+              <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>">e-mail</a>
            <% end %>
           </address>
         </div>
         <div class="col-md-auto">
-          <h4>Model</h4>
+          <h4>Order Total</h4>
+          Total:<%= humanized_money_with_symbol(@order.amount) %>
+          Paid: <%= humanized_money_with_symbol(@order.paid) %>
+          Pending: <%= humanized_money_with_symbol(@order.amount - @order.paid) %>
+        </div>
+        <div class="col-md-auto">
+          <h4>Product</h4>
           <ul class="list-group">
             <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
             <li class="list-group-item">Serial No: <%= @order.serial_number %></li>
             <li class="list-group-item">Symptom: <%= @order.symptom %></li>
           </ul>
-        </div>
-        <div class="col-md-auto">
-           <h4>Order Total</h4>
-            Total:<%= humanized_money_with_symbol(@order.amount) %>
-            Paid: <%= humanized_money_with_symbol(@order.paid) %>
-            Pending: <%= humanized_money_with_symbol(@order.amount - @order.paid) %>
-            <% if policy(Payment).create? %>
-              <h5>Charge Fees</h5>
-              <%= link_to "Charge", new_order_payment_path(@order) %>
-            <% end %>
         </div>
         <div class="col-md-auto">
           <h4>Order Details</h4>
@@ -154,21 +159,18 @@
               <% end %>
             <% end %>
           <% end %>
-
         </div>
         <div class="col-md-auto">
-          <% if @order.receivings.empty? %>
-          <% else %>
           <h4>Received</h4>
-            <% @order.receivings.each do |receive| %>
+          <% @order.receivings.each do |receive| %>
             <%= receive.model_no %>
             <%= receive.serial_number %>
             <%= receive.receive_courier %>
             <%= receive.receive_tracking %>
             <%= receive.created_at.strftime("%b %d, %Y") %>
-          <% end %>
-        <h4>Repair Status</h4>
         <% end %>
+      </div>
+      <div class="col-md-auto">
         <h4>Repair Notes</h4>
         <ul>
           <% @order.repairs.each do |repair| %>
@@ -178,6 +180,8 @@
             </li>
           <% end %>
         </ul>
+      </div>
+      <div class="col-md-auto">
         <h4>Notes</h4>
         <ul>
          <% @order.notes.each do |note| %>

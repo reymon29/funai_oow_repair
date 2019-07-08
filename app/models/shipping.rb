@@ -18,10 +18,7 @@ class Shipping < ApplicationRecord
                         :meter => ENV['FEDEX_METER_TEST'],
                         :mode => 'development')
     address_result = fedex.validate_address(:address => address)
-  rescue  Fedex::RateError => msg
-      puts "#{msg} Please try again at a later time"
   end
-
 
 
   def self.ship_out_tracking(order)
@@ -34,6 +31,7 @@ class Shipping < ApplicationRecord
     packages = []
     packages << {
       :weight => {:units => "LB", :value => 15},
+      :insured_value => {:currency => "USD", :amount => 250},
       :customer_references => [order.order_no, {type: "DEPARTMENT_NUMBER", value: "DVD-OOW"},
         {type: "P_O_NUMBER", value: order.product.model_no + order.serial_number}],
       :dimensions => {:length => 14, :width => 9, :height => 12, :units => "IN" }}
@@ -84,9 +82,9 @@ class Shipping < ApplicationRecord
                   :shipping_options => shipping_options)
 
     rescue  Fedex::RateError => msg
-      puts "#{msg} Please try again at a later time"
+     @fedex_error = "#{msg} Please try again at a later time"
     end
-
+    puts rate
     label = fedex.label(:filename => "public/uploads/labels/example.pdf",
                     :shipper=> shipper,
                     :recipient => recipient,
