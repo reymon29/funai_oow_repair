@@ -22,7 +22,7 @@
         </li>
         <li class="nav-item">
           <% if policy(Payment).create? %>
-              <%= link_to new_order_payment_path(@order), class:"nav-link-order" do %>
+              <%= link_to new_order_payment_path(@order), id: "payment-id", class:"nav-link-order" do %>
                 <i class="fas fa-shopping-cart"> Charge Payment<span class="badge badge-light"><%= humanized_money_with_symbol(@order.amount - @order.paid) %></span></i>
               <% end %>
           <% end %>
@@ -53,7 +53,8 @@
           <% end %>
         </li>
         <% else %>
-          <% if @order.order_status != "Completed, Shipped" %>
+          <% if @order.order_status == "Completed, Shipped" || @order.order_status == "Completed, Disposed" %>
+          <% else %>
             <li class="nav-item">
               <% if policy(Repair).create? %>
                 <a id="repair_btn" type="button" data-toggle="modal" class="nav-link-order" data-target="#repairModal"><i class="fas fa-tools"> Repair Update</a></i>
@@ -80,8 +81,9 @@
           </p>
         </div>
         <div class="col-6 col-md-4">
-          Contact Info
-          <%= @order.first_name %> <%= @order.last_name %> <%= @order.telephone_no %>
+         <h4> Contact Info</h4>
+            <%= @order.first_name %> <%= @order.last_name %> <%= @order.telephone_no %>
+            <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>">e-mail</a>
           <address>
             <%= @order.address %>
             <%= @order.address2 %>
@@ -90,7 +92,7 @@
             <%= @order.zip %>
             <% if @order.email.empty? %>
             <% else %>
-              <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>">e-mail</a>
+
            <% end %>
           </address>
         </div>
@@ -294,4 +296,9 @@
     });
   });
 </script>
-
+<script>
+  const paymentPageLink = document.getElementById("payment-id")
+  if(paymentPageLink.innerText == " Charge Payment$0"){
+    paymentPageLink.classList.add("disabled");
+  }
+</script>

@@ -2,6 +2,10 @@ class OrderItemsController < ApplicationController
   before_action :order_id_find, only: [:new, :create]
 
   def new
+    if @order.order_status == "Completed, Shipped" || @order.order_status == "Completed, Disposed"
+      redirect_to order_path(@order)
+      flash[:notice] = "Order is completed, cannot be adjusted"
+    end
     @order_item = OrderItem.new
     authorize @order_item
   end

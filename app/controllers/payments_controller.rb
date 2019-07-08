@@ -3,6 +3,10 @@ class PaymentsController < ApplicationController
 
   def new
     @order.amount = @order.amount - @order.paid
+    if @order.amount == 0
+      redirect_to order_path(@order)
+      flash[:notice] = "Add something to the order, there is no amount due."
+    end
     @payment = paid_check
     @customer = stripe_customer
     authorize @payment
