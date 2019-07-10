@@ -10,12 +10,14 @@
 abbr[title]{
   color: red;
 }
-
+.col {
+  flex-grow: 0.95;
+}
 .show-page-order {
   background: lightgray;
   border-radius: 20px;
   box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-  margin: 15px 30px;
+  margin: 8px 96px;
   color: #504440;
 }
 
@@ -48,4 +50,15 @@ li {
   list-style-type: none;
 }
 
+.order-details {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  padding-bottom: 12px;
+  margin: 10px;
+  h4 {
+    text-align: center;
+    padding-top: 3px;
+  }
+}
 

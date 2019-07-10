@@ -30,3 +30,12 @@
   background-color: yellow;
   font-size: 24px;
 }
+
+.fa-trash {
+  color: #F7B11B;
+  font-size: 16px;
+  @include float-right;
+}
+.fa-fedex {
+  font-size: 24px;
+}

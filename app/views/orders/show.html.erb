@@ -68,9 +68,7 @@
       </ul>
     </nav>
     <div class="col show-page-order">
-      <h1>
-        Order No.
-          <%= @order.order_no %> - <%= @order.order_status %></h1>
+      <h1>Order No. <%= @order.order_no %> - <%= @order.order_status %></h1>
       <div class="row">
         <div class="col-6 col-md-4">
           <p>
@@ -80,29 +78,18 @@
             <%= @order.created_at.strftime("%b %d, %Y") %><br>
           </p>
         </div>
-        <div class="col-6 col-md-4">
-         <h4> Contact Info</h4>
-            <%= @order.first_name %> <%= @order.last_name %> <%= @order.telephone_no %>
-            <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>">e-mail</a>
+        <div class="col-md-6  ml-auto">
+          <%= @order.first_name %> <%= @order.last_name %> <%= @order.telephone_no %>
+          <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>">e-mail</a>
           <address>
             <%= @order.address %>
             <%= @order.address2 %>
             <%= @order.city %>
             <%= @order.state %>
             <%= @order.zip %>
-            <% if @order.email.empty? %>
-            <% else %>
-
-           <% end %>
           </address>
         </div>
-        <div class="col-md-auto">
-          <h4>Order Total</h4>
-          Total:<%= humanized_money_with_symbol(@order.amount) %>
-          Paid: <%= humanized_money_with_symbol(@order.paid) %>
-          Pending: <%= humanized_money_with_symbol(@order.amount - @order.paid) %>
-        </div>
-        <div class="col-md-auto">
+        <div class="col-md-auto order-details">
           <h4>Product</h4>
           <ul class="list-group">
             <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
@@ -110,29 +97,46 @@
             <li class="list-group-item">Symptom: <%= @order.symptom %></li>
           </ul>
         </div>
-        <div class="col-md-auto">
+        <div class="col-4 order-details">
+          <h4>Order Total</h4>
+          <ul class="list-group">
+            <li class="list-group-item">
+              Total:<%= humanized_money_with_symbol(@order.amount) %>
+            </li>
+            <li class="list-group-item">
+              Paid: <%= humanized_money_with_symbol(@order.paid) %>
+            </li>
+            <li class="list-group-item">
+              Pending: <%= humanized_money_with_symbol(@order.amount - @order.paid) %>
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-auto order-details">
           <h4>Order Details</h4>
           <div class="col">
             <ul class="list-group">
               <% @order.order_items.each do |repair| %>
               <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %>
                 <% if policy(OrderItem).destroy? %>
-                  <%= link_to "Remove", order_item_path(repair),
+                  <%= link_to order_item_path(repair),
                     method: :delete,
-                    data: { confirm: "Are you sure?" }, class: "btn btn-warning btn-sm float-right" %>
+                    data: { confirm: "Are you sure?" } do %>
+                      <i class="fas fa-trash"></i>
+                    <% end %>
                 <% end %>
               </li>
             <% end %>
           </ul>
           </div>
         </div>
-        <div class="col-md-auto">
+        <div class="col-md-auto order-details">
           <h4>Shipping</h4>
-          <ul>
-            <% if @order.shippings.nil? %>
+            <% if @order.shippings.empty? %>
+            <span><i class="fab fa-fedex"></i></span>
             <% else %>
+            <ul class="list-group">
             <% @order.shippings.each do |item| %>
-              <li>
+              <li class="list-group-item">
                 <%= item.name %> - <%= item.ready_ship == false ? "Awaiting on Payment" : link_to(item.shipout_tracking, "https://www.fedex.com/apps/fedextrack/?tracknumbers=#{item.shipout_tracking}&language=en&cntry_code=us", target: "_blank") %>
                 <% if item.label.nil? %>
                 <% else %>
@@ -150,7 +154,7 @@
           <% end %>
           </ul>
         </div>
-        <div class="col-md-auto">
+        <div class="col-md-auto order-details">
           <h4>Photos</h4>
           <% if @order.images.blank? %>
             <p>No photos are available</p>
@@ -162,7 +166,7 @@
             <% end %>
           <% end %>
         </div>
-        <div class="col-md-auto">
+        <div class="col-md-auto order-details">
           <h4>Received</h4>
           <% @order.receivings.each do |receive| %>
             <%= receive.model_no %>
@@ -172,7 +176,7 @@
             <%= receive.created_at.strftime("%b %d, %Y") %>
         <% end %>
       </div>
-      <div class="col-md-auto">
+      <div class="col-md-auto order-details">
         <h4>Repair Notes</h4>
         <ul>
           <% @order.repairs.each do |repair| %>
@@ -183,7 +187,7 @@
           <% end %>
         </ul>
       </div>
-      <div class="col-md-auto">
+      <div class="col-md-auto order-details">
         <h4>Notes</h4>
         <ul>
          <% @order.notes.each do |note| %>
