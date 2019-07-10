@@ -91,7 +91,7 @@
         </div>
         <div class="col-md-auto order-details">
           <h4>Product</h4>
-          <ul class="list-group">
+          <ul class="list-group p-2">
             <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
             <li class="list-group-item">Serial No: <%= @order.serial_number %></li>
             <li class="list-group-item">Symptom: <%= @order.symptom %></li>
@@ -99,7 +99,7 @@
         </div>
         <div class="col-4 order-details">
           <h4>Order Total</h4>
-          <ul class="list-group">
+          <ul class="list-group p-2">
             <li class="list-group-item">
               Total:<%= humanized_money_with_symbol(@order.amount) %>
             </li>
@@ -132,26 +132,31 @@
         <div class="col-md-auto order-details">
           <h4>Shipping</h4>
             <% if @order.shippings.empty? %>
-            <span><i class="fab fa-fedex"></i></span>
+              <span>Awaiting order</span>
             <% else %>
             <ul class="list-group">
-            <% @order.shippings.each do |item| %>
-              <li class="list-group-item">
-                <%= item.name %> - <%= item.ready_ship == false ? "Awaiting on Payment" : link_to(item.shipout_tracking, "https://www.fedex.com/apps/fedextrack/?tracknumbers=#{item.shipout_tracking}&language=en&cntry_code=us", target: "_blank") %>
-                <% if item.label.nil? %>
-                <% else %>
-                   <button type="button" onclick="printJS('<%= root_path + item.label %>')">
-                      Print PDF
-                   </button>
-                 <% end %>
-                 <% if policy(Shipping).resend? %>
-                  <% if item.name == "Return Label Fee" %>
-                    <%=  item.ready_ship == false ? "" : link_to("resend email", resend_order_shipping_path(@order, item), data: { confirm: "Are you sure?" }, class: "btn btn-success btn-sm") %>
+              <% @order.shippings.each do |item| %>
+                <li class="list-group-item">
+                  <%= item.name %> - <%= item.ready_ship == false ? "Awaiting on Payment" : link_to(item.shipout_tracking, "https://www.fedex.com/apps/fedextrack/?tracknumbers=#{item.shipout_tracking}&language=en&cntry_code=us", target: "_blank") %>
+                  <% if item.label.nil? %>
+                  <% else %>
+                     <button class="btn btn-secondary btn-sm" type="button" onclick="printJS('<%= root_path + item.label %>')">
+                        <i class="fas fa-file-pdf"> Print</i>
+                     </button>
+                   <% end %>
+                   <% if policy(Shipping).resend? %>
+                    <% if item.name == "Return Label Fee" %>
+                      <% if item.ready_ship == false %>
+                      <% else %>
+                        <%= link_to(resend_order_shipping_path(@order, item), data: { confirm: "Are you sure?" }, class: "btn btn-secondary btn-sm") do %>
+                          <i class="fas fa-paper-plane"> Resend</i>
+                        <% end %>
+                      <% end %>
+                    <% end %>
                   <% end %>
-                <% end %>
-              </li>
+                </li>
+              <% end %>
             <% end %>
-          <% end %>
           </ul>
         </div>
         <div class="col-md-auto order-details">
