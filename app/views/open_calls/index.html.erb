@@ -3,10 +3,10 @@
     <nav class="col-md-2 offline">
       <h3>Online (Ohio)</h3>
       <% if UserOnline.my_online_users.empty? %>
-        <span class="offline-text">Offline-Setup Open Call, we will callback later.</span>
+        <span class="offline-text">Offline-Setup an Open Call and we will callback later.</span>
       <% else %>
         <% UserOnline.my_online_users.each do |user| %>
-          <i class="fas fa-user-alt"></i> <%= user.user.first_name %> - <%= user.status %>
+          <i class="fas fa-user-alt"></i> <%= user.user.first_name %> - <%= user.status %>-EXT: 119
         <% end %>
       <% end %>
       <% if policy(OpenCall).create? %>

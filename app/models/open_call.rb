@@ -13,6 +13,8 @@ class OpenCall < ApplicationRecord
     message: "format 5555555555" }
   validates :symptom, presence: true, length: { in: 10..250 }
   validates :status, presence: true
+  validates :serial_number, presence: true, length: { in: 9..14 }
+  validates :email, presence: true, format: { with: Devise.email_regexp, message: "invalid email" }
   geocoded_by :address_item
   after_validation :geocode
 
