@@ -140,7 +140,7 @@
                   <%= item.name %> - <%= item.ready_ship == false ? "Awaiting on Payment" : link_to(item.shipout_tracking, "https://www.fedex.com/apps/fedextrack/?tracknumbers=#{item.shipout_tracking}&language=en&cntry_code=us", target: "_blank") %>
                   <% if item.label.nil? %>
                   <% else %>
-                     <button class="btn btn-secondary btn-sm" type="button" onclick="printJS('<%= root_path + item.label %>')">
+                     <button class="btn btn-secondary btn-sm float-right" type="button" onclick="printJS('<%= root_path + item.label %>')">
                         <i class="fas fa-file-pdf"> Print</i>
                      </button>
                    <% end %>
