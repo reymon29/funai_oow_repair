@@ -1,5 +1,5 @@
 class OrderMailer < ApplicationMailer
-
+  before_action :add_inline_attachment
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -25,5 +25,10 @@ class OrderMailer < ApplicationMailer
   def create_call
     @call = params[:call]
     mail(to: 'nhart@funaiservice.com', subject: "DVD OOW call back request created")
+  end
+
+  private
+  def add_inline_attachment
+    attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/images/logo.png")
   end
 end

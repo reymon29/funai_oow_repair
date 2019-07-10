@@ -1,22 +1,28 @@
 <% title "Process payment" %>
-<h1>Purchase of <%= @order.order_no %></h1>
-<%= form_tag order_payments_path(@order) do %>
-  <article>
-    <label class="amount">
-      <span>Amount: <%= humanized_money_with_symbol(@order.amount) %></span>
-    </label>
-  </article>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>Purchase of <%= @order.order_no %></h1>
+      <%= form_tag order_payments_path(@order) do %>
+        <article>
+          <label class="amount">
+            <span>Amount: <%= humanized_money_with_symbol(@order.amount) %></span>
+          </label>
+        </article>
 
-  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-    data-name="My DVD Product Repair"
-    data-email="<%= @order.email %>"
-    data-description="<%= @order.order_no %>"
-    data-amount="<%= @order.amount_cents %>"
-    data-currency="<%= @order.amount.currency %>"></script>
-<% end %>
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-name="My DVD Product Repair"
+          data-email="<%= @order.email %>"
+          data-description="<%= @order.order_no %>"
+          data-amount="<%= @order.amount_cents %>"
+          data-currency="<%= @order.amount.currency %>"></script>
+      <% end %>
 
 
-<%= form_tag order_payments_path(@order) do %>
-  <%= submit_tag "Charge Last Card Used" %>
-<% end %>
+      <%= form_tag order_payments_path(@order) do %>
+        <%= submit_tag "Charge Last Card Used" %>
+      <% end %>
+    </div>
+  </div>
+</div>

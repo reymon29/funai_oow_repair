@@ -10,7 +10,7 @@
     </div>
     <div class="col-sm text-center">
       <span class="list-group-item active">Box and Packing Shipping</span>
-      <ul>
+      <ul style="margin-top: 10px;">
         <% @pending_shipping.each do |ship|  %>
           <li><%= ship.product.model_no %> - <%= link_to "Open Order", order_path(ship), class: "btn btn-warning" %> <%= ship.order_no %></li>
         <% end %>
