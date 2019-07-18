@@ -3,7 +3,7 @@
   <div class="row justify-content-md-center">
     <nav class="col-md-2 offline">
       <ul class="nav flex-column">
-        <strong><h4 class="text-center">Controls</h4></strong>
+        <strong><h4 class="text-center list-group-item active">Controls</h4></strong>
         <li class="nav-item">
           <% if policy(@order).update? %>
             <%= link_to edit_order_path(@order), class:"nav-link-order" do %>
@@ -73,9 +73,9 @@
         <div class="col order-details">
           <h4>Order Reference</h4>
           <ul class="list-group">
-            <li class="list-group-item">Case No.<%= @order.case_no %><br>Created On <%= @order.created_at.strftime("%b %d, %Y") %></li>
+            <li class="list-group-item">Case No.<%= @order.case_no %></li>
             <li class="list-group-item">Name <%= @order.first_name %> <%= @order.last_name %></li>
-            <li class="list-group-item"><%= @order.address %> <%= @order.address2 %> <%= @order.city %> <%= @order.state %> <%= @order.zip %>
+            <li class="list-group-item">Address <%= @order.address %> <%= @order.address2 %> <%= @order.city %> <%= @order.state %> <%= @order.zip %>
             </li>
             <li class="list-group-item">Contact No. <%= @order.telephone_no %></li>
             <li class="list-group-item">Email <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>">e-mail</a></li>
@@ -83,10 +83,11 @@
         </div>
         <div class="col order-details">
           <h4>Product</h4>
-          <ul class="list-group p-2">
-            <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
-            <li class="list-group-item">Serial No: <%= @order.serial_number %></li>
-            <li class="list-group-item">Symptom: <%= @order.symptom %></li>
+          <ul class="list-group">
+            <li class="list-group-item">Created On <%= @order.created_at.strftime("%b %d, %Y") %></li>
+            <li class="list-group-item">Model No <%= @order.product.model_no %></li>
+            <li class="list-group-item">Serial No <%= @order.serial_number %></li>
+            <li class="list-group-item">Symptom <%= @order.symptom %></li>
           </ul>
         </div>
         <div class="col order-details">
