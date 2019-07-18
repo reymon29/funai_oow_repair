@@ -70,26 +70,18 @@
     <div class="col show-page-order">
       <h1>Order No. <%= @order.order_no %> - <%= @order.order_status %></h1>
       <div class="row">
-        <div class="col-6 col-md-4">
-          <p>
-            Case No.
-            <%= @order.case_no %><br>
-            Created On
-            <%= @order.created_at.strftime("%b %d, %Y") %><br>
-          </p>
+        <div class="col-4 order-details">
+          <h4>Order Reference</h4>
+          <ul class="list-group">
+            <li class="list-group-item">Case No.<%= @order.case_no %><br>Created On <%= @order.created_at.strftime("%b %d, %Y") %></li>
+            <li class="list-group-item">Name <%= @order.first_name %> <%= @order.last_name %></li>
+            <li class="list-group-item"><%= @order.address %> <%= @order.address2 %> <%= @order.city %> <%= @order.state %> <%= @order.zip %>
+            </li>
+            <li class="list-group-item">Contact No. <%= @order.telephone_no %></li>
+            <li class="list-group-item">Email <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>">e-mail</a></li>
+          </ul>
         </div>
-        <div class="col-md-6  ml-auto">
-          <%= @order.first_name %> <%= @order.last_name %> <%= @order.telephone_no %>
-          <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>">e-mail</a>
-          <address>
-            <%= @order.address %>
-            <%= @order.address2 %>
-            <%= @order.city %>
-            <%= @order.state %>
-            <%= @order.zip %>
-          </address>
-        </div>
-        <div class="col-md-auto order-details">
+        <div class="col-4 order-details">
           <h4>Product</h4>
           <ul class="list-group p-2">
             <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
@@ -97,7 +89,7 @@
             <li class="list-group-item">Symptom: <%= @order.symptom %></li>
           </ul>
         </div>
-        <div class="col-4 order-details">
+        <div class="col-3 order-details">
           <h4>Order Total</h4>
           <ul class="list-group p-2">
             <li class="list-group-item">
@@ -111,6 +103,8 @@
             </li>
           </ul>
         </div>
+      </div>
+      <div class="row">
         <div class="col-md-auto order-details">
           <h4>Order Details</h4>
           <div class="col">
@@ -121,7 +115,7 @@
                   <%= link_to order_item_path(repair),
                     method: :delete,
                     data: { confirm: "Are you sure?" } do %>
-                      <i class="fas fa-trash"></i>
+                      <i class="fas fa-trash" style="margin-left: 12px;"></i>
                     <% end %>
                 <% end %>
               </li>
@@ -140,7 +134,7 @@
                   <%= item.name %> - <%= item.ready_ship == false ? "Awaiting on Payment" : link_to(item.shipout_tracking, "https://www.fedex.com/apps/fedextrack/?tracknumbers=#{item.shipout_tracking}&language=en&cntry_code=us", target: "_blank") %>
                   <% if item.label.nil? %>
                   <% else %>
-                     <button class="btn btn-secondary btn-sm float-right" type="button" onclick="printJS('<%= root_path + item.label %>')">
+                     <button class="btn btn-secondary btn-sm float-right" style="margin-left: 3px;" type="button" onclick="printJS('<%= root_path + item.label %>')">
                         <i class="fas fa-file-pdf"> Print</i>
                      </button>
                    <% end %>
@@ -171,6 +165,8 @@
             <% end %>
           <% end %>
         </div>
+      <% if @order.receivings.empty? %>
+      <% else %>
         <div class="col-md-auto order-details">
           <h4>Received</h4>
           <% @order.receivings.each do |receive| %>
@@ -179,19 +175,23 @@
             <%= receive.receive_courier %>
             <%= receive.receive_tracking %>
             <%= receive.created_at.strftime("%b %d, %Y") %>
-        <% end %>
-      </div>
-      <div class="col-md-auto order-details">
-        <h4>Repair Notes</h4>
-        <ul>
-          <% @order.repairs.each do |repair| %>
-            <li>
-              <%= repair.status %>
-              <%= repair.comment %>
-            </li>
           <% end %>
-        </ul>
-      </div>
+        </div>
+      <% end %>
+      <% if @order.repairs.empty? %>
+      <% else %>
+        <div class="col-md-auto order-details">
+          <h4>Repair Notes</h4>
+          <ul>
+            <% @order.repairs.each do |repair| %>
+              <li>
+                <%= repair.status %>
+                <%= repair.comment %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
       <div class="col-md-auto order-details">
         <h4>Notes</h4>
         <ul>
