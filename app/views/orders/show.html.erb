@@ -40,7 +40,7 @@
         <li class="nav-item">
           <% if policy(Image).create? %>
             <%= link_to new_order_image_path(@order), class: "nav-link-order" do %>
-              <i class="fas fa-images"> Add Images</i>
+              <i class="fas fa-images"> Add Photos</i>
             <% end %>
           <% end %>
         </li>
@@ -70,7 +70,7 @@
     <div class="col show-page-order">
       <h1>Order No. <%= @order.order_no %> - <%= @order.order_status %></h1>
       <div class="row">
-        <div class="col-4 order-details">
+        <div class="col order-details">
           <h4>Order Reference</h4>
           <ul class="list-group">
             <li class="list-group-item">Case No.<%= @order.case_no %><br>Created On <%= @order.created_at.strftime("%b %d, %Y") %></li>
@@ -81,7 +81,7 @@
             <li class="list-group-item">Email <a href="mailto:<%= @order.email %>?subject=Funai Repair Order No. <%= @order.order_no %>-<%= @order.product.model_no %>">e-mail</a></li>
           </ul>
         </div>
-        <div class="col-4 order-details">
+        <div class="col order-details">
           <h4>Product</h4>
           <ul class="list-group p-2">
             <li class="list-group-item">Model No: <%= @order.product.model_no %></li>
@@ -89,7 +89,7 @@
             <li class="list-group-item">Symptom: <%= @order.symptom %></li>
           </ul>
         </div>
-        <div class="col-3 order-details">
+        <div class="col order-details">
           <h4>Order Total</h4>
           <ul class="list-group p-2">
             <li class="list-group-item">
@@ -108,25 +108,29 @@
         <div class="col-md-auto order-details">
           <h4>Order Details</h4>
           <div class="col">
-            <ul class="list-group">
-              <% @order.order_items.each do |repair| %>
-              <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %>
-                <% if policy(OrderItem).destroy? %>
-                  <%= link_to order_item_path(repair),
-                    method: :delete,
-                    data: { confirm: "Are you sure?" } do %>
-                      <i class="fas fa-trash" style="margin-left: 12px;"></i>
-                    <% end %>
+            <% if @order.order_items.empty? %>
+              <span>Add to order</span>
+            <% else %>
+              <ul class="list-group">
+                <% @order.order_items.each do |repair| %>
+                <li class="list-group-item"><%= repair.repair_rate.name %>-<%= humanized_money_with_symbol(repair.repair_rate.price) %>
+                  <% if policy(OrderItem).destroy? %>
+                    <%= link_to order_item_path(repair),
+                      method: :delete,
+                      data: { confirm: "Are you sure?" } do %>
+                        <i class="fas fa-trash" style="margin-left: 12px;"></i>
+                      <% end %>
+                  <% end %>
+                </li>
                 <% end %>
-              </li>
+              </ul>
             <% end %>
-          </ul>
           </div>
         </div>
         <div class="col-md-auto order-details">
           <h4>Shipping</h4>
             <% if @order.shippings.empty? %>
-              <span>Awaiting order</span>
+              <span>No assigned shipping</span>
             <% else %>
             <ul class="list-group">
               <% @order.shippings.each do |item| %>
