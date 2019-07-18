@@ -5,6 +5,7 @@ class OrderMailerPreview < ActionMailer::Preview
   # Preview this email at http://localhost:3000/rails/mailers/order_mailer/invoice
   # Preview this email at http://localhost:3000/rails/mailers/order_mailer/create_call
   # Preview this email at http://localhost:3000/rails/mailers/order_mailer/repair_completed
+  # Preview this email at http://localhost:3000/rails/mailers/order_mailer/mail_address
   def label
     order = Order.last
     shipping = Shipping.last.shipout_tracking
@@ -14,6 +15,11 @@ class OrderMailerPreview < ActionMailer::Preview
   def invoice
     order = Order.last
     OrderMailer.with(order: order).invoice
+  end
+
+  def mail_address
+    order = Order.last
+    OrderMailer.with(order: order).mail_address
   end
 
   def create_call

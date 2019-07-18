@@ -8,7 +8,13 @@ class OrderMailer < ApplicationMailer
   def label
     @order = params[:order]
     @shipping = params[:shipping]
-    mail(to: @order.email, subject: "🛠Thank you for the order " + @order.order_no.to_s + " "+ @order.product.model_no + " this is your shipping label.").attachments[@shipping + ".pdf"] = File.read('public/uploads/labels/'+ @shipping +'.pdf')
+    mail(to: @order.email, subject: "🛠Thank you for the order " + @order.order_no.to_s + " "+ @order.product.model_no + " this is your shipping label").attachments[@shipping + ".pdf"] = File.read('public/uploads/labels/'+ @shipping +'.pdf')
+  end
+
+  def mail_address
+    @order = params[:order]
+    @shipping = params[:shipping]
+    mail(to: @order.email, subject: "🛠Thank you for the order " + @order.order_no.to_s + " "+ @order.product.model_no + " our mail location")
   end
 
   def invoice
@@ -28,6 +34,7 @@ class OrderMailer < ApplicationMailer
   end
 
   private
+
   def add_inline_attachment
     attachments.inline["logo.png"] = File.read("#{Rails.root}/app/assets/images/logo.png")
   end

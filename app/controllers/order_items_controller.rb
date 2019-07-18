@@ -22,6 +22,8 @@ class OrderItemsController < ApplicationController
         if @repair_item.sku == "SHIP003"
           @order.bap_ship = true
         elsif @repair_item.sku == "SHIP004"
+          mail = OrderMailer.with(order: @order).mail_address
+          mail.deliver_now
         else
           @shipping.order = @order
           @shipping.user = current_user

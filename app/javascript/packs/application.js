@@ -58,3 +58,32 @@ $('#image_images').on('click', function(e){
 });
 
 
+const repairReviewItem = () => {
+  const repairStatusBtn = document.getElementById("repair_status")
+  const repairBtn = document.getElementById("repair_btn")
+  const repairModal = document.getElementById("repair_modal")
+  const repairComment = document.querySelector(".repair_comment")
+  const repairCharge = document.querySelector(".no_model_fields_repair_charge")
+  if (repairBtn) {
+      repairBtn.addEventListener("click", () => {
+      if(repairStatusBtn.value != "Reviewed"){
+        repairComment.style.display = "none";
+        repairCharge.style.display = "none";
+      } else {
+        repairComment.style.display = "inherit";
+        repairCharge.style.display = "inherit";
+      }
+      repairStatusBtn.addEventListener("change", ()=> {
+        if(repairStatusBtn.value != "Reviewed"){
+        repairComment.style.display = "none";
+        repairCharge.style.display = "none";
+        } else {
+        repairComment.style.display = "inherit";
+        repairCharge.style.display = "inherit";
+        }
+      });
+    });
+  }
+}
+
+repairReviewItem();

@@ -1,4 +1,14 @@
-<%= simple_form_for [@order, @order_item] do |f| %>
-  <%= f.association :repair_rate, label_method: :name_type %>
-  <%= f.submit %>
-<% end %>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="orderform-view col-md-6">
+      <%= simple_form_for [@order, @order_item] do |f| %>
+        <h1>Order Item</h1>
+        <div class="form-row">
+          <div class="col">
+            <%= f.association :repair_rate, label_method: :name_type, prompt: "Choose a item" %>
+          </div>
+          <%= f.submit %>
+      <% end %>
+    </div>
+  </div>
+</div>
