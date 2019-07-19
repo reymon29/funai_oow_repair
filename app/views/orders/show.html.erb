@@ -88,6 +88,13 @@
             <li class="list-group-item">Model No <%= @order.product.model_no %></li>
             <li class="list-group-item">Serial No <%= @order.serial_number %></li>
             <li class="list-group-item">Symptom <%= @order.symptom %></li>
+            <% if @order.receivings.empty? %>
+            <li class="list-group-item">Received not yet</li>
+            <% else %>
+              <% @order.receivings.each do |receive| %>
+                <li class="list-group-item">Received <%= receive.model_no %> <%= receive.serial_number %></li>
+              <% end %>
+            <% end %>
           </ul>
         </div>
         <div class="col order-details">
@@ -110,7 +117,7 @@
           <h4>Order Details</h4>
           <div class="col">
             <% if @order.order_items.empty? %>
-              <span>Add to order</span>
+              <i class="fas fa-cart-arrow-down">Empty</i>
             <% else %>
               <ul class="list-group">
                 <% @order.order_items.each do |repair| %>
@@ -131,7 +138,7 @@
         <div class="col-md-auto order-details">
           <h4>Shipping</h4>
             <% if @order.shippings.empty? %>
-              <span>No assigned shipping</span>
+              <i class="fas fa-shipping-fast">Empty</i>
             <% else %>
             <ul class="list-group">
               <% @order.shippings.each do |item| %>
@@ -161,7 +168,7 @@
         <div class="col-md-auto order-details">
           <h4>Photos</h4>
           <% if @order.images.blank? %>
-            <p>No photos are available</p>
+            <i class="far fa-images">Empty</i>
           <% else %>
             <% @order.images.each do |item| %>
               <%= link_to item.image.url do %>
@@ -170,21 +177,8 @@
             <% end %>
           <% end %>
         </div>
-      <% if @order.receivings.empty? %>
-      <% else %>
-        <div class="col-md-auto order-details">
-          <h4>Received</h4>
-          <% @order.receivings.each do |receive| %>
-            <%= receive.model_no %>
-            <%= receive.serial_number %>
-            <%= receive.receive_courier %>
-            <%= receive.receive_tracking %>
-            <%= receive.created_at.strftime("%b %d, %Y") %>
-          <% end %>
-        </div>
-      <% end %>
-      <% if @order.repairs.empty? %>
-      <% else %>
+        <% if @order.repairs.empty? %>
+        <% else %>
         <div class="col-md-auto order-details">
           <h4>Repair Notes</h4>
           <ul>
