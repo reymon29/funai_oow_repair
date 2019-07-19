@@ -9,17 +9,18 @@ class PaymentsController < ApplicationController
     end
     @payment = paid_check
     @customer = stripe_customer
+    @card = card_type
     authorize @payment
   end
 
   def create
     @order.amount = @order.amount - @order.paid
+    if payment_params.empty?
       customer = Stripe::Customer.create(
         source: params[:stripeToken],
         email:  params[:stripeEmail],
         description: "DVD OOW"
       )
-    if paid_check.empty?
       charge = Stripe::Charge.create(
         customer:     customer.id,   # You should store this customer id and re-use it.
         amount:       @order.amount_cents,
@@ -28,7 +29,7 @@ class PaymentsController < ApplicationController
       )
     else
       charge = Stripe::Charge.create(
-        customer:     stripe_customer,   # If payment was already taken before to locate stripe customer id.
+        customer:     payment_params['stripe_id'],   # If payment was already taken before to locate stripe customer id.
         amount:       @order.amount_cents,
         description:  "Payment for repair #{@order.product.name} for order #{@order.order_no}",
         currency:     @order.amount.currency
@@ -75,6 +76,10 @@ class PaymentsController < ApplicationController
     end
   end
 
+  def payment_params
+    params.permit(:stripe_id)
+  end
+
   def paid_check
     @payment = Payment.where(state: "Paid", order_id: @order).limit(1)
   end
@@ -83,6 +88,13 @@ class PaymentsController < ApplicationController
     paid_check.each do |payment|
       a = JSON.parse(payment.payment)
       return a["customer"]
+    end
+  end
+
+  def card_type
+    paid_check.each do |payment|
+      a = JSON.parse(payment.payment)
+      return "#{a["payment_method_details"]["card"]["brand"].upcase} Ending(4) #{a["payment_method_details"]["card"]["last4"]}"
     end
   end
 end
