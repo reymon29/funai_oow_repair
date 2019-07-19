@@ -15,6 +15,7 @@ class PaymentsController < ApplicationController
 
   def create
     @order.amount = @order.amount - @order.paid
+
     if payment_params.empty?
       customer = Stripe::Customer.create(
         source: params[:stripeToken],

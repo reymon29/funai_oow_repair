@@ -2,34 +2,31 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="orderform-view col-md-6">
-
-        <h1>Purchase of <%= @order.order_no %></h1>
-        <div class="form-row">
-          <div class="col">
-            <%= form_tag order_payments_path(@order) do %>
-        <article>
-          <label class="amount">
-            <span>Charge amount <%= humanized_money_with_symbol(@order.amount) %></span>
-          </label>
-        </article>
-        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
-          data-name="My DVD Product Repair"
-          data-email="<%= @order.email %>"
-          data-description="<%= @order.order_no %>"
-          data-amount="<%= @order.amount_cents %>"
-          data-currency="<%= @order.amount.currency %>"></script>
-      <% end %>
-      <% if @customer.empty? %>
-      <% else %>
-        <%= form_tag order_payments_path(@order) do %>
-          <%= hidden_field_tag(:stripe_id, @customer) %>
-          <%= submit_tag @card %>
+      <h1>Purchase of <%= @order.order_no %></h1>
+      <div class="form-row">
+        <div class="col">
+          <%= form_tag order_payments_path(@order) do %>
+            <article>
+              <label class="amount">
+                <span>Charge amount <%= humanized_money_with_symbol(@order.amount) %></span>
+              </label>
+            </article>
+            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+              data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+              data-name="My DVD Product Repair"
+              data-email="<%= @order.email %>"
+              data-description="<%= @order.order_no %>"
+              data-amount="<%= @order.amount_cents %>"
+              data-currency="<%= @order.amount.currency %>"></script>
+        <% end %>
+        <% if @customer.empty? %>
+        <% else %>
+          <%= form_tag order_payments_path(@order) do %>
+            <%= hidden_field_tag(:stripe_id, @customer) %>
+            <%= submit_tag @card, class: "btn-stripe" %>
         <% end %>
       <% end %>
       </div>
     </div>
   </div>
 </div>
-
-<%= console %>
