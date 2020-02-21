@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_05_021534) do
+ActiveRecord::Schema.define(version: 2020_02_21_171700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,42 @@ ActiveRecord::Schema.define(version: 2019_07_05_021534) do
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_repairs_on_order_id"
     t.index ["user_id"], name: "index_repairs_on_user_id"
+  end
+
+  create_table "samples", force: :cascade do |t|
+    t.string "express_tracking"
+    t.string "original_net"
+    t.string "original_service"
+    t.string "ship_date"
+    t.string "original_delivery_name"
+    t.string "original_delivery_address"
+    t.string "original_delivery_city"
+    t.string "original_delivery_state"
+    t.string "original_delivery_zip"
+    t.string "original_delivery_country"
+    t.string "original_delivery_customer_reference"
+    t.string "original_delivery_customer_po"
+    t.string "original_delivery_customer_description"
+    t.string "original_delivery_main_rma"
+    t.string "original_delivery_main_name"
+    t.string "original_delivery_main_address"
+    t.string "original_delivery_main_city"
+    t.string "original_delivery_main_state"
+    t.string "original_delivery_main_country"
+    t.string "original_delivery_main_zip"
+    t.string "original_delivery_main_phone"
+    t.string "original_delivery_main_model"
+    t.string "original_delivery_main_model_size"
+    t.string "original_delivery_return_name"
+    t.string "original_delivery_return_address"
+    t.string "original_delivery_return_city"
+    t.string "original_delivery_return_state"
+    t.string "original_delivery_return_country"
+    t.string "original_delivery_return_zip"
+    t.string "original_delivery_return_net"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "original_delivery_return_time"
   end
 
   create_table "shippings", force: :cascade do |t|
